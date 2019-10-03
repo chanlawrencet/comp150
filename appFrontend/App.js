@@ -32,7 +32,7 @@ class App extends React.Component{
                     <CalculatorMock locked unlock={this.unlock.bind(this)}/>
                 ) : 
                 <View>
-                    <Text style={{marginTop: 50, fontSize: 20, textAlign: "center"}}>Unnlocked!</Text>
+                    <Text style={{marginTop: 50, fontSize: 20, textAlign: "center"}}>Unlocked!</Text>
                     <Button onPress={() => this.setState({locked:true})} title='lock'/>
                 </View>
 
