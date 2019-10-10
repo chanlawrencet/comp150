@@ -10,13 +10,23 @@ import {
 import Constants from 'expo-constants';
 import { Calculator } from 'react-native-calculator'
 import CalculatorMock from './components/CalculatorMock'
+import RealApp from './RealApp'
 
-
+async function alertIfRemoteNotificationsDisabledAsync() {
+    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    if (status !== 'granted') {
+      alert('Hey! You might want to enable notifications for my app, they are good.');
+    }
+  }
 
 class App extends React.Component{
 
     unlock = () => {
         this.setState({locked:false})
+    }
+
+    lock = () => {
+        this.setState({locked:true})
     }
 
     componentWillMount(){
@@ -25,17 +35,13 @@ class App extends React.Component{
 
     render(){
         const {locked} = this.state
-
+        // alertIfRemoteNotificationsDisabledAsync()
         return(
             <View style={{ flex: 1 }}>
                 {locked ? (
                     <CalculatorMock locked unlock={this.unlock.bind(this)}/>
                 ) : 
-                <View>
-                    <Text style={{marginTop: 50, fontSize: 20, textAlign: "center"}}>Unlocked!</Text>
-                    <Button onPress={() => this.setState({locked:true})} title='lock'/>
-                </View>
-
+                <RealApp lock={this.lock.bind(this)}/>
                 }
                 
             </View>
