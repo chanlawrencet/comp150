@@ -1,12 +1,33 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
+import {
+    StyleSheet,
+    Button,
+    View,
+    SafeAreaView,
+    Text,
+    Alert,
+    TouchableOpacity,
+    Image,
+} from 'react-native';
 
 export default class CameraExample extends React.Component {
   state = {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
+    photoURI: '',
+    showCamera: true
+  };
+
+  snap = async () => {
+    if (this.camera) {
+      let photo = await this.camera.takePictureAsync({skipProcessing:true});
+      this.setState({
+          photoURI: photo.uri,
+          showCamera: false
+      });
+    }
   };
 
   async componentDidMount() {
@@ -15,7 +36,7 @@ export default class CameraExample extends React.Component {
   }
 
   render() {
-    const { hasCameraPermission } = this.state;
+    const { hasCameraPermission, showCamera, photoURI } = this.state;
     if (hasCameraPermission === null) {
       return <View />;
     } else if (hasCameraPermission === false) {
@@ -23,31 +44,59 @@ export default class CameraExample extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Camera style={{ flex: 1 }} type={this.state.type}>
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: 'transparent',
-                flexDirection: 'row',
-              }}>
-              <TouchableOpacity
-                style={{
-                  flex: 0.1,
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                }}
-                onPress={() => {
-                  this.setState({
-                    type:
-                      this.state.type === Camera.Constants.Type.back
-                        ? Camera.Constants.Type.front
-                        : Camera.Constants.Type.back,
-                  });
-                }}>
-                <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
-              </TouchableOpacity>
-            </View>
-          </Camera>
+            {showCamera ?
+                <View style={{ flex: 1 }}>
+                    <Camera
+                        style={{ flex: 1 }}
+                        type={this.state.type}
+                        ref={ref => {this.camera = ref;}}
+                    >
+                        <View
+                            style={{
+                                flex: 1,
+                                backgroundColor: 'transparent',
+                                flexDirection: 'row',
+                            }}>
+                        </View>
+                    </Camera>
+                    <View style={{flexDirection:'row', justifyContent:'space-evenly', margin:20}}>
+                        <Button
+                            onPress={() => {
+                                this.setState({
+                                    type:
+                                        this.state.type === Camera.Constants.Type.back
+                                            ? Camera.Constants.Type.front
+                                            : Camera.Constants.Type.back,
+                                });
+                            }}
+                            title='flip'/>
+
+                    <Button
+                        onPress={() => this.snap()}
+                        title='snap'
+                    />
+                    </View>
+                </View> :
+                <View style={{ flex: 1 }}>
+                    {photoURI !== '' &&
+                        <Image
+                            // style={{ width: 100, height: 100, position:'flex-center' }}
+                            source={{uri: this.state.photoURI}}
+                            style={{ flex: 1,
+                            transform:[{scale:0.9}]}}
+                        />
+                    }
+                    <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:20}}>
+                        <Button onPress={() => {this.setState({showCamera: true})}} title='retake'/>
+                        <Button onPress={() => {this.setState({showCamera: true})}} title='continue'/>
+                    </View>
+                </View>
+
+
+            }
+
+
+
         </View>
       );
     }
