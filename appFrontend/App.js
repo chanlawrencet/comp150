@@ -11,6 +11,7 @@ import Constants from 'expo-constants';
 import { Calculator } from 'react-native-calculator'
 import CalculatorMock from './components/CalculatorMock'
 import RealApp from './RealApp'
+import Setup from "./components/Setup";
 
 async function alertIfRemoteNotificationsDisabledAsync() {
     const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
@@ -30,12 +31,20 @@ class App extends React.Component{
     }
 
     componentWillMount(){
-        this.setState({locked:true})
+        this.setState({
+            locked:true,
+            setup: false,
+        })
     }
 
     render(){
-        const {locked} = this.state
+        const {locked, setup} = this.state;
         // alertIfRemoteNotificationsDisabledAsync()
+        if (setup){
+            return (
+                <Setup/>
+            )
+        }
         return(
             <View style={{ flex: 1 }}>
                 {locked ? (
