@@ -30,32 +30,46 @@ class App extends React.Component{
         this.setState({locked:true})
     }
 
+    setup = () => {
+        this.setState({setup: true})
+    }
+
+    notSetup = () => {
+        this.setState({setup: false})
+    }
+
+    setCode = (theCode) => {
+        this.setState({code: theCode})
+    }
+
+
     componentWillMount(){
         this.setState({
             locked:true,
             setup: true,
+            code:'',
         })
     }
 
     render(){
-        const {locked, setup} = this.state;
+        const {locked, setup, code} = this.state;
         // alertIfRemoteNotificationsDisabledAsync()
         if (setup){
             return (
-                <Setup/>
+                <Setup setCode={this.setCode.bind(this)} notSetup={this.notSetup.bind(this)}/>
             )
         }
 
         if (locked){
             return (
               <View style={{ flex: 1 }}>
-                  <CalculatorMock locked unlock={this.unlock.bind(this)}/>
+                  <CalculatorMock code={code} locked unlock={this.unlock.bind(this)}/>
               </View>
             )
         } else {
             return (
               <View style={{ flex: 1 }}>
-                  <RealApp lock={this.lock.bind(this)}/>
+                  <RealApp reset={this.setup.bind(this)} lock={this.lock.bind(this)}/>
               </View>
             )
         }

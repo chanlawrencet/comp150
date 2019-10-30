@@ -17,7 +17,7 @@ class RealApp extends React.Component{
         })
     }
     render(){
-        const {lock} = this.props
+        const {lock, reset} = this.props
         const {currentView} = this.state
         return(
             <View style={{ flex: 1 }}>
@@ -37,6 +37,7 @@ class RealApp extends React.Component{
                     </View>
                 ) : null}
                 <Button onPress={lock} title='lock'/>
+                <Button onPress={reset} title='reset'/>
             </View>
         )
 

@@ -24,13 +24,17 @@ const User = t.struct({
 
 });
 
+const Dis = t.struct({
+  enable: t.Boolean
+});
+
 
 class Setup extends React.Component{
 
 
   componentWillMount() {
     this.setState({
-      showScreen:'showCalcSetup',
+      showScreen:'setup',
       email:'',
       enteredCode:'',
       verifyCode:'',
@@ -67,9 +71,42 @@ class Setup extends React.Component{
     })
   };
 
+  handleSubmitD = () => {
+    const {notSetup, setCode} = this.props;
+    const {enteredCode} = this.state;
+    const value = this._formD.getValue();
+    if (value == null){
+      return
+    }
+    this.setState({
+      agreeToAudio: value.enable,
+      showScreen: 'setup'
+    })
+    notSetup()
+    setCode(enteredCode)
+  };
+
   render() {
     const {showScreen, showForm, email, showCalcSetup, enteredCode, showCalcVerify, verifyCode, showCode} = this.state;
 
+    if (showScreen === 'disclaimer'){
+      return(
+        <View style={{flex:1}}>
+          <Text style={{textAlign:'center', marginTop:100, fontSize:20}}>The application can record and notify authorities if it detects violence.</Text>
+          <View style={{flex:1, alignSelf: 'center'}}>
+            <Form
+              type={Dis}
+              ref={c => this._formD = c}
+            />
+          </View>
+          <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:10}}>
+            <Button onPress={() => this.setState({showScreen:'showCalcSetupInfo', enteredCode:''})} title={'reset code'}/>
+            <Button onPress={this.handleSubmitD} title={'finish'} disabled={enteredCode !== verifyCode}/>
+          </View>
+        </View>
+
+      )
+    }
     if (showScreen === 'showCalcVerify'){
       return(
         <View style={{flex:1}}>
@@ -85,8 +122,8 @@ class Setup extends React.Component{
           </View>
 
           <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:10}}>
-            <Button onPress={() => this.setState({showScreen:'showCalcSetupInfo', enteredCode:''})} title={'reset'}/>
-            <Button title={'next'} disabled={enteredCode !== verifyCode}/>
+            <Button onPress={() => this.setState({showScreen:'showCalcSetupInfo', enteredCode:''})} title={'reset code'}/>
+            <Button onPress={() => this.setState({showScreen:'disclaimer'})} title={'next'} disabled={enteredCode !== verifyCode}/>
           </View>
         </View>
       )

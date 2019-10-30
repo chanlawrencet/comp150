@@ -24,8 +24,8 @@ class CalculatorMock extends React.Component{
     }
 
     componentDidUpdate(){
-        const {unlock} = this.props
-        if (this.state.text === '18'){
+        const {unlock, code} = this.props
+        if (this.state.text === code){
             unlock()
         }
     }
