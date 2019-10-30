@@ -33,7 +33,7 @@ class CalculatorMock extends React.Component{
     render(){
         return(
             <View style={{ flex: 1 }}>
-                <Calculator style={{ flex: 1 }} displayTextAlign='right' onTextChange={this.setText}/>
+                <Calculator thousandSeparator='' style={{ flex: 1 }} displayTextAlign='right' onTextChange={this.setText}/>
             </View>
         )
     }

@@ -6,9 +6,12 @@ import {
   SafeAreaView,
   Text,
   Alert,
-  ScrollView
+  ScrollView,
+  KeyboardAvoidingView
 } from 'react-native';
 import t from 'tcomb-form-native';
+import { Calculator } from 'react-native-calculator'
+
 const Form = t.form.Form;
 const User = t.struct({
   name: t.String,
@@ -27,10 +30,25 @@ class Setup extends React.Component{
 
   componentWillMount() {
     this.setState({
-      showForm:false,
-      email:''
+      showScreen:'showCalcSetup',
+      email:'',
+      enteredCode:'',
+      verifyCode:'',
+      showCode: false,
     })
   }
+
+  setText = (textInput) => {
+    this.setState({
+      enteredCode: textInput
+    })
+  };
+
+  setTextVerify = (textInput) => {
+    this.setState({
+      verifyCode: textInput
+    })
+  };
 
   handleSubmit = () => {
     const value = this._form.getValue();
@@ -38,26 +56,116 @@ class Setup extends React.Component{
       return
     }
     this.setState({
-      email:value.email
+      name:value.name,
+      address:value.address,
+      phone:value.phone,
+      age:value.age,
+      emergencyContact:value.emergencyContact,
+      gender:value.gender,
+      race:value.race,
+      showScreen:'showCalcSetupInfo',
     })
   };
 
   render() {
-    const {showForm, email} = this.state;
-    if (showForm){
-      return (
+    const {showScreen, showForm, email, showCalcSetup, enteredCode, showCalcVerify, verifyCode, showCode} = this.state;
 
+    if (showScreen === 'showCalcVerify'){
+      return(
+        <View style={{flex:1}}>
+          <Text style={{textAlign:'center', marginTop:50, fontSize:15}}>Re-enter in your desired code in the calculator below:</Text>
+          <View style={{flex:1, marginBottom:24}}>
+            <Calculator  thousandSeparator='' style={{ flex: 1}} displayTextAlign='right' onTextChange={this.setTextVerify}/>
+          </View>
+          <View style={{marginTop:24}}>
+            {enteredCode !== verifyCode ?
+              <Text style={{textAlign:'center', fontSize:20, marginBottom:20, color:'red'}}>Codes do not match.</Text>:
+              <Text style={{textAlign:'center', fontSize:20, marginBottom:20, color:'green'}}>Correct code</Text>
+            }
+          </View>
+
+          <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:10}}>
+            <Button onPress={() => this.setState({showScreen:'showCalcSetupInfo', enteredCode:''})} title={'reset'}/>
+            <Button title={'next'} disabled={enteredCode !== verifyCode}/>
+          </View>
+        </View>
+      )
+    }
+
+    if (showScreen === 'showCode'){
+      return (
+        <View style={{flex:1, marginTop:200}}>
+          <Text style={{textAlign:'center', fontSize:30}}>Your code:</Text>
+          <Text style={{textAlign:'center', fontSize:50}}>"{enteredCode}"</Text>
+          <View style={{flex:1}}/>
+          <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:10}}>
+            <Button onPress={() => this.setState({showScreen:'showCalcSetup'})} title={'back'}/>
+            <Button onPress={() => this.setState({showScreen:'showCalcVerify'})} title={'continue'}/>
+          </View>
+        </View>
+      )
+    }
+
+    if (showScreen === 'showCalcSetup'){
+      return(
+        <View style={{flex:1}}>
+          <Text style={{textAlign:'center', marginTop:50, fontSize:15, marginBottom:5}}>Enter in your desired code in the calculator below:</Text>
+          <View style={{flex:1, marginBottom:20}}>
+            <Calculator thousandSeparator='' style={{ flex: 1}} displayTextAlign='right' onTextChange={this.setText}/>
+          </View>
+          <Text style={{textAlign:'center', marginTop:5, fontSize:20, marginBottom:20}}>Currently Entered:"{enteredCode}"</Text>
+          {enteredCode.length > 10 ?
+            <Text style={{textAlign:'center', marginTop:5, fontSize:20, marginBottom:20, color:'red'}}>Too long. Must be between 5 and 10 characters.</Text>:
+            null
+          }
+          {enteredCode.length < 5 ?
+            <Text style={{textAlign:'center', marginTop:5, fontSize:20, marginBottom:20, color:'red'}}>Too short. Must be between 5 and 10 characters.</Text>:
+            null
+          }
+          {enteredCode.length <= 10 && enteredCode.length >=5 ?
+            <View style={{height:76}}/> :
+            null
+          }
+          <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:10}}>
+            <Button onPress={() => this.setState({showScreen:'showCalcSetupInfo'})} title={'back'}/>
+            <Button onPress={() => this.setState({showScreen:'showCode'})} title={'next'} disabled={enteredCode.length > 10 || enteredCode.length < 5}/>
+          </View>
+        </View>
+      )
+    }
+
+    if (showScreen === 'showCalcSetupInfo'){
+      return (
+        <View style={{flex:1, marginTop:200}}>
+          <Text style={{textAlign:'center', fontSize:30}}>This app requires a secret calculator code to be entered. Please enter your desired code on the next page.</Text>
+          <Text style={{textAlign:'center', fontSize:20}}>Code must be 5-10 characters long.</Text>
+          <View style={{flex:1}}/>
+          <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:10}}>
+            <Button onPress={() => this.setState({showScreen:'showForm'})} title={'back'}/>
+            <Button onPress={() => this.setState({showScreen:'showCalcSetup'})} title={'continue'}/>
+          </View>
+
+        </View>
+      )
+    }
+
+    if (showScreen === 'showForm'){
+      return (
+        <KeyboardAvoidingView style={{flex:1}} behavior="padding" enabled>
           <ScrollView style={{flex:1}}>
             <View style={{flex:1, marginTop:50, paddingLeft:50, paddingRight:50}}>
-            <Text style={{fontSize: 20, textAlign: "center"}}>Enter your information:{email}:</Text>
-            <Form
-              type={User}
-              ref={c => this._form = c}
-            />
-            <Button onPress={this.handleSubmit} title={'submit'}/>
-            <Button onPress={() => this.setState({showForm: false})} title={'back'}/>
+              <Text style={{fontSize: 20, textAlign: "center"}}>Enter your information:</Text>
+              <Form
+                type={User}
+                ref={c => this._form = c}
+              />
+              <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:10}}>
+                <Button onPress={() => this.setState({showScreen:'setup'})} title={'back'}/>
+                <Button onPress={this.handleSubmit} title={'submit'}/>
+              </View>
             </View>
           </ScrollView>
+        </KeyboardAvoidingView>
 
       )
     }
@@ -67,7 +175,7 @@ class Setup extends React.Component{
           <Text style={{fontSize: 20, textAlign: "center"}}>150 Project, {email}</Text>
         </View>
         <View style={{marginBottom:10}}>
-          <Button onPress={() => this.setState({showForm: true})} title={'set up app'}/>
+          <Button onPress={() => this.setState({showScreen: 'showForm'})} title={'set up app'}/>
         </View>
         <Button title={'emergency call'}/>
       </View>
