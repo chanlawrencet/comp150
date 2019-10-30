@@ -9,7 +9,8 @@ print("BEGIN: Creating spectrograms from .wav files...")
 for audioFile in os.listdir(directory):
     filename = os.fsdecode(audioFile)
     if filename.endswith(".wav"):
-        print("File {} is a .wav file, congratulations!".format(filename))
+        ff = ffmpy.FFmpeg(inputs={'./audio_files/' + filename: None}, outputs={'./spectrograms/' + filename + '.jpg': ['-lavfi', 'showspectrumpic=s=1024x512:legend=disabled']})
+        ff.run()
     else:
         print("File {} is not in .wav format".format(filename))
 
