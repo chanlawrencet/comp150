@@ -33,7 +33,7 @@ class App extends React.Component{
     componentWillMount(){
         this.setState({
             locked:true,
-            setup: false,
+            setup: true,
         })
     }
 
@@ -45,16 +45,20 @@ class App extends React.Component{
                 <Setup/>
             )
         }
-        return(
-            <View style={{ flex: 1 }}>
-                {locked ? (
-                    <CalculatorMock locked unlock={this.unlock.bind(this)}/>
-                ) : 
-                <RealApp lock={this.lock.bind(this)}/>
-                }
-                
-            </View>
-        )
+
+        if (locked){
+            return (
+              <View style={{ flex: 1 }}>
+                  <CalculatorMock locked unlock={this.unlock.bind(this)}/>
+              </View>
+            )
+        } else {
+            return (
+              <View style={{ flex: 1 }}>
+                  <RealApp lock={this.lock.bind(this)}/>
+              </View>
+            )
+        }
     }
 }
 

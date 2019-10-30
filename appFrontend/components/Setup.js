@@ -6,9 +6,9 @@ import {
   SafeAreaView,
   Text,
   Alert,
+  ScrollView
 } from 'react-native';
 import t from 'tcomb-form-native';
-
 const Form = t.form.Form;
 const User = t.struct({
   name: t.String,
@@ -46,15 +46,19 @@ class Setup extends React.Component{
     const {showForm, email} = this.state;
     if (showForm){
       return (
-        <View style={{flex:1, marginTop:50, paddingLeft:50, paddingRight:50}}>
-          <Text style={{fontSize: 20, textAlign: "center"}}>Enter your information:{email}:</Text>
-          <Form
-            type={User}
-            ref={c => this._form = c}
-          />
-          <Button onPress={this.handleSubmit} title={'submit'}/>
-          <Button onPress={() => this.setState({showForm: false})} title={'back'}/>
-        </View>
+
+          <ScrollView style={{flex:1}}>
+            <View style={{flex:1, marginTop:50, paddingLeft:50, paddingRight:50}}>
+            <Text style={{fontSize: 20, textAlign: "center"}}>Enter your information:{email}:</Text>
+            <Form
+              type={User}
+              ref={c => this._form = c}
+            />
+            <Button onPress={this.handleSubmit} title={'submit'}/>
+            <Button onPress={() => this.setState({showForm: false})} title={'back'}/>
+            </View>
+          </ScrollView>
+
       )
     }
     return (
