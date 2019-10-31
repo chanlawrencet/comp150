@@ -18,6 +18,7 @@ def uploadImage():
     filename = werkzeug.utils.secure_filename(imagefile.filename)
     print("\nReceived image File name : " + imagefile.filename)
     imagefile.save(filename)
+    print(filename)
     return "Image Uploaded Successfully"
 
 
