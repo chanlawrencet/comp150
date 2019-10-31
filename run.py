@@ -46,8 +46,10 @@ def getImages():
                      mimetype='image/png')
 
 
-@app.route('/uploadImage', methods = ['GET', 'POST'])
+@app.route('/uploadImage', methods=['GET', 'POST'])
 def uploadImage():
+    userID = request.args.get('uid')
+
     # retrieve file from request params
     imagefile = request.files['image']
     # retrieve filename from file
@@ -60,11 +62,20 @@ def uploadImage():
         f = image.read()
         # save image file
         a = fs.put(f)
-    data = {
-        'special': 'true',
-        'image': a
-    }
-    db.forms.insert_one(data)
+
+    if len(list(db.forms.find({"uid": userID}))) == 0:
+        data = {
+            'special': 'true',
+            'image': [a],
+            'uid': userID
+        }
+        db.forms.insert_one(data)
+
+    else:
+        userProfile: list(db.forms.find({"uid": userID}))[0]
+        # db.forms.delete_one({"uid": userID})
+        print(userProfile)
+
     print('done')
     return "Image Uploaded Successfully"
 
