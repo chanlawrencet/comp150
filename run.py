@@ -66,15 +66,15 @@ def uploadImage():
     if len(list(db.forms.find({"uid": userID}))) == 0:
         data = {
             'special': 'true',
-            'image': [a],
+            'images': [a],
             'uid': userID
         }
         db.forms.insert_one(data)
-
     else:
         userProfile = list(db.forms.find({"uid": userID}))[0]
-        # db.forms.delete_one({"uid": userID})
-        print(userProfile)
+        db.forms.delete_one({"uid": userID})
+        userProfile['images'].append(a)
+        db.forms.insert_one(userProfile)
 
     print('done')
     return "Image Uploaded Successfully"
