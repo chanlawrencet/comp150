@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, send_file
 from flask_restful import Resource, Api
 from flask_cors import CORS
 import os
@@ -39,7 +39,9 @@ def getImages():
 
     print('toReturn', imageBytes)
 
-    return 'success'
+    return send_file(io.BytesIO(imageBytes),
+                     attachment_filename='logo.png',
+                     mimetype='image/png')
 
 
 @app.route('/uploadImage', methods = ['GET', 'POST'])
