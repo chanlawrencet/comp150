@@ -62,9 +62,9 @@ def getImageIds():
             toReturn.append(photoID)
         print(toReturn)
         return(
-            {
+            str({
                 'imageIDs': 'yep'
-            }
+            })
         )
 
 
