@@ -18,7 +18,7 @@ CORS(app)
 
 app.config["MONGO_URI"] = os.environ.get('MONGODB_URI')
 mongo = PyMongo(app)
-db = mongo.db.files
+db = mongo.db
 fs = gridfs.GridFS(db)
 # look I'm a comment
 
