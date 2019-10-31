@@ -28,6 +28,17 @@ def test():
     print(fs.get(a).read())
     return
 
+@app.route('./getImages', methods=['GET'])
+def getImages():
+    contents = list(db.forms.find())
+    toReturn = None
+    for content in contents:
+        toReturn = fs.get(content['image'])
+
+    print(toReturn)
+
+    return 200
+
 
 @app.route('/uploadImage', methods = ['GET', 'POST'])
 def uploadImage():
