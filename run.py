@@ -54,7 +54,7 @@ def uploadImage():
     filename = werkzeug.utils.secure_filename(imagefile.filename)
     # save image file (temp)
     imagefile.save(filename)
-
+    print(filename)
     a = None
     with open(filename, "rb") as image:
         f = image.read()
@@ -65,6 +65,7 @@ def uploadImage():
         'image': a
     }
     db.forms.insert_one(data)
+    print('done')
     return "Image Uploaded Successfully"
 
 
