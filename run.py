@@ -46,6 +46,26 @@ def getImages():
                      mimetype='image/png')
 
 
+@app.route('/getImageIDs', methods=['GET', 'POST'])
+def getImageIds():
+    userID = request.args.get('uid')
+    if len(list(db.forms.find({"uid": userID}))) == 0:
+        return(
+            {
+                'imageIDs':[]
+            }
+        )
+    else:
+        userProfile = list(db.forms.find({"uid": userID}))[0]
+        db.forms.delete_one({"uid": userID})
+        return(
+            {
+                'imageIDs': userProfile['images']
+            }
+        )
+
+
+
 @app.route('/uploadImage', methods=['GET', 'POST'])
 def uploadImage():
     userID = request.args.get('uid')
