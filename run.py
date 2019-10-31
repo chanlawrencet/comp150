@@ -72,7 +72,7 @@ def uploadImage():
         db.forms.insert_one(data)
 
     else:
-        userProfile: list(db.forms.find({"uid": userID}))[0]
+        userProfile = list(db.forms.find({"uid": userID}))[0]
         # db.forms.delete_one({"uid": userID})
         print(userProfile)
 
