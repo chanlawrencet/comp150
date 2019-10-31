@@ -36,6 +36,12 @@ def uploadImage():
     print("\nReceived image File name : " + imagefile.filename)
     imagefile.save(filename)
     print(filename)
+    a = None
+    with open(filename, "rb") as image:
+        f = image.read()
+        b = bytearray(f)
+        a = fs.put(b)
+    print(fs.get(a).read())
     return "Image Uploaded Successfully"
 
 
