@@ -52,11 +52,7 @@ def getImageIds():
     print('1')
     if len(list(db.forms.find({"uid": userID}))) == 0:
         print('2')
-        return(
-            {
-                'imageIDs': []
-            }
-        )
+        return str({'imageIDs': []})
     else:
         print('3')
         userProfile = list(db.forms.find({"uid": userID}))[0]
