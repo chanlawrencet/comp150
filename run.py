@@ -39,8 +39,7 @@ def uploadImage():
     a = None
     with open(filename, "rb") as image:
         f = image.read()
-        b = bytearray(f)
-        a = fs.put(b)
+        a = fs.put(f)
     print(fs.get(a).read())
     return "Image Uploaded Successfully"
 
