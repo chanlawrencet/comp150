@@ -1,37 +1,24 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Resource, Api
+from flask_cors import CORS
 from database import testDB
+import werkzeug
 
+UPLOAD_FOLDER = './'
 app = Flask(__name__)
 api = Api(app)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+CORS(app)
 
 # look I'm a comment
 
-
-class HelloWorld(Resource):
-    def get(self):
-        listOfNums = []
-        for i in range(0, 10):
-            listOfNums.append(i)
-
-        testDB.getTest()
-        return {'users': testDB.getTest()}
-
-class MakeUsers(Resource):
-    def get(self):
-        testDB.makeUsers()
-        return {'success': True}
-
-class Demo(Resource):
-    def get(self):
-        return {
-            'hello': 'world',
-            'imalist': [1,2,3,4]
-        }
-
-api.add_resource(HelloWorld, '/')
-api.add_resource(Demo, '/demo')
-api.add_resource(MakeUsers, '/insert')
+@app.route('/uploadImage', methods = ['GET', 'POST'])
+def uploadImage():
+    imagefile = request.files['image']
+    filename = werkzeug.utils.secure_filename(imagefile.filename)
+    print("\nReceived image File name : " + imagefile.filename)
+    imagefile.save(filename)
+    return "Image Uploaded Successfully"
 
 
 if __name__ == '__main__':
