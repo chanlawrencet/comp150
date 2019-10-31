@@ -6,7 +6,7 @@ from flask_pymongo import PyMongo
 from database import testDB
 import gridfs
 import werkzeug
-
+import codecs
 
 
 
@@ -31,11 +31,14 @@ def test():
 @app.route('/getImages', methods=['GET'])
 def getImages():
     contents = list(db.forms.find())
-    toReturn = None
+    imageBytes = None
     for content in contents:
-        toReturn = fs.get(content['image']).read()
+        imageBytes = fs.get(content['image']).read()
 
-    print('toReturn', toReturn)
+    base64_data = codecs.encode(imageBytes, 'base64')
+    image = base64_data.decode('utf-8')
+
+    print('toReturn', image)
 
     return 'success'
 
