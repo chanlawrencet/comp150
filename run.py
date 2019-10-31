@@ -31,16 +31,22 @@ def test():
 
 @app.route('/uploadImage', methods = ['GET', 'POST'])
 def uploadImage():
+    # retrieve file from request params
     imagefile = request.files['image']
+    # retrieve filename from file
     filename = werkzeug.utils.secure_filename(imagefile.filename)
-    print("\nReceived image File name : " + imagefile.filename)
+    # save image file (temp)
     imagefile.save(filename)
-    print(filename)
+
     a = None
     with open(filename, "rb") as image:
         f = image.read()
+        # save image file
         a = fs.put(f)
-    print(fs.get(a).read())
+    data = {
+        'image': a
+    }
+    db.forms.insert_one(data)
     return "Image Uploaded Successfully"
 
 
