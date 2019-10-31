@@ -64,7 +64,7 @@ def getImageIds():
             toReturn.append(photoID)
         print(toReturn)
         dict = {'dog': 1}
-        return str(dict)
+        return str({'imageIDs': toReturn})
 
 
 
