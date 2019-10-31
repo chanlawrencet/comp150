@@ -35,10 +35,9 @@ def getImages():
     for content in contents:
         imageBytes = fs.get(content['image']).read()
 
-    base64_data = codecs.encode(imageBytes, 'base64')
-    image = base64_data.decode('utf-8')
+    print(type(imageBytes))
 
-    print('toReturn', image)
+    print('toReturn', imageBytes)
 
     return 'success'
 
