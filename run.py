@@ -32,9 +32,7 @@ def test():
 @app.route('/getImages', methods=['GET'])
 def getImages():
     contents = list(db.forms.find())
-    imageBytes = None
-    for content in contents:
-        imageBytes = fs.get(content['image']).read()
+    imageBytes = fs.get(contents[0]['image']).read()
 
     print(type(imageBytes))
 
