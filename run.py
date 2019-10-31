@@ -32,7 +32,10 @@ def test():
 @app.route('/getImages', methods=['GET'])
 def getImages():
     contents = list(db.forms.find())
-    imageBytes = fs.get(contents[0]['image']).read()
+
+    for content in contents:
+        if content['special'] == 'true':
+            imageBytes = fs.get(content['image']).read()
 
     print(type(imageBytes))
 
@@ -58,6 +61,7 @@ def uploadImage():
         # save image file
         a = fs.put(f)
     data = {
+        'special': 'true',
         'image': a
     }
     db.forms.insert_one(data)
