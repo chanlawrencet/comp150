@@ -61,11 +61,9 @@ def getImageIds():
         for photoID in userProfile['images']:
             toReturn.append(photoID)
         print(toReturn)
-        return(
-            str({
-                'imageIDs': 'yep'
-            })
-        )
+
+        dict = {'dog': 1}
+        return str(dict)
 
 
 
