@@ -49,16 +49,22 @@ def getImages():
 @app.route('/getImageIDs', methods=['GET', 'POST'])
 def getImageIds():
     userID = request.args.get('uid')
+    print('1')
     if len(list(db.forms.find({"uid": userID}))) == 0:
+        print('2')
         return(
             {
                 'imageIDs': []
             }
         )
     else:
+        print('3')
         userProfile = list(db.forms.find({"uid": userID}))[0]
+        print('4')
         toReturn = []
+        print('5')
         for photoID in userProfile['images']:
+            print('6')
             toReturn.append(photoID)
         print(toReturn)
         dict = {'dog': 1}
