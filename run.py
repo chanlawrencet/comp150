@@ -35,9 +35,9 @@ def getImages():
     for content in contents:
         toReturn = fs.get(content['image'])
 
-    print(toReturn)
+    print('toReturn', toReturn)
 
-    return 200
+    return 'success'
 
 
 @app.route('/uploadImage', methods = ['GET', 'POST'])
