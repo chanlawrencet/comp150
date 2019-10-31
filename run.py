@@ -52,15 +52,18 @@ def getImageIds():
     if len(list(db.forms.find({"uid": userID}))) == 0:
         return(
             {
-                'imageIDs':[]
+                'imageIDs': []
             }
         )
     else:
         userProfile = list(db.forms.find({"uid": userID}))[0]
-        db.forms.delete_one({"uid": userID})
+        toReturn = []
+        for photoID in userProfile['images']:
+            toReturn.append(photoID)
+        print(toReturn)
         return(
             {
-                'imageIDs': userProfile['images']
+                'imageIDs': 'yep'
             }
         )
 
