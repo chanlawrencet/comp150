@@ -33,7 +33,7 @@ def getImages():
     contents = list(db.forms.find())
     toReturn = None
     for content in contents:
-        toReturn = fs.get(content['image'])
+        toReturn = fs.get(content['image']).read()
 
     print('toReturn', toReturn)
 
