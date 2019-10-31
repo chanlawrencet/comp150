@@ -48,22 +48,21 @@ def getImages():
 
 @app.route('/getImageIDs', methods=['GET', 'POST'])
 def getImageIds():
-    # userID = request.args.get('uid')
-    # if len(list(db.forms.find({"uid": userID}))) == 0:
-    #     return(
-    #         {
-    #             'imageIDs': []
-    #         }
-    #     )
-    # else:
-    #     userProfile = list(db.forms.find({"uid": userID}))[0]
-    #     toReturn = []
-    #     for photoID in userProfile['images']:
-    #         toReturn.append(photoID)
-    #     print(toReturn)
-    #
-    dict = {'dog': 1}
-    return str(dict)
+    userID = request.args.get('uid')
+    if len(list(db.forms.find({"uid": userID}))) == 0:
+        return(
+            {
+                'imageIDs': []
+            }
+        )
+    else:
+        userProfile = list(db.forms.find({"uid": userID}))[0]
+        toReturn = []
+        for photoID in userProfile['images']:
+            toReturn.append(photoID)
+        print(toReturn)
+        dict = {'dog': 1}
+        return str(dict)
 
 
 
