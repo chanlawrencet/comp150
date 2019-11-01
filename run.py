@@ -101,6 +101,18 @@ def uploadImage():
     print('done')
     return "Image Uploaded Successfully"
 
+@app.route('/uploadAudio', methods=['GET', 'POST'])
+def uploadAudio():
+    userID = request.args.get('uid')
+
+    # retrieve file from request params
+    audiofile = request.files['audio']
+    # retrieve filename from file
+    filename = werkzeug.utils.secure_filename(audiofile.filename)
+    # save audio file (temp)
+    auiofile.save(filename)
+    print(filename)
+    return "Audio File Uploaded Successfully"
 
 if __name__ == '__main__':
     app.run(debug=True)
