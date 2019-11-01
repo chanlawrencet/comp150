@@ -35,7 +35,13 @@ def getImages():
     query = {
         "$oid": imageID
     }
-    imageBytes = fs.find(query).limit(1).read()
+    cursor = fs.find(query).limit(1)
+
+    imageBytes = None
+    
+    while (yield cursor.fetch_next):
+        grid_data = cursor.next_object()
+        imageBytes = grid_data.read()
 
     print(type(imageBytes))
 
