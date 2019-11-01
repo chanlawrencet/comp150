@@ -35,7 +35,7 @@ def getImages():
     print(1)
     imageID = request.args.get('imageID')
     query = {
-        "$oid": imageID
+        "_id": imageID
     }
     print(2)
     cursor = fs.find(query).limit(1)
