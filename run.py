@@ -29,7 +29,7 @@ def test():
     print(fs.get(a).read())
     return
 
-@app.route('/getImages', methods=['GET'])
+@app.route('/getImages', methods=['GET', 'POST'])
 def getImages():
     print("HELLO")
     print(1)
