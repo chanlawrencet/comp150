@@ -43,9 +43,9 @@ def getImages():
     while (yield cursor.fetch_next):
         grid_data = cursor.next_object()
         print(4)
-        imageBytes = grid_data.read()
-        print(5)
-        print(type(imageBytes))
+        # imageBytes = grid_data.read()
+        # print(5)
+        # print(type(imageBytes))
     #
     #     print('toReturn', imageBytes)
     #
