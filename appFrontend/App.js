@@ -46,8 +46,8 @@ class App extends React.Component{
     componentWillMount(){
         this.setState({
             locked:true,
-            setup: true,
-            code:'',
+            setup: false,
+            code:'1',
         })
     }
 

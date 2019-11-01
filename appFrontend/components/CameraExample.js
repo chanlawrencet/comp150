@@ -23,7 +23,7 @@ export default class CameraExample extends React.Component {
   snap = async () => {
     if (this.camera) {
       let photo = await this.camera.takePictureAsync({
-          quality:0.5,
+          quality:0.2,
           skipProcessing:true
       });
       this.setState({
@@ -40,6 +40,7 @@ export default class CameraExample extends React.Component {
 
   render() {
     const { hasCameraPermission, showCamera, photoURI } = this.state;
+    const {setPhotoURI, goToForms} = this.props;
     if (hasCameraPermission === null) {
       return <View />;
     } else if (hasCameraPermission === false) {
@@ -91,15 +92,14 @@ export default class CameraExample extends React.Component {
                     }
                     <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:20}}>
                         <Button onPress={() => {this.setState({showCamera: true})}} title='retake'/>
-                        <Button onPress={() => {this.setState({showCamera: true})}} title='continue'/>
+                        <Button onPress={() => {
+                          setPhotoURI(photoURI)
+                          goToForms()
+                        }
+                        } title='continue'/>
                     </View>
                 </View>
-
-
             }
-
-
-
         </View>
       );
     }
