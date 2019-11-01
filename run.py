@@ -32,11 +32,8 @@ def test():
 
 @app.route('/getImages', methods=['GET'])
 def getImages():
-    contents = list(db.forms.find())
-
-    for content in contents:
-        if content['special'] == 'true':
-            imageBytes = fs.get(content['image']).read()
+    imageID = request.args.get('imageID')
+    imageBytes = fs.get(imageID).read()
 
     print(type(imageBytes))
 
@@ -50,21 +47,13 @@ def getImages():
 @app.route('/getImageIDs', methods=['GET', 'POST'])
 def getImageIds():
     userID = request.args.get('uid')
-    print('1')
     if len(list(db.forms.find({"uid": userID}))) == 0:
-        print('2')
         return str({'imageIDs': []})
     else:
-        print('3')
         userProfile = list(db.forms.find({"uid": userID}))[0]
-        print('4')
         toReturn = []
-        print('5')
         for photoID in userProfile['images']:
-            print('6')
             toReturn.append(str(photoID))
-        print(toReturn)
-        dict = {'dog': 1}
         return str({'imageIDs': toReturn})
 
 
