@@ -37,19 +37,19 @@ def getImages():
     }
     cursor = fs.find(query).limit(1)
 
-    imageBytes = None
-    
+
     while (yield cursor.fetch_next):
         grid_data = cursor.next_object()
         imageBytes = grid_data.read()
 
-    print(type(imageBytes))
+        print(type(imageBytes))
 
-    print('toReturn', imageBytes)
+        print('toReturn', imageBytes)
 
-    return send_file(io.BytesIO(imageBytes),
-                     attachment_filename='logo.png',
-                     mimetype='image/png')
+        return send_file(io.BytesIO(imageBytes),
+                         attachment_filename='logo.png',
+                         mimetype='image/png')
+    return "fail"
 
 
 @app.route('/getImageIDs', methods=['GET', 'POST'])
