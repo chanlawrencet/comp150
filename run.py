@@ -35,7 +35,7 @@ def getImages():
     query = {
         "$oid": imageID
     }
-    imageBytes = fs.find(query)
+    imageBytes = fs.find(query).limit(1).read()
 
     print(type(imageBytes))
 
