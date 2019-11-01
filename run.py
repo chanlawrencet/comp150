@@ -41,7 +41,7 @@ def getImages():
     cursor = fs.find(query).limit(1)
     print(3, cursor)
     while (yield cursor.fetch_next):
-        grid_data = cursor.next_object()
+        # grid_data = cursor.next_object()
         print(4)
         # imageBytes = grid_data.read()
         # print(5)
