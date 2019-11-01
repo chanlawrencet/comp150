@@ -52,7 +52,7 @@ def getImages():
     #     return send_file(io.BytesIO(imageBytes),
     #                      attachment_filename='logo.png',
     #                      mimetype='image/png')
-    # return "fail"
+    return "fail"
 
 
 @app.route('/getImageIDs', methods=['GET', 'POST'])
