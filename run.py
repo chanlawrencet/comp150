@@ -33,13 +33,13 @@ def test():
 def getImages():
     print("HELLO")
     print(1)
-    # imageID = request.args.get('imageID')
-    # query = {
-    #     "$oid": imageID
-    # }
-    # print(2)
-    # cursor = fs.find(query).limit(1)
-    # print(3, cursor)
+    imageID = request.args.get('imageID')
+    query = {
+        "$oid": imageID
+    }
+    print(2)
+    cursor = fs.find(query).limit(1)
+    print(3, cursor)
     # while (yield cursor.fetch_next):
     #     grid_data = cursor.next_object()
     #     print(4)
