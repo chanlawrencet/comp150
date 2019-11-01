@@ -31,6 +31,7 @@ def test():
 
 @app.route('/getImages', methods=['GET'])
 def getImages():
+    print("HELLO")
     print(1)
     imageID = request.args.get('imageID')
     query = {
