@@ -106,13 +106,13 @@ def uploadImage():
 def uploadAudio():
     userID = request.args.get('uid')
 
-    # retrieve file from request params
-    #audiofile = request.files['audio']
+    #retrieve file from request params
+    audiofile = request.files['audio']
     # retrieve filename from file
-    #filename = werkzeug.utils.secure_filename(audiofile.filename)
+    filename = werkzeug.utils.secure_filename(audiofile.filename)
     # save audio file (temp)
-    #auiofile.save(filename)
-    #print(filename)
+    #audiofile.save(filename)
+    print(filename)
     return str("Audio File Uploaded Successfully")
 
 if __name__ == '__main__':
