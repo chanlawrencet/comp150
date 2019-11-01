@@ -32,7 +32,10 @@ def test():
 @app.route('/getImages', methods=['GET'])
 def getImages():
     imageID = request.args.get('imageID')
-    imageBytes = fs.get(imageID).read()
+    query = {
+        "$oid": imageID
+    }
+    imageBytes = fs.get(query).read()
 
     print(type(imageBytes))
 
