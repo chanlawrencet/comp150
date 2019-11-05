@@ -86,7 +86,7 @@ def getImageIds():
         toReturn = []
         for photoID in userProfile['images']:
             toReturn.append(str(photoID))
-        return str({"number": len(toReturn)})
+        return {"number": len(toReturn)}
 
 
 
