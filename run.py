@@ -32,7 +32,7 @@ def test():
 
 @app.route('/getImages', methods=['GET', 'POST'])
 def getImages():
-    print(request.args)
+    # print(request.args)
     userID = request.args.get('uid')
     imageNumber = int(request.args.get('number'))
 
@@ -46,10 +46,10 @@ def getImages():
 
         data = fs.get(toReturn[imageNumber])
         imageBytes = data.read()
-        print(5)
-        print(type(imageBytes))
+        # print(5)
+        # print(type(imageBytes))
 
-        print('toReturn', imageBytes)
+        # print('toReturn', imageBytes)
 
         return send_file(io.BytesIO(imageBytes),
                          attachment_filename='logo.png',
@@ -103,7 +103,7 @@ def uploadImage():
     filename = werkzeug.utils.secure_filename(imagefile.filename)
     # save image file (temp)
     imagefile.save(filename)
-    print(filename)
+    # print(filename)
     a = None
     with open(filename, "rb") as image:
         f = image.read()
@@ -123,7 +123,7 @@ def uploadImage():
         userProfile['images'].append(a)
         db.forms.insert_one(userProfile)
 
-    print('done')
+    # print('done')
     return "Image Uploaded Successfully"
 
 @app.route('/uploadAudio', methods=['GET', 'POST'])
