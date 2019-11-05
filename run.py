@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, flash, request, redirect, send_file, url_for
 from flask_restful import Resource, Api
 from flask_cors import CORS
 import os
@@ -130,14 +130,28 @@ def uploadImage():
 def uploadAudio():
     userID = request.args.get('uid')
 
-    #retrieve file from request params
-    audiofile = request.files['audio']
-    # retrieve filename from file
-    filename = werkzeug.utils.secure_filename(audiofile.filename)
-    # save audio file (temp)
-    #audiofile.save(filename)
-    print(filename)
-    return str("Audio File Uploaded Successfully")
+    if request.method == 'POST':
+        # check for post having audio file
+        if 'file' not in request.files:
+            flash('No file included w/ POST request')
+            return redirect("You didn't send a file!")
+        audiofile = request.files['file']
+        if audiofile.filename == '':
+            flash('No selected file')
+            return redirect("You didn't select a file!")
+        # TODO: add check for being a .wav file, or do conversion here
+        #       if we are unable to send .wav files from the front-end
+        filename = secure_filename(audiofile.filename)
+        return str("Audio File Uploaded Successfully, it is = " + filename)
+    elif request.method == 'GET':
+        #retrieve file from request params
+        #audiofile = request.files['audio']
+        # retrieve filename from file
+        #filename = werkzeug.utils.secure_filename(audiofile.filename)
+        # save audio file (temp)
+        #audiofile.save(filename)
+        #print(filename)
+        return str("Audio File GET request received")
 
 if __name__ == '__main__':
     app.run(debug=True)
