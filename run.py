@@ -34,11 +34,11 @@ def test():
 def getImages():
     print(request.args)
     userID = request.args.get('uid')
-    imageNumber = int(request.args.get('number'))
     multi_dict = request.args
     for key in multi_dict:
         print(multi_dict.get(key))
         print(multi_dict.getlist(key))
+    imageNumber = int(request.args.get('number'))
 
     if len(list(db.forms.find({"uid": userID}))) == 0:
         return str({'imageIDs': []})
