@@ -31,31 +31,52 @@ def test():
 
 @app.route('/getImages', methods=['GET', 'POST'])
 def getImages():
-    print("HELLO")
-    print(1)
-    imageID = request.args.get('imageID')
-    query = {
-        "_id": imageID
-    }
-    print(2)
-    cursor = fs.find(query).limit(1)
-    print(3, cursor)
-    while (yield cursor.fetch_next):
-        # grid_data = cursor.next_object()
-        print(4)
-        # imageBytes = grid_data.read()
-        # print(5)
-        # print(type(imageBytes))
-    #
-    #     print('toReturn', imageBytes)
-    #
-    #     return send_file(io.BytesIO(imageBytes),
-    #                      attachment_filename='logo.png',
-    #                      mimetype='image/png')
-    return "fail"
+    userID = request.args.get('uid')
+    imageNumber = int(request.args.get('number'))
+    if len(list(db.forms.find({"uid": userID}))) == 0:
+        return str({'imageIDs': []})
+    else:
+        userProfile = list(db.forms.find({"uid": userID}))[0]
+        toReturn = []
+        for photoID in userProfile['images']:
+            toReturn.append(str(photoID))
+
+        data = fs.get(toReturn[imageNumber])
+        imageBytes = data.read()
+        print(5)
+        print(type(imageBytes))
+
+        print('toReturn', imageBytes)
+
+        return send_file(io.BytesIO(imageBytes),
+                         attachment_filename='logo.png',
+                         mimetype='image/png')
+
+    # print("HELLO")
+    # print(1)
+    # imageID = request.args.get('imageID')
+    # query = {
+    #     "_id": imageID
+    # }
+    # print(2)
+    # cursor = fs.find(query).limit(1)
+    # print(3, cursor)
+    # while (yield cursor.fetch_next):
+    #     # grid_data = cursor.next_object()
+    #     print(4)
+    #     # imageBytes = grid_data.read()
+    #     # print(5)
+    #     # print(type(imageBytes))
+    # #
+    # #     print('toReturn', imageBytes)
+    # #
+    # #     return send_file(io.BytesIO(imageBytes),
+    # #                      attachment_filename='logo.png',
+    # #                      mimetype='image/png')
+    # return "fail"
 
 
-@app.route('/getImageIDs', methods=['GET', 'POST'])
+@app.route('/getNumImages', methods=['GET', 'POST'])
 def getImageIds():
     userID = request.args.get('uid')
     if len(list(db.forms.find({"uid": userID}))) == 0:
@@ -65,7 +86,7 @@ def getImageIds():
         toReturn = []
         for photoID in userProfile['images']:
             toReturn.append(str(photoID))
-        return str({'imageIDs': toReturn})
+        return str({'number': len(toReturn)})
 
 
 
