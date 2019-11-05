@@ -32,6 +32,7 @@ def test():
 
 @app.route('/getImages', methods=['GET', 'POST'])
 def getImages():
+    print(request.args)
     userID = request.args.get('uid')
     imageNumber = int(request.args.get('number'))
     if len(list(db.forms.find({"uid": userID}))) == 0:
