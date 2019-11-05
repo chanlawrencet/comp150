@@ -8,6 +8,7 @@ from database import testDB
 import gridfs
 import werkzeug
 import codecs
+import json
 
 
 
@@ -86,7 +87,7 @@ def getImageIds():
         toReturn = []
         for photoID in userProfile['images']:
             toReturn.append(str(photoID))
-        return {"number": len(toReturn)}
+        return json.dumps({"number": len(toReturn)})
 
 
 
