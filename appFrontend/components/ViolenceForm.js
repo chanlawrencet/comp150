@@ -41,15 +41,16 @@ class ViolenceForm extends React.Component{
 
   componentWillMount() {
     this.setState({
-      success: false
+      success: false,
+      processing: false,
     })
   }
 
   submitForm = () => {
-    const {photoURI} = this.props;
+    const {photoURI, uid} = this.props;
     const formData = new FormData();
+    this.setState({processing: true})
     formData.append('image', {uri: photoURI, name: 'image.jpg', type: 'image/jpeg'});
-
     const options = {
       method: 'POST',
       body: formData,
@@ -61,20 +62,27 @@ class ViolenceForm extends React.Component{
 
     delete options.headers['Content-Type'];
 
-    fetch('https://comp150.herokuapp.com/uploadImage?uid=1234', options).then(
-      () => this.setState({success:true})
+    fetch('https://comp150.herokuapp.com/uploadImage?uid=' + uid, options).then(
+      () => this.setState({processing: false, success:true})
     );
 
   }
 
   render() {
     const {photoURI} = this.props;
-    const {success} = this.state;
+    const {success, processing} = this.state;
 
+    if (processing){
+      return(
+        <View  style={{flex:1}}>
+          <Text style={{textAlign:'center', fontSize:20, marginTop:50}}>Sending</Text>
+        </View>
+      )
+    }
     if (success){
       return(
         <View  style={{flex:1}}>
-          <Text>SUCCESS</Text>
+          <Text style={{textAlign:'center', fontSize:20, marginTop:50}}>Success</Text>
         </View>
       )
     }

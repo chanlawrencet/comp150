@@ -21,6 +21,7 @@ export default class CameraExample extends React.Component {
   };
 
   snap = async () => {
+    console.log('snap')
     if (this.camera) {
       let photo = await this.camera.takePictureAsync({
           quality:0.2,

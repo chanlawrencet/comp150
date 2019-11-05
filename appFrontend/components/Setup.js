@@ -35,7 +35,7 @@ class Setup extends React.Component{
   componentWillMount() {
     this.setState({
       showScreen:'setup',
-      email:'',
+      uid:'',
       enteredCode:'',
       verifyCode:'',
       showCode: false,
@@ -209,7 +209,7 @@ class Setup extends React.Component{
     return (
       <View style={{ flex: 1, marginTop:50}}>
         <View style={{marginBottom:10}}>
-          <Text style={{fontSize: 20, textAlign: "center"}}>150 Project, {email}</Text>
+          <Text style={{fontSize: 20, textAlign: "center"}}>150 Project {email}</Text>
         </View>
         <View style={{marginBottom:10}}>
           <Button onPress={() => this.setState({showScreen: 'showForm'})} title={'set up app'}/>

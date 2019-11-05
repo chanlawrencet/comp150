@@ -28,16 +28,30 @@ class RealApp extends React.Component{
         })
     }
     render(){
-        const {lock, reset} = this.props
+        const {lock, reset, uid} = this.props
         const {currentView, photoURI} = this.state
 
         if (currentView === 'gallery'){
-            return(<Gallery/>)
+          return(
+            <View style={{flex:1}}>
+              <Gallery/>
+              <View style={{marginBottom:10}}>
+                <Button onPress={() => {
+                  this.setState({
+                    currentView: 'home',
+                    photoURI: ''
+                  })
+                }} title='home'/>
+              </View>
+              <Button onPress={lock} title='lock'/>
+            </View>
+          )
+
         }
         if (currentView === 'form'){
             return(
               <View style={{flex:1}}>
-                  <ViolenceForm photoURI={photoURI}/>
+                  <ViolenceForm photoURI={photoURI} uid={uid}/>
                   <View style={{marginBottom:10}}>
                       <Button onPress={() => {
                           this.setState({
@@ -74,9 +88,9 @@ class RealApp extends React.Component{
                           <View style={{marginBottom:10}}>
                             <Button onPress={() => this.setState({currentView: 'form'})} title='new form'/>
                           </View>
-                          <View style={{marginBottom:10}}>
-                              <Button onPress={() => this.setState({currentView: 'form'})} title='old forms'/>
-                          </View>
+                          {/*<View style={{marginBottom:10}}>*/}
+                          {/*    <Button onPress={() => this.setState({currentView: 'form'})} title='old forms'/>*/}
+                          {/*</View>*/}
                           <View style={{marginBottom:10}}>
                               <Button onPress={() => this.setState({currentView: 'gallery'})} title='gallery'/>
                           </View>

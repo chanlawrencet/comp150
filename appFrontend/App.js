@@ -22,6 +22,10 @@ async function alertIfRemoteNotificationsDisabledAsync() {
 
 class App extends React.Component{
 
+    setUid = newUid => {
+      this.setState({uid:newUid})
+    }
+
     unlock = () => {
         this.setState({locked:false})
     }
@@ -48,15 +52,16 @@ class App extends React.Component{
             locked:true,
             setup: false,
             code:'1',
+            uid: '1234'
         })
     }
 
     render(){
-        const {locked, setup, code} = this.state;
+        const {locked, setup, code, uid} = this.state;
         // alertIfRemoteNotificationsDisabledAsync()
         if (setup){
             return (
-                <Setup setCode={this.setCode.bind(this)} notSetup={this.notSetup.bind(this)}/>
+                <Setup setCode={this.setCode.bind(this)} notSetup={this.notSetup.bind(this)} setUid={this.setUid.bind(this)}/>
             )
         }
 
@@ -69,7 +74,7 @@ class App extends React.Component{
         } else {
             return (
               <View style={{ flex: 1 }}>
-                  <RealApp reset={this.setup.bind(this)} lock={this.lock.bind(this)}/>
+                  <RealApp reset={this.setup.bind(this)} lock={this.lock.bind(this)} uid={uid}/>
               </View>
             )
         }
