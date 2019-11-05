@@ -40,7 +40,7 @@ def getImages():
         userProfile = list(db.forms.find({"uid": userID}))[0]
         toReturn = []
         for photoID in userProfile['images']:
-            toReturn.append(str(photoID))
+            toReturn.append(photoID)
 
         data = fs.get(toReturn[imageNumber])
         imageBytes = data.read()
