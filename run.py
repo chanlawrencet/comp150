@@ -38,7 +38,8 @@ def getImages():
     for key in multi_dict:
         print(multi_dict.get(key))
         print(multi_dict.getlist(key))
-    imageNumber = int(request.args.get('number'))
+    imageNumber = request.args.get('number')
+    print('imageNumber', imageNumber)
 
     if len(list(db.forms.find({"uid": userID}))) == 0:
         return str({'imageIDs': []})
