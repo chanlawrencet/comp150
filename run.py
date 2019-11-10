@@ -147,7 +147,7 @@ def uploadAudio():
         if filename == '':
             print("No selected file")
             return str("You didn't select a file!")
-        
+
         #TODO: add check for being a .wav file, or do conversion here
         #      if we are unable to send .wav files from the front-end
 
