@@ -10,6 +10,9 @@ import {
 import CameraExample from './components/CameraExample'
 import ViolenceForm from "./components/ViolenceForm";
 import Gallery from "./components/Gallery";
+import Audio from 
+"./components/Audio";
+
 
 class RealApp extends React.Component{
 
@@ -95,7 +98,10 @@ class RealApp extends React.Component{
                               <Button onPress={() => this.setState({currentView: 'gallery'})} title='gallery'/>
                           </View>
                           <View style={{marginBottom:10}}>
-                            <Button onPress={reset} title='reset'/>
+                              <Button onPress={() => this.setState({currentView: 'audio'})} title='record audio'/>
+                          </View>
+                          <View style={{marginBottom:10}}>
+                              <Button onPress={reset} title='reset'/>
                           </View>
                           <Button onPress={lock} title='lock'/>
                       </View>
