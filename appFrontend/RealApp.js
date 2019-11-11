@@ -10,8 +10,8 @@ import {
 import CameraExample from './components/CameraExample'
 import ViolenceForm from "./components/ViolenceForm";
 import Gallery from "./components/Gallery";
-import Audio from 
-"./components/Audio";
+import AudioExample from 
+"./components/AudioExample";
 
 
 class RealApp extends React.Component{
@@ -72,6 +72,16 @@ class RealApp extends React.Component{
             return(
               <View style={{flex:1}}>
                   <CameraExample goToForms={this.goToForms.bind(this)} setPhotoURI={this.setPhotoURI.bind(this)}/>
+                  <Button onPress={() => this.setState({currentView: 'home'})} title='home'/>
+                  <Button onPress={lock} title='lock'/>
+              </View>
+            )
+        }
+
+        if (currentView === 'audio'){
+            return(
+              <View style={{flex:1}}>
+              <AudioExample goToForms={this.goToForms.bind(this)}/>
                   <Button onPress={() => this.setState({currentView: 'home'})} title='home'/>
                   <Button onPress={lock} title='lock'/>
               </View>
