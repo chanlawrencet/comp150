@@ -24,6 +24,10 @@ class RealApp extends React.Component{
         this.setState({photoURI: uri})
     };
 
+    setAudioURI = (uri) => {
+        this.setState({audioURI: uri})
+    };
+
     componentWillMount(){
         this.setState({
             currentView: 'home',
@@ -81,9 +85,9 @@ class RealApp extends React.Component{
         if (currentView === 'audio'){
             return(
               <View style={{flex:1}}>
-              <AudioExample goToForms={this.goToForms.bind(this)}/>
-                  <Button onPress={() => this.setState({currentView: 'home'})} title='home'/>
-                  <Button onPress={lock} title='lock'/>
+                <AudioExample setAudioURI={this.setAudioURI.bind(this)} />
+                <Button onPress={() => this.setState({currentView: 'home'})} title='home'/>
+                <Button onPress={lock} title='lock'/>
               </View>
             )
         }
