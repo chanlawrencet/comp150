@@ -70,8 +70,16 @@ class Gallery extends React.Component{
 
     if (numImages === null){
       return(
+      <View style={{flex:1}} key={theKey}>
+        <Text>Loading</Text>
+      </View>
+    )
+  }
+
+    if (numImages === 0){
+      return(
         <View style={{flex:1}} key={theKey}>
-          <Text>Loading</Text>
+          <Text>No Images</Text>
         </View>
       )
     }

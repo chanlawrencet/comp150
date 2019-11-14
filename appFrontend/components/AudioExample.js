@@ -39,16 +39,16 @@ import * as Permissions from 'expo-permissions';
       recording.setOnRecordingStatusUpdate
   
       this.recording = recording;
-      audioURI = this.recording.getURI()
+      const audioURI = this.recording.getURI()
       //setAudioURI(audioURI)
       await this.recording.startAsync();
       this.setState({
         isLoading: false,
-        audioURI: this.recording.getURI()
+        audioURI: audioURI
       });
       //await this.recording.stopAndUnloadAsync();
       console.log("Recording finished")
-      console.log("This is the URI: " + this.audioURI)
+      console.log("This is the URI: " + audioURI)
     }
 
     // Need to figure out when to stop recording w/ .stopAndUploadAsync() and how to set audioURI 

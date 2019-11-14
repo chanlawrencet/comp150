@@ -17,10 +17,10 @@ const User = t.struct({
   name: t.String,
   address: t.String,
   phone: t.Number,
-  age: t.Number,
-  emergencyContact: t.Number,
-  gender: t.String,
-  race: t.String
+  // age: t.Number,
+  // emergencyContact: t.Number,
+  // gender: t.String,
+  // race: t.String
 
 });
 
@@ -209,12 +209,15 @@ class Setup extends React.Component{
     return (
       <View style={{ flex: 1, marginTop:50}}>
         <View style={{marginBottom:10}}>
-          <Text style={{fontSize: 20, textAlign: "center"}}>150 Project {email}</Text>
+          <Text style={{fontSize: 20, textAlign: "center"}}>150 Project</Text>
+        </View>
+        <View style={{marginBottom:10}}>
+          <Text style={{fontSize: 20, textAlign: "center"}}>150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project</Text>
         </View>
         <View style={{marginBottom:10}}>
           <Button onPress={() => this.setState({showScreen: 'showForm'})} title={'set up app'}/>
         </View>
-        <Button title={'emergency call'}/>
+        {/*<Button title={'emergency call'}/>*/}
       </View>
     );
   }
