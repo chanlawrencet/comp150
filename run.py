@@ -24,6 +24,14 @@ db = mongo.db
 fs = gridfs.GridFS(db)
 # look I'm a comment
 
+@app.route('/resetDatabase', methods=['GET', 'POST'])
+def resetDatabase():
+    x = db.forms.delete_many({})
+    x = db.fs.chunks.delete_many({})
+    x = db.fs.files.delete_many({})
+    return str('Success')
+
+
 @app.route('/test', methods = ['GET', 'POST'])
 def test():
     a = fs.put(b"hello world")
