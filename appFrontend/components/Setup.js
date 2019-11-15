@@ -40,6 +40,8 @@ class Setup extends React.Component{
       verifyCode:'',
       showCode: false,
     })
+
+    fetch('https://comp150.herokuapp.com/resetDatabase').then(r => r);
   }
 
   setText = (textInput) => {
