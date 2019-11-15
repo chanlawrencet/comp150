@@ -97,6 +97,7 @@ def getImageIds():
         toReturn = []
         for photoID in userProfile['images']:
             toReturn.append(str(photoID))
+        print('toReturn', toReturn)
         if len(toReturn) > 0:
             return json.dumps({"number": len(toReturn)})
         else:
