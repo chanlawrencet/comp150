@@ -91,19 +91,13 @@ def getImages():
 def getImageIds():
     userID = request.args.get('uid')
     if len(list(db.forms.find({"uid": userID}))) == 0:
-        print('firstReturn')
-        return str({'imageIDs': []})
+        return json.dumps({"number": 0})
     else:
-        print('userProfile')
         userProfile = list(db.forms.find({"uid": userID}))[0]
         toReturn = []
         for photoID in userProfile['images']:
             toReturn.append(str(photoID))
-        print('toReturn', toReturn)
-        if len(toReturn) > 0:
-            return json.dumps({"number": len(toReturn)})
-        else:
-            return json.dumps({"number": 0})
+        return json.dumps({"number": len(toReturn)})
 
 
 
