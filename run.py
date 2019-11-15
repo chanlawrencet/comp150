@@ -91,6 +91,7 @@ def getImages():
 def getImageIds():
     userID = request.args.get('uid')
     if len(list(db.forms.find({"uid": userID}))) == 0:
+        print('firstReturn')
         return str({'imageIDs': []})
     else:
         print('userProfile')
