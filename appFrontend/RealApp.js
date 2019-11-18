@@ -10,8 +10,7 @@ import {
 import CameraExample from './components/CameraExample'
 import ViolenceForm from "./components/ViolenceForm";
 import Gallery from "./components/Gallery";
-import AudioExample from 
-"./components/AudioExample";
+import AudioExample from "./components/AudioExample";
 
 
 class RealApp extends React.Component{
@@ -31,7 +30,8 @@ class RealApp extends React.Component{
     componentWillMount(){
         this.setState({
             currentView: 'home',
-            photoURI: ''
+            photoURI: '',
+            audioURI: ''
         })
     }
     render(){
@@ -85,7 +85,7 @@ class RealApp extends React.Component{
         if (currentView === 'audio'){
             return(
               <View style={{flex:1}}>
-                <AudioExample setAudioURI={this.setAudioURI.bind(this)} />
+                <AudioExample setAudioURI={this.setAudioURI.bind(this)} uid={uid}/>
                 <Button onPress={() => this.setState({currentView: 'home'})} title='home'/>
                 <Button onPress={lock} title='lock'/>
               </View>
@@ -96,7 +96,7 @@ class RealApp extends React.Component{
             return(
               <View style={{flex:1}}>
                   <View style={{marginTop: 50}}>
-                      <Text style={{fontSize: 20, textAlign: "center"}}>150 Project</Text>
+                      <Text style={{fontSize: 20, textAlign: "center"}}>Emergency Response App</Text>
                       <View style={{marginTop: 20}}>
                           <Text style={{fontSize: 15, textAlign:'center'}}>Options:</Text>
                           <View style={{marginBottom:10}}>

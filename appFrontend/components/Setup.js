@@ -211,7 +211,7 @@ class Setup extends React.Component{
     return (
       <View style={{ flex: 1, marginTop:50}}>
         <View style={{marginBottom:10}}>
-          <Text style={{fontSize: 20, textAlign: "center"}}>150 Project</Text>
+          <Text style={{fontSize: 20, textAlign: "center"}}>Emergency Response App</Text>
         </View>
         <View style={{marginBottom:10}}>
           <Text style={{fontSize: 20, textAlign: "center"}}>150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project</Text>
