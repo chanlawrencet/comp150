@@ -2,9 +2,8 @@ import os
 import ffmpy
 
 def convertAudio(self):
-    print("I am being called!")
     myFile = os.fsdecode(self)
-    if myFile.endswith(".wav"):
+    print("myFile is: " + myFile)
         ff = ffmpy.FFmpeg(inputs={myFile: None}, outputs={myFile + '.jpg': ['-lavfi', 'showspectrumpic=s=1024x512:legend=disabled']})
         ff.run()
     else:

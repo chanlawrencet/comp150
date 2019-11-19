@@ -9,7 +9,10 @@ import gridfs
 import werkzeug
 import codecs
 import json
+import sys
+import argparse
 from spectroClass import convertAudio
+from pydub import AudioSegment
 
 UPLOAD_FOLDER = './'
 app = Flask(__name__)
@@ -157,9 +160,24 @@ def uploadAudio():
         # temporary save file
         file.save(file.filename)
 
+        # convert .m4a file provided by frontend to .wav
+        filepath = './' + filename
+        (path, file_extension) = os.path.splitext(filepath)
+        file_extension_final = file_extension.replace('.', '')
+        
+        try:
+            track = AudioSegment.from_file(filepath,
+                    file_extension_final)
+            wav_filename = filename.replace(file_extension_final, 'wav')
+            wav_path = './' + wav_filename
+            file_handle = track.export(wav_path, format='wav')
+            os.remove(filepath)
+        except:
+            print("Error converting from .m4a to .wav" + str(filepath))
+
         # Convert .wav file to spectrogram, also checks for .wav file
         # being the input form, raises exception if not
-        convertAudio(file.filename)
+        convertAudio(wav_filename)
     
         return str("Audio File Uploaded Successfully, it is = " + filename)
 
