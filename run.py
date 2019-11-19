@@ -160,6 +160,8 @@ def uploadAudio():
         # temporary save file
         file.save(file.filename)
 
+        print("FILENAME IS: " + filename)
+
         # convert .m4a file provided by frontend to .wav
         filepath = './' + filename
         (path, file_extension) = os.path.splitext(filepath)
@@ -178,7 +180,7 @@ def uploadAudio():
         # Convert .wav file to spectrogram, also checks for .wav file
         # being the input form, raises exception if not
         convertAudio(wav_filename)
-    
+
         return str("Audio File Uploaded Successfully, it is = " + filename)
 
     # if request.method == 'GET':
