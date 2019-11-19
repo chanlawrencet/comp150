@@ -29,6 +29,5 @@ urllib3==1.23
 virtualenv==16.2.0
 Werkzeug==0.14.1
 ffmpeg==1.4
-ffmeg-python==0.2.0
 ffmpy==0.2.2
 pydub==0.23.1
