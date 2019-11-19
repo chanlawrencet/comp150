@@ -1,3 +1,5 @@
 .idea
 backendEnv/
 node_modules/
+.vscode
+__pycache__

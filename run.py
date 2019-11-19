@@ -4,13 +4,12 @@ from flask_cors import CORS
 import os
 import io
 from flask_pymongo import PyMongo
-from database import testDB
+#from database import testDB
 import gridfs
 import werkzeug
 import codecs
 import json
-
-
+from spectroClass import convertAudio
 
 UPLOAD_FOLDER = './'
 app = Flask(__name__)
@@ -134,7 +133,7 @@ def uploadImage():
     # print('done')
     return "Image Uploaded Successfully"
 
-@app.route('/uploadAudio', methods=['GET', 'POST'])
+@app.route('/uploadAudio', methods=['POST'])
 def uploadAudio():
     userID = request.args.get('uid')
 
@@ -143,7 +142,6 @@ def uploadAudio():
 
         # check for post having audio file
         if 'audio' not in request.files:
-            print("No file included w/ POST request")
             return str("You didn't send a file!")
 
         #retrieve file from request params
@@ -156,15 +154,20 @@ def uploadAudio():
             print("No selected file")
             return str("You didn't select a file!")
 
-        #TODO: add check for being a .wav file, or do conversion here
-        #      if we are unable to send .wav files from the front-end
+        # temporary save file
+        file.save(file.filename)
 
+        # Convert .wav file to spectrogram, also checks for .wav file
+        # being the input form, raises exception if not
+        convertAudio(file.filename)
+    
         return str("Audio File Uploaded Successfully, it is = " + filename)
-    elif request.method == 'GET':
-        # save audio file (temp)
-        #audiofile.save(filename)
-        #print(filename)
-        return str("Audio File GET request received")
+
+    # if request.method == 'GET':
+    #    # save audio file (temp)
+    #   #audiofile.save(filename)
+    #    #print(filename)
+    #    return str("Audio File GET request received")
 
 if __name__ == '__main__':
     app.run(debug=True)
