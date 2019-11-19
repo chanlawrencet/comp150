@@ -4,7 +4,7 @@ from flask_cors import CORS
 import os
 import io
 from flask_pymongo import PyMongo
-#from database import testDB
+from database import testDB
 import gridfs
 import werkzeug
 import codecs
