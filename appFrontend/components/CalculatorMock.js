@@ -1,17 +1,10 @@
 import React from 'react'
 import { Calculator } from 'react-native-calculator'
-import {
-    StyleSheet,
-    Button,
-    View,
-    SafeAreaView,
-    Text,
-    Alert,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 class CalculatorMock extends React.Component{
 
-    componentWillMount(){
+    componentWillMount() {
         this.setState({
             text:'nothing'
         })
@@ -23,20 +16,45 @@ class CalculatorMock extends React.Component{
         })
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         const {unlock, code} = this.props
-        if (this.state.text === code){
+        if (this.state.text === code) {
             unlock()
         }
     }
 
-    render(){
+    render() {
         return(
-            <View style={{ flex: 1 }}>
-                <Calculator thousandSeparator='' style={{ flex: 1 }} displayTextAlign='right' onTextChange={this.setText}/>
+            <View style={styles.container}>
+                <Calculator
+                    style={styles.calculator}
+                    thousandSeparator=''
+                    displayTextAlign='right'
+                    onTextChange={this.setText}
+                    numericButtonBackgroundColor='white'
+                    numericButtonColor='black'
+                    acceptButtonColor='pink'
+                    acceptButtonBackgroundColor='orange'
+                    fontSize={48}
+                    borderColor='black'
+                />
+                <View style={styles.padding}></View>
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+    calculator: {
+        flex: 5,
+        paddingTop: 24
+    },
+    padding: {
+        height: 24
+    }
+})
 
 export default CalculatorMock

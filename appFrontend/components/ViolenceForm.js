@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Button,
   View,
-  SafeAreaView,
   Text,
   Alert, Image, ScrollView, KeyboardAvoidingView
 } from 'react-native';

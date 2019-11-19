@@ -1,14 +1,13 @@
 import React from 'react';
 import {
-    StyleSheet,
-    Button,
+    // StyleSheet,
+    // Button,
     View,
-    SafeAreaView,
-    Text,
-    Alert,
+    // SafeAreaView,
+    // Text,
+    // Alert,
 } from 'react-native';
-import Constants from 'expo-constants';
-import { Calculator } from 'react-native-calculator'
+// import Constants from 'expo-constants';
 import CalculatorMock from './components/CalculatorMock'
 import RealApp from './RealApp'
 import Setup from "./components/Setup";
@@ -23,7 +22,7 @@ async function alertIfRemoteNotificationsDisabledAsync() {
 class App extends React.Component{
 
     setUid = newUid => {
-      this.setState({uid:newUid})
+        this.setState({uid:newUid})
     }
 
     unlock = () => {
@@ -49,7 +48,7 @@ class App extends React.Component{
 
     componentWillMount(){
         this.setState({
-            locked:true,
+            locked: false,
             setup: false,
             code:'1',
             uid: '1234'
