@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-    // StyleSheet,
-    // Button,
-    View,
-    // SafeAreaView,
-    // Text,
-    // Alert,
-} from 'react-native';
-// import Constants from 'expo-constants';
+import { View } from 'react-native';
 import CalculatorMock from './components/CalculatorMock'
 import RealApp from './RealApp'
 import Setup from "./components/Setup";

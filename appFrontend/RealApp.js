@@ -7,7 +7,6 @@ import {
   Alert,
   TouchableOpacity
 } from 'react-native';
-
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import CameraExample from './components/CameraExample'
@@ -42,59 +41,101 @@ class RealApp extends React.Component {
     const { lock, reset, uid } = this.props
     const { currentView, photoURI } = this.state
 
+    // if (currentView === 'audio') {
+    //   return (
+    //     <View style={styles.container}>
+    //       <View style={styles.notiBar}></View>
+    //       <View style={styles.contentContainer}>
+    //         <AudioExample setAudioURI={this.setAudioURI.bind(this)} uid={uid} />
+    //       </View>
+    //       <View style={styles.emergencyContainer}>
+    //         <TouchableOpacity
+    //           onPress={() => this.setState({ currentView: 'home' })}
+    //           style={styles.backButton}
+    //         >
+    //           <Icon name="arrow-left" size={50} color='black' />
+    //           <Text style={styles.text}>Back</Text>
+    //         </TouchableOpacity>
+    //         <TouchableOpacity onPress={lock} style={styles.lockButton}>
+    //           <Icon name="lock" size={50} color='black' />
+    //           <Text style={styles.text}>Lock</Text>
+    //         </TouchableOpacity>
+    //       </View>
+    //     </View>
+    //   )
+    // }
+
     if (currentView === 'gallery') {
       return (
-        <View style={{ flex: 1 }}>
-          <Gallery />
-          <View style={{ marginBottom: 10 }}>
-            <Button onPress={() => {
-              this.setState({
-                currentView: 'home',
-                photoURI: ''
-              })
-            }} title='home' />
+        <View style={styles.container}>
+          <View style={styles.notiBar}></View>
+          <View style={styles.contentContainer}>
+            <Gallery />
           </View>
-          <Button onPress={lock} title='lock' />
+          <View style={styles.emergencyContainer}>
+            <TouchableOpacity
+              onPress={() => this.setState({ currentView: 'home', photoURI: '' })}
+              style={styles.backButton}
+            >
+              <Icon name="arrow-left" size={50} color='black' />
+              <Text style={styles.text}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={lock} style={styles.lockButton}>
+              <Icon name="lock" size={50} color='black' />
+              <Text style={styles.text}>Lock</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )
-
     }
+
     if (currentView === 'form') {
       return (
-        <View style={{ flex: 1 }}>
-          <ViolenceForm photoURI={photoURI} uid={uid} />
-          <View style={{ marginBottom: 10 }}>
-            <Button onPress={() => {
-              this.setState({
-                currentView: 'home',
-                photoURI: ''
-              })
-            }} title='home' />
+        <View style={styles.container}>
+          <View style={styles.notiBar}></View>
+          <View style={styles.contentContainer}>
+            <ViolenceForm photoURI={photoURI} uid={uid} />
           </View>
-          <Button onPress={lock} title='lock' />
+          <View style={styles.emergencyContainer}>
+            <TouchableOpacity
+              onPress={() => this.setState({ currentView: 'home', photoURI: '' })}
+              style={styles.backButton}
+            >
+              <Icon name="arrow-left" size={50} color='black' />
+              <Text style={styles.text}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={lock} style={styles.lockButton}>
+              <Icon name="lock" size={50} color='black' />
+              <Text style={styles.text}>Lock</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )
     }
 
     if (currentView === 'camera') {
       return (
-        <View style={{ flex: 1 }}>
-          <CameraExample goToForms={this.goToForms.bind(this)} setPhotoURI={this.setPhotoURI.bind(this)} />
-          <Button onPress={() => this.setState({ currentView: 'home' })} title='home' />
-          <Button onPress={lock} title='lock' />
+        <View style={styles.container}>
+          <View style={styles.notiBar}></View>
+          <View style={styles.contentContainer}>
+            <CameraExample goToForms={this.goToForms.bind(this)} setPhotoURI={this.setPhotoURI.bind(this)} />
+          </View>
+          <View style={styles.emergencyContainer}>
+            <TouchableOpacity
+              onPress={() => this.setState({ currentView: 'home' })}
+              style={styles.backButton}
+            >
+              <Icon name="arrow-left" size={50} color='black' />
+              <Text style={styles.text}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={lock} style={styles.lockButton}>
+              <Icon name="lock" size={50} color='black' />
+              <Text style={styles.text}>Lock</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )
     }
-
-    // if (currentView === 'audio'){
-    //     return(
-    //       <View style={{flex:1}}>
-    //         <AudioExample setAudioURI={this.setAudioURI.bind(this)} uid={uid}/>
-    //         <Button onPress={() => this.setState({currentView: 'home'})} title='home'/>
-    //         <Button onPress={lock} title='lock'/>
-    //       </View>
-    //     )
-    // }
 
     if (currentView === 'home') {
       return (
@@ -123,7 +164,7 @@ class RealApp extends React.Component {
                 style={styles.menuOption}
               >
                 <Icon name="sticky-note" size={50} color='black' />
-                <Text style={styles.text}>New Form</Text>
+                <Text style={styles.text}>Add New Form</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => Alert.alert('Saved forms will be displayed.')}
@@ -138,8 +179,8 @@ class RealApp extends React.Component {
                 onPress={() => this.setState({ currentView: 'audio' })}
                 style={styles.menuOption}
               >
-                <Icon name="volume-up" size={50} color='black' />
-                <Text style={styles.text}>Record Audio</Text>
+                <Icon name="microphone" size={50} color='black' />
+                <Text style={styles.text}>Process Audio</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={reset}
@@ -176,6 +217,7 @@ const styles = StyleSheet.create(
     },
     notiBar: {
       height: '3%',
+      backgroundColor: 'black'
     },
     contentContainer: {
       height: '82%',
@@ -190,7 +232,7 @@ const styles = StyleSheet.create(
       alignItems: 'center',
       width: '40%',
       height: '100%',
-      backgroundColor: '#c4c4c4',
+      backgroundColor: '#ccecff',
       justifyContent: 'space-evenly',
       borderRadius: 10
     },
@@ -203,14 +245,30 @@ const styles = StyleSheet.create(
       height: '100%',
       width: '50%',
       backgroundColor: '#ff1a1a',
-      justifyContent: 'space-evenly'
+      justifyContent: 'space-evenly',
+      borderWidth: 2,
+      borderTopWidth: 4,
+      borderColor: 'black'
     },
     lockButton: {
       alignItems: 'center',
       height: '100%',
       width: '50%',
       backgroundColor: 'orange',
-      justifyContent: 'space-evenly'
+      justifyContent: 'space-evenly',
+      borderWidth: 2,
+      borderTopWidth: 4,
+      borderColor: 'black'
+    },
+    backButton: {
+      alignItems: 'center',
+      height: '100%',
+      width: '50%',
+      backgroundColor: '#ccecff',
+      justifyContent: 'space-evenly',
+      borderWidth: 2,
+      borderTopWidth: 4,
+      borderColor: 'black'
     },
     text: {
       fontSize: 20

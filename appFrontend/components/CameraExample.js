@@ -5,14 +5,13 @@ import {
     StyleSheet,
     Button,
     View,
-    SafeAreaView,
     Text,
     Alert,
     TouchableOpacity,
     Image,
 } from 'react-native';
 
-export default class CameraExample extends React.Component {
+class CameraExample extends React.Component {
   state = {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
@@ -106,3 +105,9 @@ export default class CameraExample extends React.Component {
     }
   }
 }
+
+const styles = StyleSheet.create({
+
+})
+
+export default CameraExample

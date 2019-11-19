@@ -21,7 +21,6 @@ const User = t.struct({
   // emergencyContact: t.Number,
   // gender: t.String,
   // race: t.String
-
 });
 
 const Dis = t.struct({
@@ -225,4 +224,4 @@ class Setup extends React.Component{
   }
 }
 
-export default Setup;
+export default Setup

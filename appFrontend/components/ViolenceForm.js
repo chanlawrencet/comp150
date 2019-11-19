@@ -4,7 +4,10 @@ import {
   Button,
   View,
   Text,
-  Alert, Image, ScrollView, KeyboardAvoidingView
+  Alert,
+  Image,
+  ScrollView,
+  KeyboardAvoidingView
 } from 'react-native';
 import t from 'tcomb-form-native';
 
@@ -115,4 +118,4 @@ class ViolenceForm extends React.Component{
   }
 }
 
-export default ViolenceForm;
+export default ViolenceForm
