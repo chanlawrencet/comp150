@@ -28,7 +28,28 @@ app.config["MONGO_URI"] = os.environ.get('MONGODB_URI')
 mongo = PyMongo(app)
 db = mongo.db
 fs = gridfs.GridFS(db)
-# look I'm a comment
+
+
+@app.route('./sendForm', methods=['POST'])
+def sendForm():
+    userID = request.args.get('uid')
+    formContents = request.json
+
+    if len(list(db.forms.find({"uid": userID}))) == 0:
+        data = {
+            'special': 'true',
+            'forms': [formContents],
+            'images': [],
+            'uid': userID
+        }
+        db.forms.insert_one(data)
+    else:
+        userProfile = list(db.forms.find({"uid": userID}))[0]
+        db.forms.delete_one({"uid": userID})
+        userProfile['forms'].append(formContents)
+        db.forms.insert_one(userProfile)
+
+
 
 @app.route('/resetDatabase', methods=['GET', 'POST'])
 def resetDatabase():
@@ -69,29 +90,6 @@ def getImages():
                          attachment_filename='logo.png',
                          mimetype='image/png')
 
-    # print("HELLO")
-    # print(1)
-    # imageID = request.args.get('imageID')
-    # query = {
-    #     "_id": imageID
-    # }
-    # print(2)
-    # cursor = fs.find(query).limit(1)
-    # print(3, cursor)
-    # while (yield cursor.fetch_next):
-    #     # grid_data = cursor.next_object()
-    #     print(4)
-    #     # imageBytes = grid_data.read()
-    #     # print(5)
-    #     # print(type(imageBytes))
-    # #
-    # #     print('toReturn', imageBytes)
-    # #
-    # #     return send_file(io.BytesIO(imageBytes),
-    # #                      attachment_filename='logo.png',
-    # #                      mimetype='image/png')
-    # return "fail"
-
 
 @app.route('/getNumImages', methods=['GET', 'POST'])
 def getImageIds():
@@ -127,6 +125,7 @@ def uploadImage():
     if len(list(db.forms.find({"uid": userID}))) == 0:
         data = {
             'special': 'true',
+            'forms': [],
             'images': [a],
             'uid': userID
         }
