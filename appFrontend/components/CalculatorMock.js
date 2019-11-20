@@ -1,12 +1,12 @@
 import React from 'react'
 import { Calculator } from 'react-native-calculator'
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native'
 
-class CalculatorMock extends React.Component{
+class CalculatorMock extends React.Component {
 
     componentWillMount() {
         this.setState({
-            text:'nothing'
+            text: 'nothing'
         })
     }
 
@@ -17,14 +17,14 @@ class CalculatorMock extends React.Component{
     }
 
     componentDidUpdate() {
-        const {unlock, code} = this.props
+        const { unlock, code } = this.props
         if (this.state.text === code) {
             unlock()
         }
     }
 
     render() {
-        return(
+        return (
             <View style={styles.container}>
                 <Calculator
                     style={styles.calculator}

@@ -1,72 +1,72 @@
-import React from 'react';
-import { View } from 'react-native';
+import React from 'react'
+import { View } from 'react-native'
 import CalculatorMock from './components/CalculatorMock'
 import RealApp from './RealApp'
-import Setup from "./components/Setup";
+import Setup from "./components/Setup"
 
 async function alertIfRemoteNotificationsDisabledAsync() {
-    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
     if (status !== 'granted') {
-      alert('Hey! You might want to enable notifications for my app, they are good.');
+        alert('Hey! You might want to enable notifications for my app, they are good.')
     }
-  }
+}
 
-class App extends React.Component{
+class App extends React.Component {
 
     setUid = newUid => {
-        this.setState({uid:newUid})
+        this.setState({ uid: newUid })
     }
 
     unlock = () => {
-        this.setState({locked:false})
+        this.setState({ locked: false })
     }
 
     lock = () => {
-        this.setState({locked:true})
+        this.setState({ locked: true })
     }
 
     setup = () => {
-        this.setState({setup: true})
+        this.setState({ setup: true })
     }
 
     notSetup = () => {
-        this.setState({setup: false})
+        this.setState({ setup: false })
     }
 
     setCode = (theCode) => {
-        this.setState({code: theCode})
+        this.setState({ code: theCode })
     }
 
 
-    componentWillMount(){
+    componentWillMount() {
         this.setState({
             locked: false,
             setup: false,
-            code:'1',
+            code: '1',
             uid: '1234'
         })
     }
 
-    render(){
-        const {locked, setup, code, uid} = this.state;
+    render() {
+        const { locked, setup, code, uid } = this.state
         // alertIfRemoteNotificationsDisabledAsync()
-        if (setup){
+        if (setup) {
             return (
-                <Setup setCode={this.setCode.bind(this)} notSetup={this.notSetup.bind(this)} setUid={this.setUid.bind(this)}/>
+                <Setup setCode={this.setCode.bind(this)} notSetup={this.notSetup.bind(this)} setUid={this.setUid.bind(this)} />
             )
         }
 
-        if (locked){
+        if (locked) {
             return (
-              <View style={{ flex: 1 }}>
-                  <CalculatorMock code={code} locked unlock={this.unlock.bind(this)}/>
-              </View>
+                <View style={{ flex: 1 }}>
+                    <CalculatorMock code={code} locked unlock={this.unlock.bind(this)} />
+                </View>
             )
         } else {
             return (
-              <View style={{ flex: 1 }}>
-                  <RealApp reset={this.setup.bind(this)} lock={this.lock.bind(this)} uid={uid}/>
-              </View>
+                <View style={{ flex: 1 }}>
+                    <RealApp reset={this.setup.bind(this)} lock={this.lock.bind(this)} uid={uid} />
+                </View>
             )
         }
     }

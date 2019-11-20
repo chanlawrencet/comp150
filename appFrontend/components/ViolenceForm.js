@@ -76,22 +76,22 @@ class ViolenceForm extends React.Component{
 
     if (processing){
       return(
-        <View  style={{flex:1}}>
-          <Text style={{textAlign:'center', fontSize:20, marginTop:50}}>Sending</Text>
+        <View  style={styles.container}>
+          <Text style={styles.text}>Sending</Text>
         </View>
       )
     }
     if (success){
       return(
-        <View  style={{flex:1}}>
-          <Text style={{textAlign:'center', fontSize:20, marginTop:50}}>Success</Text>
+        <View  style={styles.container}>
+          <Text style={styles.text}>Success</Text>
         </View>
       )
     }
     return(
-      <View style={{flex:1}}>
+      <View style={styles.container}>
         {photoURI !== '' ?
-          <View style={{flex:1}}>
+          <View style={styles.container}>
             <Image
               source={{uri: photoURI}}
               style={{
@@ -108,14 +108,37 @@ class ViolenceForm extends React.Component{
             />
           </ScrollView>
         </KeyboardAvoidingView>
-        <View style={{marginBottom:10}}>
+        <View style={styles.buttonContainer}>
           <Button onPress={this.submitForm} title='submit'/>
         </View>
       </View>
     )
-
-
   }
 }
 
-export default ViolenceForm
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: 20,
+    marginTop: 50 
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    height: '15%'
+  },
+  submitButton: {
+    alignItems: 'center',
+    height: '100%',
+    width: '50%',
+    backgroundColor: '#ff1a1a',
+    justifyContent: 'space-evenly',
+    borderWidth: 2,
+    borderTopWidth: 4,
+    borderColor: 'black'
+  }
+})
+
+export default ViolenceForm;

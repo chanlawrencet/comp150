@@ -6,12 +6,12 @@ import {
   Text,
   Alert,
   TouchableOpacity
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+} from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 
 import CameraExample from './components/CameraExample'
-import ViolenceForm from "./components/ViolenceForm";
-import Gallery from "./components/Gallery";
+import ViolenceForm from "./components/ViolenceForm"
+import Gallery from "./components/Gallery"
 // import AudioExample from "./components/AudioExample";
 
 
@@ -277,3 +277,10 @@ const styles = StyleSheet.create(
 )
 
 export default RealApp
+
+
+
+// <TouchableOpacity style={styles.submitButton} onPress={this.submitForm}>
+// <Icon name="upload" size={50} color='black' />
+// <Text style={styles.text}>Lock</Text>
+// </TouchableOpacity>
