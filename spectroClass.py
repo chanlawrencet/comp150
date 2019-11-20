@@ -4,7 +4,7 @@ import ffmpy
 def convertAudio(self):
     myFile = os.fsdecode(self)
     if myFile.endswith(".wav"):
-        ff = ffmpy.FFmpeg(inputs={myFile: None}, outputs={myFile + '.jpg': ['-lavfi', 'showspectrumpic=s=1024x512:legend=disabled']})
+        ff = ffmpy.FFmpeg(inputs={myFile: None}, outputs={myFile + '.jpg': ['-lavfi', 'showspectrumpic=s=1024x512:legend=disabled', '-y']})
         ff.run()
     else:
         raise Exception("File was not in .wav format")
