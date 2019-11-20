@@ -15,6 +15,7 @@ from spectroClass import convertAudio
 
 # terrible hack to try and make this package work
 os.system('pip3 install pydub')
+os.system('pip3 install ffmpeg')
 from pydub import AudioSegment
 
 UPLOAD_FOLDER = './'
