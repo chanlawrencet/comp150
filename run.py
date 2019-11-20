@@ -181,7 +181,9 @@ def uploadAudio():
 
         # Convert .wav file to spectrogram, also checks for .wav file
         # being the input form, raises exception if not
-        convertAudio(wav_filename)
+        
+        spectroFile = convertAudio(wav_filename)
+        # print("spectroFile is: " + spectroFile)
 
         return str("Audio File Uploaded Successfully, it is = " + filename)
 

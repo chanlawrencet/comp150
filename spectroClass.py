@@ -8,7 +8,7 @@ def convertAudio(self):
         ff.run()
     else:
         raise Exception("File was not in .wav format")
-    return 
+    return ff
 
 class audioProcessing:
     def __init__(self, audioFile):
