@@ -29,7 +29,7 @@ mongo = PyMongo(app)
 db = mongo.db
 fs = gridfs.GridFS(db)
 
-""" @app.route('./sendForm', methods=['POST'])
+@app.route('/sendForm', methods=['POST'])
 def sendForm():
     userID = request.args.get('uid')
     formContents = request.json
@@ -46,7 +46,7 @@ def sendForm():
         userProfile = list(db.forms.find({"uid": userID}))[0]
         db.forms.delete_one({"uid": userID})
         userProfile['forms'].append(formContents)
-        db.forms.insert_one(userProfile) """
+        db.forms.insert_one(userProfile)
 
 
 
