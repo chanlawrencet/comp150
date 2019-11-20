@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import CameraExample from './components/CameraExample'
 import ViolenceForm from "./components/ViolenceForm"
 import Gallery from "./components/Gallery"
-// import AudioExample from "./components/AudioExample";
+import AudioExample from "./components/AudioExample";
 
 
 class RealApp extends React.Component {
@@ -41,29 +41,29 @@ class RealApp extends React.Component {
     const { lock, reset, uid } = this.props
     const { currentView, photoURI } = this.state
 
-    // if (currentView === 'audio') {
-    //   return (
-    //     <View style={styles.container}>
-    //       <View style={styles.notiBar}></View>
-    //       <View style={styles.contentContainer}>
-    //         <AudioExample setAudioURI={this.setAudioURI.bind(this)} uid={uid} />
-    //       </View>
-    //       <View style={styles.emergencyContainer}>
-    //         <TouchableOpacity
-    //           onPress={() => this.setState({ currentView: 'home' })}
-    //           style={styles.backButton}
-    //         >
-    //           <Icon name="arrow-left" size={50} color='black' />
-    //           <Text style={styles.text}>Back</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity onPress={lock} style={styles.lockButton}>
-    //           <Icon name="lock" size={50} color='black' />
-    //           <Text style={styles.text}>Lock</Text>
-    //         </TouchableOpacity>
-    //       </View>
-    //     </View>
-    //   )
-    // }
+    if (currentView === 'audio') {
+      return (
+        <View style={styles.container}>
+          <View style={styles.notiBar}></View>
+          <View style={styles.contentContainer}>
+            <AudioExample setAudioURI={this.setAudioURI.bind(this)} uid={uid} />
+          </View>
+          <View style={styles.emergencyContainer}>
+            <TouchableOpacity
+              onPress={() => this.setState({ currentView: 'home' })}
+              style={styles.backButton}
+            >
+              <Icon name="arrow-left" size={50} color='black' />
+              <Text style={styles.text}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={lock} style={styles.lockButton}>
+              <Icon name="lock" size={50} color='black' />
+              <Text style={styles.text}>Lock</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )
+    }
 
     if (currentView === 'gallery') {
       return (

@@ -10,7 +10,7 @@ import {
     Text,
 } from 'react-native';
 import { Asset } from 'expo-asset';
-// import { Audio } from 'expo-av';
+import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import * as Font from 'expo-font';
 import * as Permissions from 'expo-permissions';
