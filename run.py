@@ -14,10 +14,9 @@ import argparse
 from spectroClass import convertAudio
 
 # terrible hack to try and make this package work
-os.system('pip install --upgrade pip')
 os.system('pip3 install pydub')
 os.system('pip3 install ffmpeg')
-from pydub import AudioSegment
+from pydub import *
 
 UPLOAD_FOLDER = './'
 app = Flask(__name__)
