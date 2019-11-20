@@ -18,6 +18,8 @@ from spectroClass import convertAudio
 #os.system('pip3 install ffmpeg')
 from pydub import AudioSegment
 
+# AUDIO_FILE_COUNT = 0
+
 UPLOAD_FOLDER = './'
 app = Flask(__name__)
 api = Api(app)
