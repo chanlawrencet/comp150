@@ -14,9 +14,9 @@ import argparse
 from spectroClass import convertAudio
 
 # terrible hack to try and make this package work
-os.system('pip3 install pydub')
-os.system('pip3 install ffmpeg')
-from pydub import *
+#os.system('pip3 install pydub')
+#os.system('pip3 install ffmpeg')
+#from pydub import *
 
 UPLOAD_FOLDER = './'
 app = Flask(__name__)
@@ -170,19 +170,19 @@ def uploadAudio():
         (path, file_extension) = os.path.splitext(filepath)
         file_extension_final = file_extension.replace('.', '')
         
-        try:
-            track = AudioSegment.from_file(filepath,
-                    file_extension_final)
-            wav_filename = filename.replace(file_extension_final, 'wav')
-            wav_path = './' + wav_filename
-            file_handle = track.export(wav_path, format='wav')
-            os.remove(filepath)
-        except:
-            print("Error converting from .m4a to .wav" + str(filepath))
+        #try:
+        #    track = AudioSegment.from_file(filepath,
+        #            file_extension_final)
+        #    wav_filename = filename.replace(file_extension_final, 'wav')
+        #    wav_path = './' + wav_filename
+        #    file_handle = track.export(wav_path, format='wav')
+        #    os.remove(filepath)
+        #except:
+        #    print("Error converting from .m4a to .wav" + str(filepath))
 
         # Convert .wav file to spectrogram, also checks for .wav file
         # being the input form, raises exception if not
-        convertAudio(wav_filename)
+        #convertAudio(wav_filename)
 
         return str("Audio File Uploaded Successfully, it is = " + filename)
 
