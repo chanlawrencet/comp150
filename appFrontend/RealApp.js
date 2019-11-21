@@ -76,7 +76,7 @@ class RealApp extends React.Component {
               onPress={() => this.setState({ currentView: 'home', photoURI: '' })}
               style={styles.backButton}
             >
-              <Icon name="arrow-left" size={50} color='black' />
+              <Icon name="home" size={50} color='black' />
               <Text style={styles.text}>Home</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={lock} style={styles.lockButton}>
@@ -100,7 +100,7 @@ class RealApp extends React.Component {
               onPress={() => this.setState({ currentView: 'home', photoURI: '' })}
               style={styles.backButton}
             >
-              <Icon name="arrow-left" size={50} color='black' />
+              <Icon name="home" size={50} color='black' />
               <Text style={styles.text}>Home</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={lock} style={styles.lockButton}>
@@ -124,7 +124,7 @@ class RealApp extends React.Component {
               onPress={() => this.setState({ currentView: 'home' })}
               style={styles.backButton}
             >
-              <Icon name="arrow-left" size={50} color='black' />
+              <Icon name="home" size={50} color='black' />
               <Text style={styles.text}>Home</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={lock} style={styles.lockButton}>

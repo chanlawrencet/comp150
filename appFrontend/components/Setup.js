@@ -178,7 +178,8 @@ class Setup extends React.Component {
         <View style={styles.container}>
           <View style={{ height: '15%' }}></View>
           <View style={{ height: '30%' }}>
-            <Text style={{ fontSize: 28, textAlign: 'center', padding: '5%' }}>This app requires a secret code to be entered on the calculator. Please enter your code on the next page.</Text>
+            <Text style={{ fontSize: 24, textAlign: 'center', padding: '5%' }}>Please enter your secret code on the next page
+            and make sure your surroundings are clear before entering your code each time.</Text>
           </View>
           <View style={{ height: '8%' }}></View>
           <View style={{ height: 70, flexDirection: 'row', justifyContent: 'space-evenly', paddingHorizontal: 36, paddingTop: 6 }}>
@@ -231,32 +232,28 @@ class Setup extends React.Component {
       <View style={styles.container}>
         <View style={styles.notiBar}></View>
         <ScrollView style={styles.contentContainer}>
-          <Text style={styles.titleText}>Welcome!</Text>
+        <View style={{ height: 30 }}></View>
+          <Text style={styles.titleText}>Hey there!</Text>
+          <View style={{ height: 10 }}></View>
           <View style={styles.textBox}>
-            <Text style={styles.text}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Nullam ac tortor vitae purus faucibus ornare.
-            Dignissim enim sit amet venenatis. Tortor dignissim convallis aenean et tortor at. Pellentesque
-            dignissim enim sit amet venenatis urna cursus. Pretium vulputate sapien nec sagittis aliquam
-            malesuada bibendum arcu. Id porta nibh venenatis cras sed felis eget velit. Turpis egestas integer
-            eget aliquet. Sed velit dignissim sodales ut eu sem integer. Amet nisl purus in mollis nunc.
-            Condimentum id venenatis a condimentum vitae sapien. Cras ornare arcu dui vivamus. Aliquam
-            faucibus purus in massa tempor. </Text>
+            <Text style={styles.text}>This is Ada. It can help you document instances of mistreatment
+            from your family members or significant other on a shared or monitored phone discreetly.</Text>
           </View>
           <View style={styles.textBox}>
-            <Text style={styles.text}>Non curabitur gravida arcu ac tortor dignissim convallis aenean et.
-            Facilisi nullam vehicula ipsum a arcu cursus vitae congue. Nunc scelerisque viverra mauris in
-            aliquam. Ornare quam viverra orci sagittis eu volutpat. Nulla pellentesque dignissim enim sit
-            amet.</Text>
+            <Text style={styles.text}>This is how Ada works: the front-facing app is a fully functional calculator, but when
+            you enter your personal code on the calculator, it reveals a portal for you to take pictures
+            and notes or place emergency calls to local authorities. Anything you save on the app will be safely stored on the cloud and cannot be
+            found from anywhere else on your phone, so you don’t need to worry.</Text>
           </View>
           <View style={styles.textBox}>
-            <Text style={styles.text}>Non curabitur gravida arcu ac tortor dignissim convallis aenean et.
-            Facilisi nullam vehicula ipsum a arcu cursus vitae congue. Nunc scelerisque viverra mauris in
-            aliquam. Ornare quam viverra orci sagittis eu volutpat. Nulla pellentesque dignissim enim sit
-            amet.</Text>
+            <Text style={styles.text}>Even if someone else finds out about Ada, you can remove all
+            your data easily by hitting the reset button, and you can later contact us to retrieve
+            your account and documentation.</Text>
           </View>
+          <View style={{ height: 30 }}></View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={() => this.setState({ showScreen: 'showForm' })} style={styles.submitButton}>
-              <Text style={styles.textButton}>Set Up</Text>
+              <Text style={styles.textButton}>Set Up Ada</Text>
               <Icon name="arrow-right" size={40} color='black' />
             </TouchableOpacity>
           </View>
@@ -315,7 +312,7 @@ const styles = StyleSheet.create({
   submitButton: {
     alignItems: 'center',
     height: 60,
-    width: 170,
+    width: 190,
     flexDirection: 'row',
     backgroundColor: '#ccecff',
     justifyContent: 'space-evenly',

@@ -91,7 +91,6 @@ class Gallery extends React.Component {
       <View style={{ flex: 1 }} key={theKey.concat("NO")}>
         {this.makeImages()}
       </View>
-
     )
   }
 }
