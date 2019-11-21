@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   StyleSheet,
+  Button,
   View,
   Text,
   Alert,
@@ -81,8 +82,8 @@ class RealApp extends React.Component {
               onPress={() => this.setState({ currentView: 'home', photoURI: '' })}
               style={styles.backButton}
             >
-              <Icon name="home" size={50} color='black' />
-              <Text style={styles.text}>Home</Text>
+              <Icon name="arrow-left" size={50} color='black' />
+              <Text style={styles.text}>Back</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={lock} style={styles.lockButton}>
               <Icon name="lock" size={50} color='black' />
@@ -105,8 +106,8 @@ class RealApp extends React.Component {
               onPress={() => this.setState({ currentView: 'home', photoURI: '' })}
               style={styles.backButton}
             >
-              <Icon name="home" size={50} color='black' />
-              <Text style={styles.text}>Home</Text>
+              <Icon name="arrow-left" size={50} color='black' />
+              <Text style={styles.text}>Back</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={lock} style={styles.lockButton}>
               <Icon name="lock" size={50} color='black' />
@@ -129,8 +130,8 @@ class RealApp extends React.Component {
               onPress={() => this.setState({ currentView: 'home' })}
               style={styles.backButton}
             >
-              <Icon name="home" size={50} color='black' />
-              <Text style={styles.text}>Home</Text>
+              <Icon name="arrow-left" size={50} color='black' />
+              <Text style={styles.text}>Back</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={lock} style={styles.lockButton}>
               <Icon name="lock" size={50} color='black' />
@@ -158,8 +159,8 @@ class RealApp extends React.Component {
                 onPress={() => this.setState({ currentView: 'form' })}
                 style={styles.menuOption}
               >
-                <Icon name="images" size={50} color='black' />
-                <Text style={styles.text}>Add Note</Text>
+                <Icon name="sticky-note" size={50} color='black' />
+                <Text style={styles.text}>Add New Form</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.rowContainer}>
@@ -167,11 +168,9 @@ class RealApp extends React.Component {
                 onPress={() => this.setState({ currentView: 'gallery' })}
                 style={styles.menuOption}
               >
-                <Icon name="sticky-note" size={50} color='black' />
-                <Text style={styles.text}>Saved Files</Text>
+                <Icon name="folder-open" size={50} color='black' />
+                <Text style={styles.text}>Gallery</Text>
               </TouchableOpacity>
-            </View>
-            <View style={styles.rowContainer}>
               <TouchableOpacity
                 onPress={() => this.setState({ currentView: 'audio' })}
                 style={styles.menuOption}
@@ -183,15 +182,7 @@ class RealApp extends React.Component {
             </View>
             <View style={styles.rowContainer}>
               <TouchableOpacity
-                onPress={() => Alert.alert(
-                  'Reset App?',
-                  'All information stored on this version of the app will be destroyed.',
-                  [
-                    {text: 'Cancel', onPress: () => this.setState({ currentView: 'home' })},
-                    {text: 'OK', onPress: reset}
-                  ],
-                  {cancelable: false}
-                )}
+                onPress={reset}
                 style={styles.menuOption}
               >
                 <Icon name="cog" size={50} color='black' />
@@ -205,7 +196,7 @@ class RealApp extends React.Component {
               <Text style={styles.text}>Lock</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => Alert.alert('Emergency call', "Emergency call will be placed momentarily.")}
+              onPress={() => Alert.alert('Emergency call will be made.')}
               style={styles.callButton}
             >
               <Icon name="phone" size={50} color='black' />
@@ -285,3 +276,10 @@ const styles = StyleSheet.create(
 )
 
 export default RealApp
+
+
+
+// <TouchableOpacity style={styles.submitButton} onPress={this.submitForm}>
+// <Icon name="upload" size={50} color='black' />
+// <Text style={styles.text}>Lock</Text>
+// </TouchableOpacity>

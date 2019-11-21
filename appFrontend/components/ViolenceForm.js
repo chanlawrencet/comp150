@@ -7,19 +7,17 @@ import {
   Alert,
   Image,
   ScrollView,
-  TextInput,
   KeyboardAvoidingView,
-  TouchableOpacity
+  TextInput,
+  ActivityIndicator
 } from 'react-native';
-import t from 'tcomb-form-native';
-import Icon from 'react-native-vector-icons/FontAwesome5'
 
 
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
-class ViolenceForm extends React.Component {
+class ViolenceForm extends React.Component{
 
   componentWillMount() {
     this.setState({
@@ -68,6 +66,7 @@ class ViolenceForm extends React.Component {
               'Content-Type': 'multipart/form-data',
             }
           };
+
           delete options.headers['Content-Type'];
 
           fetch('https://comp150.herokuapp.com/uploadImage?uid=' + uid, options).then(
@@ -103,43 +102,25 @@ class ViolenceForm extends React.Component {
         </View>
       )
     }
-    return (
+    return(
       <View style={styles.container}>
         <Text style={{fontSize:30, padding: 6}}>Save Evidence Form:</Text>
         {photoURI !== '' ?
-          <View style={{ flex: 2 }}>
+          <View style={styles.container}>
             <Image
-              source={{ uri: photoURI }}
+              source={{uri: photoURI}}
               style={{
-                flex: 1,
-                transform: [{ scale: 0.8 }]
-
-//                 marginTop: 5,
-//                 marginLeft: 100,
-//                 marginRight: 100,
-//                 minWidth: 200,
-//                 minHeight: 200,
-//                 transform: [{scale: 0.9}]
-
+                marginTop: 5,
+                marginLeft: 100,
+                marginRight: 100,
+                minWidth: 200,
+                minHeight: 200,
+                transform: [{scale: 0.9}]
               }}
             />
-          </View> : <View style={{ height: '5%' }}/>}
-        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+          </View>: <View/>}
+        <KeyboardAvoidingView style={{flex:1, marginTop:20, paddingLeft:5, paddingRight:5}} behavior="padding" enabled>
           <ScrollView>
-//             <View style={styles.formContainer}>
-//               <Form
-//                 type={FormContent}
-//                 options={options}
-//               />
-//             </View>   
-//           <View style={styles.buttonContainer}>
-//             <TouchableOpacity onPress={this.submitForm} style={styles.submitButton}>
-//               <Text style={styles.textButton}>Submit</Text>
-//               <Icon name="arrow-right" size={40} color='black' />
-//             </TouchableOpacity>
-//           </View>
-//           </ScrollView>
-//         </KeyboardAvoidingView>
             <Text>Location:</Text>
             <TextInput
               style={{ height: 40, borderColor: 'gray', borderWidth: 1, padding:5 }}
@@ -177,36 +158,22 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: 20,
-    marginTop: 50
+    fontSize: 30,
+    marginTop: 50 
   },
   buttonContainer: {
     alignItems: 'center',
-    height: '15%',
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignContent: 'center',
-    paddingTop: 20,
-    justifyContent: 'space-evenly'
-  },
-  textButton: {
-    fontSize: 25,
-    textAlign: 'center'
-  },
-  formContainer: {
-    width: '100%',
-    paddingHorizontal: '5%',
+    height: '15%'
   },
   submitButton: {
     alignItems: 'center',
-    height: 60,
-    width: 170,
-    flexDirection: 'row',
-    backgroundColor: '#ccecff',
+    height: '100%',
+    width: '50%',
+    backgroundColor: '#ff1a1a',
     justifyContent: 'space-evenly',
-    borderRadius: 10,
-    margin: 10
+    borderWidth: 2,
+    borderTopWidth: 4,
+    borderColor: 'black'
   }
 })
 

@@ -5,11 +5,7 @@ import {
   View,
   SafeAreaView,
   Text,
-  Alert,
-  Image,
-  ScrollView,
-  KeyboardAvoidingView,
-  FlatList
+  Alert, Image, ScrollView, KeyboardAvoidingView, FlatList, ActivityIndicator
 } from 'react-native';
 
 class Gallery extends React.Component {
@@ -46,6 +42,7 @@ class Gallery extends React.Component {
           })
         }
     )
+
   }
 
   makeImages = () => {
@@ -101,6 +98,7 @@ class Gallery extends React.Component {
         </View>
       )
     }
+
     let previousDateTime = '';
     return(
       <ScrollView style={{padding: 6}} key={theKey.concat("yes")}>
