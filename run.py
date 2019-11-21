@@ -219,7 +219,7 @@ def uploadAudio():
         MLresponse = get_prediction(spectroFile, '809306467634', 'ICN1707554752075661312')
         print("This is what was detected: " + MLresponse)
         #return str("Violence detectded, placing emergency call!" + filename)
-        return jsonify(keyword="Violence")
+        return jsonify(keyword=MLresponse)
 
     # if request.method == 'GET':
     #    # save audio file (temp)
