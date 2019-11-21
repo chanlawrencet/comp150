@@ -50,7 +50,7 @@ def sendForm():
         userProfile['forms'].append(formContents)
         db.forms.insert_one(userProfile)
 
-    return str('Success')
+    return 200
 
 
 
