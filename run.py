@@ -31,8 +31,9 @@ mongo = PyMongo(app)
 db = mongo.db
 fs = gridfs.GridFS(db)
 
+
 @app.route('/getForms', methods=['GET'])
-def sendForm():
+def getForms():
     userID = request.args.get('uid')
 
     if len(list(db.forms.find({"uid": userID}))) == 0:
