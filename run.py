@@ -31,6 +31,17 @@ mongo = PyMongo(app)
 db = mongo.db
 fs = gridfs.GridFS(db)
 
+@app.route('/getForms', methods=['GET'])
+def sendForm():
+    userID = request.args.get('uid')
+
+    if len(list(db.forms.find({"uid": userID}))) == 0:
+        return json.dumps({'success':False}), 400, {'ContentType':'application/json'}
+
+    userProfile = list(db.forms.find({"uid": userID}))[0]
+    return json.dumps({'forms': userProfile['forms']}), 200, {'ContentType': 'application/json'}
+
+
 @app.route('/sendForm', methods=['POST'])
 def sendForm():
     userID = request.args.get('uid')
