@@ -8,13 +8,14 @@ import {
     Button,
     View,
     Text,
+    Alert,
+    TouchableOpacity,
 } from 'react-native';
 import { Asset } from 'expo-asset';
-// import { Audio } from 'expo-av';
+import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import * as Font from 'expo-font';
 import * as Permissions from 'expo-permissions';
-
 
 export default class AudioExample extends React.Component {
     constructor(props) {
@@ -69,7 +70,7 @@ export default class AudioExample extends React.Component {
             audioURI: aURI,
             //agreeToAudio: value.disable
         });
-    
+
         console.log("This is the this.audioURI: " + this.state.audioURI)
     }
 
@@ -85,7 +86,7 @@ export default class AudioExample extends React.Component {
         /* 
         let database = 'http://localhost:5000/uploadAudio'
         */
-        
+
         console.log('audioURI before uploading: ' + this.state.audioURI)
 
         const formData = new FormData();
@@ -105,15 +106,34 @@ export default class AudioExample extends React.Component {
 
         delete options.headers['Content-Type'];
 
-        fetch('https://comp150.herokuapp.com/uploadAudio?uid=' + uid, options).then(
-            () => this.setState({ processing: false, success: true })
-        );
+        fetch('https://comp150.herokuapp.com/uploadAudio?uid=' + uid, options)
+        .then(
+            response => response.json()).then(
+                response => {
+                    const prediction = response['keyword']
+                    console.log("Prediction is: " + prediction)
+                    this.setState({ 
+                        success: true,
+                        prediction: prediction
+                    })
+                }
+            )
+
+        //const myJson = await response.json();
+        //console.log(JSON.stringify(myJson));
     }
 
     componentDidMount() {
         this._askForPermissions();
         this.recordAudio()
         //setTimeout(this.stopAudio, 5000)
+    }
+
+    componentWillMount() {
+        this.setState({
+            success: false,
+            prediction: '',
+        })
     }
 
     _askForPermissions = async () => {
@@ -125,6 +145,7 @@ export default class AudioExample extends React.Component {
 
     render() {
         const { setAudioURI, uid } = this.props;
+        const { success, prediction } = this.state;
         //onst {setAudioURI} = this.props;
         if (!this.state.haveRecordingPermissions) {
             return (
@@ -138,6 +159,20 @@ export default class AudioExample extends React.Component {
         }
         //       <View style={{flex:1}}>
         // was   <View style={styles.container}
+        if (success && prediction == 'Emergency') {
+            return (
+                <View style={styles.container}>
+                    <Text style={styles.text}>Distress detected, placing emergency call!</Text>
+                </View>
+            )
+        }
+        if (success && prediction != 'Emergency') {
+            return (
+                <View style={styles.container}>
+                    <Text style={styles.text}>Distress not detected.</Text>
+                </View>
+            )
+        }
         return (
             <View style={{ flex: 1 }}>
                 <Text style={{ textAlign: 'center', marginTop: 100, fontSize: 20 }}>
@@ -153,3 +188,28 @@ export default class AudioExample extends React.Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+    text: {
+        textAlign: 'center',
+        fontSize: 30,
+        marginTop: 50
+    },
+    buttonContainer: {
+        alignItems: 'center',
+        height: '15%'
+    },
+    submitButton: {
+        alignItems: 'center',
+        height: '100%',
+        width: '50%',
+        backgroundColor: '#ff1a1a',
+        justifyContent: 'space-evenly',
+        borderWidth: 2,
+        borderTopWidth: 4,
+        borderColor: 'black'
+    }
+})

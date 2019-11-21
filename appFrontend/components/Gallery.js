@@ -17,14 +17,17 @@ class Gallery extends React.Component {
   componentWillMount() {
     this.setState({
       photoURI: null,
-      numImages: null
+      numImages: null,
+      formData: null
     })
   }
 
   componentDidMount() {
-    // const {uid} = this.props
-    console.log('callingsdfsd')
     const uid = '1234'
+
+    let d = new Date();
+    const theKey = d.getMilliseconds().toString()
+
     fetch('https://comp150.herokuapp.com/getNumImages?uid=' + uid).then(
       response => response.json()).then(
         response => {
@@ -34,6 +37,15 @@ class Gallery extends React.Component {
           })
         }
       )
+    fetch ('https://comp150.herokuapp.com/getForms?uid='.concat(uid).concat("&milliseconds=").concat(theKey)).then(
+      response => response.json()).then(
+        response => {
+          const formData = response['forms']
+          this.setState({
+            formData: formData
+          })
+        }
+    )
   }
 
   makeImages = () => {
@@ -67,31 +79,92 @@ class Gallery extends React.Component {
 
   render() {
     const { photoURI } = this.state;
-    const { numImages } = this.state;
+    const { numImages, formData } = this.state;
     let d = new Date();
     const theKey = d.getMilliseconds().toString()
 
-    if (numImages === null) {
+    if (formData === null) {
       return (
         <View style={{ flex: 1 }} key={theKey}>
           <Text>Loading</Text>
+          <ActivityIndicator size={50} color="#0000ff"/>
         </View>
       )
     }
 
-    if (numImages === 0) {
+    if (formData === undefined) {
       return (
-        <View style={{ flex: 1 }} key={theKey}>
-          <Text>No Images</Text>
+        <View style={{ flex: 1, padding:6 }} key={theKey}>
+          <Text style={{fontSize:30}}>Online Saved Forms</Text>
+          <Text>No saved forms found.</Text>
+          <Text>Take a picture or save a form to view forms.</Text>
         </View>
       )
     }
+    let previousDateTime = '';
+    return(
+      <ScrollView style={{padding: 6}} key={theKey.concat("yes")}>
+        <Text style={{fontSize:30}}>Online Saved Forms</Text>
+        {formData.map(formInstance => {
+          if (formInstance.location === 'N/A') {
+            previousDateTime = formInstance.dateTime
+            return (
+              <View style={{flex: 1}} key={formInstance.dateTime.concat(formInstance.dateTime)}>
+                <View
+                  style={{
+                    borderBottomColor: 'black',
+                    borderBottomWidth: 1,
+                  }}
+                />
+                <Text style={{fontSize: 20}}>Time: {formInstance.dateTime}</Text>
+                <Image
+                  source={{uri: "https://comp150.herokuapp.com/getImages?uid=1234&number=".concat(formInstance.description).concat("&milliseconds=").concat(theKey)}}
+                  style={{
+                    marginLeft: 100,
+                    marginRight: 100,
+                    width: 200,
+                    height: 200,
+                    transform: [{scale: 0.9}]
+                  }}
+                />
 
-    return (
-      <View style={{ flex: 1 }} key={theKey.concat("NO")}>
-        {this.makeImages()}
-      </View>
+              </View>
+            )
+          }
+        else {
+          let oldPrevousDateTime = previousDateTime
+          previousDateTime = formInstance.dateTime
+          return (
+            <View style={{flex:1, marginBottom:5}} key={formInstance.dateTime}>
+              {oldPrevousDateTime !== formInstance.dateTime ?
+                <View
+                  style={{
+                    borderBottomColor: 'black',
+                    borderBottomWidth: 1,
+                  }}
+                /> : null
+              }
+              {oldPrevousDateTime !== formInstance.dateTime ?
+                <Text style={{fontSize:20}}>Time: {formInstance.dateTime}</Text>: null
+              }
+
+
+              <Text style={{fontSize:20}}>Location: {formInstance.location}</Text>
+              <Text style={{fontSize:20}}>Description: {formInstance.description}</Text>
+            </View>
+          )
+          }
+        })
+        }
+      </ScrollView>
     )
+
+    // return (
+    //   <View style={{ flex: 1 }} key={theKey.concat("NO")}>
+    //     {this.makeImages()}
+    //   </View>
+    //
+    // )
   }
 }
 

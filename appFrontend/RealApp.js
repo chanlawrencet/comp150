@@ -11,10 +11,15 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import CameraExample from './components/CameraExample'
 import ViolenceForm from "./components/ViolenceForm"
 import Gallery from "./components/Gallery"
-// import AudioExample from "./components/AudioExample";
+import AudioExample from "./components/AudioExample";
 
 
 class RealApp extends React.Component {
+
+
+  goToHome = () => {
+    this.setState({ currentView: 'home' })
+  }
 
   goToForms = () => {
     this.setState({ currentView: 'form' })
@@ -40,29 +45,29 @@ class RealApp extends React.Component {
     const { lock, reset, uid } = this.props
     const { currentView, photoURI } = this.state
 
-    // if (currentView === 'audio') {
-    //   return (
-    //     <View style={styles.container}>
-    //       <View style={styles.notiBar}></View>
-    //       <View style={styles.contentContainer}>
-    //         <AudioExample setAudioURI={this.setAudioURI.bind(this)} uid={uid} />
-    //       </View>
-    //       <View style={styles.emergencyContainer}>
-    //         <TouchableOpacity
-    //           onPress={() => this.setState({ currentView: 'home' })}
-    //           style={styles.backButton}
-    //         >
-    //           <Icon name="arrow-left" size={50} color='black' />
-    //           <Text style={styles.text}>Back</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity onPress={lock} style={styles.lockButton}>
-    //           <Icon name="lock" size={50} color='black' />
-    //           <Text style={styles.text}>Lock</Text>
-    //         </TouchableOpacity>
-    //       </View>
-    //     </View>
-    //   )
-    // }
+    if (currentView === 'audio') {
+      return (
+        <View style={styles.container}>
+          <View style={styles.notiBar}></View>
+          <View style={styles.contentContainer}>
+            <AudioExample setAudioURI={this.setAudioURI.bind(this)} uid={uid} />
+          </View>
+          <View style={styles.emergencyContainer}>
+            <TouchableOpacity
+              onPress={() => this.setState({ currentView: 'home' })}
+              style={styles.backButton}
+            >
+              <Icon name="arrow-left" size={50} color='black' />
+              <Text style={styles.text}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={lock} style={styles.lockButton}>
+              <Icon name="lock" size={50} color='black' />
+              <Text style={styles.text}>Lock</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )
+    }
 
     if (currentView === 'gallery') {
       return (
@@ -93,7 +98,7 @@ class RealApp extends React.Component {
         <View style={styles.container}>
           <View style={styles.notiBar}></View>
           <View style={styles.contentContainer}>
-            <ViolenceForm photoURI={photoURI} uid={uid} />
+            <ViolenceForm photoURI={photoURI} uid={uid} goToHome={this.goToHome.bind(this)}/>
           </View>
           <View style={styles.emergencyContainer}>
             <TouchableOpacity
@@ -165,12 +170,15 @@ class RealApp extends React.Component {
                 <Icon name="sticky-note" size={50} color='black' />
                 <Text style={styles.text}>Saved Files</Text>
               </TouchableOpacity>
+            </View>
+            <View style={styles.rowContainer}>
               <TouchableOpacity
                 onPress={() => this.setState({ currentView: 'audio' })}
                 style={styles.menuOption}
               >
                 <Icon name="microphone" size={50} color='black' />
-                <Text style={styles.text}>Audio Detection</Text>
+                <Text style={styles.text}>Emergency</Text>
+                <Text style={styles.text}>Detection</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.rowContainer}>
