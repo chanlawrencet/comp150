@@ -33,6 +33,8 @@ class CalculatorMock extends React.Component {
                     onTextChange={this.setText}
                     numericButtonBackgroundColor='white'
                     numericButtonColor='black'
+                    acceptButtonColor='pink'
+                    acceptButtonBackgroundColor='orange'
                     fontSize={48}
                     borderColor='black'
                 />
