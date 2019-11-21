@@ -123,7 +123,7 @@ def getImageIds():
 @app.route('/uploadImage', methods=['GET', 'POST'])
 def uploadImage():
     userID = request.args.get('uid')
-
+    print('uploadImage')
     # retrieve file from request params
     imagefile = request.files['image']
     # retrieve dateTime string from request params
@@ -144,7 +144,7 @@ def uploadImage():
             'special': 'true',
             'forms': [{
                 'location': 'N/A',
-                'description': 'N/A',
+                'description': '0',
                 'dateTime': dateTime
             }],
             'images': [a],
@@ -157,7 +157,7 @@ def uploadImage():
         userProfile['images'].append(a)
         userProfile['forms'].insert(0, {
                 'location': 'N/A',
-                'description': 'N/A',
+                'description': len(userProfile['images']) - 1,
                 'dateTime': dateTime
             })
         db.forms.insert_one(userProfile)
