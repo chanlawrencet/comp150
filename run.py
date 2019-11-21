@@ -128,7 +128,7 @@ def uploadImage():
     imagefile = request.files['image']
     print('imagefile Retrieved')
     # retrieve dateTime string from request params
-    dateTime = request.files['dateTime']
+    dateTime = request.args.get('dateTime')
     print('dateTime', dateTime)
     # retrieve filename from file
     filename = werkzeug.utils.secure_filename(imagefile.filename)
