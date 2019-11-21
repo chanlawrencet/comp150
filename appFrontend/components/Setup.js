@@ -1,42 +1,32 @@
-import React from 'react';
+import React from 'react'
 import {
   StyleSheet,
-  Button,
   View,
-  SafeAreaView,
   Text,
-  Alert,
   ScrollView,
-  KeyboardAvoidingView
-} from 'react-native';
-import t from 'tcomb-form-native';
+  KeyboardAvoidingView,
+  TouchableOpacity
+} from 'react-native'
+import t from 'tcomb-form-native'
 import { Calculator } from 'react-native-calculator'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 
 const Form = t.form.Form;
 const User = t.struct({
   name: t.String,
   address: t.String,
   phone: t.Number,
-  // age: t.Number,
-  // emergencyContact: t.Number,
-  // gender: t.String,
-  // race: t.String
+  emergencyContact: t.Number
 });
 
-const Dis = t.struct({
-  enable: t.Boolean
-});
-
-
-class Setup extends React.Component{
-
+class Setup extends React.Component {
 
   componentWillMount() {
     this.setState({
-      showScreen:'setup',
-      uid:'',
-      enteredCode:'',
-      verifyCode:'',
+      showScreen: 'setup',
+      uid: '',
+      enteredCode: '',
+      verifyCode: '',
       showCode: false,
     })
 
@@ -57,30 +47,22 @@ class Setup extends React.Component{
 
   handleSubmit = () => {
     const value = this._form.getValue();
-    if (value == null){
+    if (value == null) {
       return
     }
     this.setState({
-      name:value.name,
-      address:value.address,
-      phone:value.phone,
-      age:value.age,
-      emergencyContact:value.emergencyContact,
-      gender:value.gender,
-      race:value.race,
-      showScreen:'showCalcSetupInfo',
+      name: value.name,
+      address: value.address,
+      phone: value.phone,
+      emergencyContact: value.emergencyContact,
+      showScreen: 'showCalcSetupInfo',
     })
   };
 
   handleSubmitD = () => {
-    const {notSetup, setCode} = this.props;
-    const {enteredCode} = this.state;
-    const value = this._formD.getValue();
-    if (value == null){
-      return
-    }
+    const { notSetup, setCode } = this.props;
+    const { enteredCode } = this.state;
     this.setState({
-      agreeToAudio: value.enable,
       showScreen: 'setup'
     })
     notSetup()
@@ -88,118 +70,157 @@ class Setup extends React.Component{
   };
 
   render() {
-    const {showScreen, showForm, email, showCalcSetup, enteredCode, showCalcVerify, verifyCode, showCode} = this.state;
+    const { showScreen, showForm, email, showCalcSetup, enteredCode, showCalcVerify, verifyCode, showCode } = this.state;
 
-    if (showScreen === 'disclaimer'){
-      return(
-        <View style={{flex:1}}>
-          <Text style={{textAlign:'center', marginTop:100, fontSize:20}}>The application can record and notify authorities if it detects violence.</Text>
-          <View style={{flex:1, alignSelf: 'center'}}>
-            <Form
-              type={Dis}
-              ref={c => this._formD = c}
-            />
+    if (showScreen === 'showCalcVerify') {
+      return (
+        <View style={styles.container}>
+          <View style={styles.notiBar}></View>
+          <View style={{ height: '7%' }}>
+            <Text style={{ fontSize: 20, textAlign: "center", paddingBottom: 5 }}>Re-enter in your desired code in the calculator below:</Text>
           </View>
-          <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:10}}>
-            <Button onPress={() => this.setState({showScreen:'showCalcSetupInfo', enteredCode:''})} title={'reset code'}/>
-            <Button onPress={this.handleSubmitD} title={'finish'} disabled={enteredCode !== verifyCode}/>
+          <View style={{ paddingHorizontal: '2%', height: '65%' }}>
+            <View style={{ height: '100%' }}>
+              <Calculator thousandSeparator='' style={{ flex: 1 }} displayTextAlign='right' onTextChange={this.setTextVerify}
+                          numericButtonBackgroundColor='white' numericButtonColor='black' fontSize={35} borderColor='black' />
+            </View>
           </View>
-        </View>
 
-      )
-    }
-    if (showScreen === 'showCalcVerify'){
-      return(
-        <View style={{flex:1}}>
-          <Text style={{textAlign:'center', marginTop:50, fontSize:15}}>Re-enter in your desired code in the calculator below:</Text>
-          <View style={{flex:1, marginBottom:24}}>
-            <Calculator  thousandSeparator='' style={{ flex: 1}} displayTextAlign='right' onTextChange={this.setTextVerify}/>
-          </View>
-          <View style={{marginTop:24}}>
+          <View style={{ height: '14%', paddingTop: '5%' }}>
             {enteredCode !== verifyCode ?
-              <Text style={{textAlign:'center', fontSize:20, marginBottom:20, color:'red'}}>Codes do not match.</Text>:
-              <Text style={{textAlign:'center', fontSize:20, marginBottom:20, color:'green'}}>Correct code</Text>
+              <Text style={{ textAlign: 'center', fontSize: 20, marginBottom: 20, color: 'red' }}>Codes do not match.</Text> :
+              <Text style={{ textAlign: 'center', fontSize: 20, marginBottom: 20, color: 'green' }}>Correct code</Text>
             }
           </View>
-
-          <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:10}}>
-            <Button onPress={() => this.setState({showScreen:'showCalcSetupInfo', enteredCode:''})} title={'reset code'}/>
-            <Button onPress={() => this.setState({showScreen:'disclaimer'})} title={'next'} disabled={enteredCode !== verifyCode}/>
+          <View style={styles.calculatorButtonContainer}>
+            <TouchableOpacity onPress={() => this.setState({ showScreen: 'showCalcSetupInfo' })} style={styles.twoButton}>
+              <Icon name="arrow-left" size={25} color='black' />
+              <Text style={styles.textButton}>Reset</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.handleSubmitD} disabled={enteredCode !== verifyCode} style={styles.twoButton}>
+              <Text style={styles.textButton}>Finish</Text>
+              <Icon name="arrow-right" size={25} color='black' />
+            </TouchableOpacity>
           </View>
         </View>
       )
     }
 
-    if (showScreen === 'showCode'){
+    if (showScreen === 'showCode') {
       return (
-        <View style={{flex:1, marginTop:200}}>
-          <Text style={{textAlign:'center', fontSize:30}}>Your code:</Text>
-          <Text style={{textAlign:'center', fontSize:50}}>"{enteredCode}"</Text>
-          <View style={{flex:1}}/>
-          <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:10}}>
-            <Button onPress={() => this.setState({showScreen:'showCalcSetup'})} title={'back'}/>
-            <Button onPress={() => this.setState({showScreen:'showCalcVerify'})} title={'continue'}/>
+        <View style={styles.container}>
+          <View style={{ height: '35%' }}></View>
+          <Text style={styles.titleText}>Your code:</Text>
+          <Text style={styles.titleText}>"{enteredCode}"</Text>
+          <View style={{ height: '5%' }}></View>
+          <View style={styles.calculatorButtonContainer}>
+            <TouchableOpacity onPress={() => this.setState({ showScreen: 'showCalcSetupInfo' })} style={styles.twoButton}>
+              <Icon name="arrow-left" size={25} color='black' />
+              <Text style={styles.textButton}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({ showScreen: 'showCalcVerify' })}
+                              disabled={enteredCode.length > 10 || enteredCode.length < 5}
+                              style={styles.twoButton}>
+              <Text style={styles.textButton}>Next</Text>
+              <Icon name="arrow-right" size={25} color='black' />
+            </TouchableOpacity>
           </View>
         </View>
       )
     }
 
-    if (showScreen === 'showCalcSetup'){
-      return(
-        <View style={{flex:1}}>
-          <Text style={{textAlign:'center', marginTop:50, fontSize:15, marginBottom:5}}>Enter in your desired code in the calculator below:</Text>
-          <View style={{flex:1, marginBottom:20}}>
-            <Calculator thousandSeparator='' style={{ flex: 1}} displayTextAlign='right' onTextChange={this.setText}/>
+    if (showScreen === 'showCalcSetup') {
+      return (
+        <View style={styles.container}>
+          <View style={styles.notiBar}></View>
+          <View style={{ height: '7%' }}>
+            <Text style={{ fontSize: 20, textAlign: "center", paddingBottom: 5 }}>Enter in your desired code in the calculator below:</Text>
           </View>
-          <Text style={{textAlign:'center', marginTop:5, fontSize:20, marginBottom:20}}>Currently Entered:"{enteredCode}"</Text>
+          <View style={{ paddingHorizontal: '2%', height: '65%' }}>
+            <View style={{ height: '100%' }}>
+              <Calculator thousandSeparator='' style={{ flex: 1 }} displayTextAlign='right' onTextChange={this.setText}
+                          numericButtonBackgroundColor='white' numericButtonColor='black' fontSize={35} borderColor='black' />
+            </View>
+          </View>
+          <View style={{ height: '7%' }}>
+            <Text style={{ fontSize: 20, textAlign: "center", paddingTop: 5 }}>Currently Entered: "{enteredCode}"</Text>
+          </View>
           {enteredCode.length > 10 ?
-            <Text style={{textAlign:'center', marginTop:5, fontSize:20, marginBottom:20, color:'red'}}>Too long. Must be between 5 and 10 characters.</Text>:
+            <Text style={styles.redText}>Too long. Must be between 5 and 10 characters.</Text> :
             null
           }
           {enteredCode.length < 5 ?
-            <Text style={{textAlign:'center', marginTop:5, fontSize:20, marginBottom:20, color:'red'}}>Too short. Must be between 5 and 10 characters.</Text>:
+            <Text style={styles.redText}>Too short. Must be between 5 and 10 characters.</Text> :
             null
           }
-          {enteredCode.length <= 10 && enteredCode.length >=5 ?
-            <View style={{height:76}}/> :
+          {enteredCode.length <= 10 && enteredCode.length >= 5 ?
+            <Text style={styles.redText}></Text> :
             null
           }
-          <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:10}}>
-            <Button onPress={() => this.setState({showScreen:'showCalcSetupInfo'})} title={'back'}/>
-            <Button onPress={() => this.setState({showScreen:'showCode'})} title={'next'} disabled={enteredCode.length > 10 || enteredCode.length < 5}/>
+          <View style={styles.calculatorButtonContainer}>
+            <TouchableOpacity onPress={() => this.setState({ showScreen: 'showCalcSetupInfo' })} style={styles.twoButton}>
+              <Icon name="arrow-left" size={25} color='black' />
+              <Text style={styles.textButton}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({ showScreen: 'showCode' })}
+                              disabled={enteredCode.length > 10 || enteredCode.length < 5}
+                              style={styles.twoButton}>
+              <Text style={styles.textButton}>Next</Text>
+              <Icon name="arrow-right" size={25} color='black' />
+            </TouchableOpacity>
           </View>
         </View>
       )
     }
 
-    if (showScreen === 'showCalcSetupInfo'){
+    if (showScreen === 'showCalcSetupInfo') {
       return (
-        <View style={{flex:1, marginTop:200}}>
-          <Text style={{textAlign:'center', fontSize:30}}>This app requires a secret calculator code to be entered. Please enter your desired code on the next page.</Text>
-          <Text style={{textAlign:'center', fontSize:20}}>Code must be 5-10 characters long.</Text>
-          <View style={{flex:1}}/>
-          <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:10}}>
-            <Button onPress={() => this.setState({showScreen:'showForm'})} title={'back'}/>
-            <Button onPress={() => this.setState({showScreen:'showCalcSetup'})} title={'continue'}/>
+        <View style={styles.container}>
+          <View style={{ height: '15%' }}></View>
+          <View style={{ height: '30%' }}>
+            <Text style={{ fontSize: 24, textAlign: 'center', padding: '5%' }}>Please enter your secret code on the next page
+              and make sure your surroundings are clear before entering your code each time.</Text>
           </View>
-
+          <View style={{ height: '8%' }}></View>
+          <View style={{ height: 70, flexDirection: 'row', justifyContent: 'space-evenly', paddingHorizontal: 36, paddingTop: 6 }}>
+            <TouchableOpacity onPress={() => this.setState({ showScreen: 'showForm' })} style={styles.twoButton}>
+              <Icon name="arrow-left" size={25} color='black' />
+              <Text style={styles.textButton}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({ showScreen: 'showCalcSetup' })} style={styles.twoButton}>
+              <Text style={styles.textButton}>Next</Text>
+              <Icon name="arrow-right" size={25} color='black' />
+            </TouchableOpacity>
+          </View>
+          <View style={{ height: '10%' }}></View>
         </View>
       )
     }
 
-    if (showScreen === 'showForm'){
+    if (showScreen === 'showForm') {
       return (
-        <KeyboardAvoidingView style={{flex:1}} behavior="padding" enabled>
-          <ScrollView style={{flex:1}}>
-            <View style={{flex:1, marginTop:50, paddingLeft:50, paddingRight:50}}>
-              <Text style={{fontSize: 20, textAlign: "center"}}>Enter your information:</Text>
-              <Form
-                type={User}
-                ref={c => this._form = c}
-              />
-              <View style={{flexDirection:'row', justifyContent:'space-evenly', marginBottom:10}}>
-                <Button onPress={() => this.setState({showScreen:'setup'})} title={'back'}/>
-                <Button onPress={this.handleSubmit} title={'submit'}/>
+        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+          <ScrollView>
+            <View style={styles.notiBar}></View>
+            <View style={styles.contentContainer}>
+              <View style={styles.textBox}>
+                <Text style={styles.titleText}>Enter your information:</Text>
+              </View>
+              <View style={styles.formContainer}>
+                <Form
+                  type={User}
+                  ref={c => this._form = c}
+                />
+              </View>
+              <View style={styles.twoButtonContainer}>
+                <TouchableOpacity onPress={() => this.setState({ showScreen: 'setup' })} style={styles.twoButton}>
+                  <Icon name="arrow-left" size={25} color='black' />
+                  <Text style={styles.textButton}>Back</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.handleSubmit} style={styles.twoButton}>
+                  <Text style={styles.textButton}>Next</Text>
+                  <Icon name="arrow-right" size={25} color='black' />
+                </TouchableOpacity>
               </View>
             </View>
           </ScrollView>
@@ -208,20 +229,120 @@ class Setup extends React.Component{
       )
     }
     return (
-      <View style={{ flex: 1, marginTop:50}}>
-        <View style={{marginBottom:10}}>
-          <Text style={{fontSize: 20, textAlign: "center"}}>Emergency Response App</Text>
-        </View>
-        <View style={{marginBottom:10}}>
-          <Text style={{fontSize: 20, textAlign: "center"}}>150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project 150 Project</Text>
-        </View>
-        <View style={{marginBottom:10}}>
-          <Button onPress={() => this.setState({showScreen: 'showForm'})} title={'set up app'}/>
-        </View>
-        {/*<Button title={'emergency call'}/>*/}
+      <View style={styles.container}>
+        <View style={styles.notiBar}></View>
+        <ScrollView >
+          <View style={{ height: 30 }}></View>
+          <Text style={styles.titleText}>Hey there!</Text>
+          <View style={{ height: 10 }}></View>
+          <View style={styles.textBox}>
+            <Text style={styles.text}>This is Ada. It can help you document instances of mistreatment
+              from your family members or significant other on a shared or monitored phone discreetly.</Text>
+          </View>
+          <View style={styles.textBox}>
+            <Text style={styles.text}>This is how Ada works: the front-facing app is a fully functional calculator, but when
+              you enter your personal code on the calculator, it reveals a portal for you to take pictures
+              and notes or place emergency calls to local authorities. Anything you save on the app will be safely stored on the cloud and cannot be
+              found from anywhere else on your phone, so you don’t need to worry.</Text>
+          </View>
+          <View style={styles.textBox}>
+            <Text style={styles.text}>Even if someone else finds out about Ada, you can remove all
+              your data easily by hitting the reset button, and you can later contact us to retrieve
+              your account and documentation.</Text>
+          </View>
+          <View style={{ height: 30 }}></View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={() => this.setState({ showScreen: 'showForm' })} style={styles.submitButton}>
+              <Text style={styles.textButton}>Set Up Ada</Text>
+              <Icon name="arrow-right" size={40} color='black' />
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
     );
   }
 }
 
-export default Setup
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  notiBar: {
+    height: 24,
+    backgroundColor: 'white'
+  },
+  contentContainer: {
+    height: '82%',
+    width: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  textBox: {
+    padding: '2%'
+  },
+  titleText: {
+    fontSize: 28,
+    textAlign: 'center',
+    paddingTop: '2%'
+  },
+  text: {
+    fontSize: 20,
+    textAlign: "center"
+  },
+  redText: {
+    textAlign: 'center',
+    fontSize: 20,
+    marginBottom: 10,
+    color: 'red',
+    height: '7%',
+  },
+  buttonContainer: {
+    height: '13%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignContent: 'center',
+    paddingBottom: '5%',
+    justifyContent: 'space-evenly',
+    marginBottom: '0.5%'
+  },
+  textButton: {
+    fontSize: 25,
+    textAlign: 'center'
+  },
+  submitButton: {
+    alignItems: 'center',
+    height: 60,
+    width: 190,
+    flexDirection: 'row',
+    backgroundColor: '#ccecff',
+    justifyContent: 'space-evenly',
+    borderRadius: 10,
+    margin: 10
+  },
+  twoButtonContainer: {
+    height: 70,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  twoButton: {
+    alignItems: 'center',
+    height: 50,
+    width: 140,
+    flexDirection: 'row',
+    backgroundColor: '#ccecff',
+    justifyContent: 'space-evenly',
+    borderRadius: 10,
+    margin: 10
+  },
+  formContainer: {
+    width: '90%'
+  },
+  calculatorButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'space-evenly'
+  }
+})
+
+export default Setup;
