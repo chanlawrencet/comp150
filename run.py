@@ -126,6 +126,7 @@ def uploadImage():
     print('uploadImage')
     # retrieve file from request params
     imagefile = request.files['image']
+    print('imagefile Retrieved')
     # retrieve dateTime string from request params
     dateTime = request.files['dateTime']
     print('dateTime', dateTime)
