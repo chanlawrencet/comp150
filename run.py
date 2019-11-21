@@ -4,7 +4,7 @@ from flask_cors import CORS
 import os
 import io
 from flask_pymongo import PyMongo
-#from database import testDB
+from database import testDB
 import gridfs
 import werkzeug
 import codecs
@@ -24,7 +24,7 @@ api = Api(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 
-""" app.config["MONGO_URI"] = os.environ.get('MONGODB_URI')
+app.config["MONGO_URI"] = os.environ.get('MONGODB_URI')
 mongo = PyMongo(app)
 db = mongo.db
 fs = gridfs.GridFS(db)
@@ -136,7 +136,7 @@ def uploadImage():
         db.forms.insert_one(userProfile)
 
     # print('done')
-    return "Image Uploaded Successfully" """
+    return "Image Uploaded Successfully"
 
 @app.route('/uploadAudio', methods=['POST'])
 def uploadAudio():
@@ -187,7 +187,7 @@ def uploadAudio():
 
         # sending spectrogram to AutoML
         MLresponse = get_prediction(spectroFile, '809306467634', 'ICN1707554752075661312')
-        
+
         # print("spectroFile is: " + spectroFile)
         #os.system('export GOOGLE_APPLICATION_CREDENTIALS="$(< cdrproject-41ed7890a5e2.json)"')
         #os.system('echo $GOOGLE_APPLICATION_CREDENTIALS')
