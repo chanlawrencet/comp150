@@ -4,7 +4,7 @@ from flask_cors import CORS
 import os
 import io
 from flask_pymongo import PyMongo
-from database import testDB
+#from database import testDB
 import gridfs
 import werkzeug
 import codecs
@@ -12,13 +12,11 @@ import json
 import sys
 import argparse
 from spectroClass import convertAudio
-
-# terrible hack to try and make this package work
-#os.system('pip3 install pydub')
-#os.system('pip3 install ffmpeg')
+from google.cloud import automl_v1beta1
+from google.cloud.automl_v1beta1.proto import service_pb2
+from google.oauth2 import service_account
 from pydub import AudioSegment
-
-# AUDIO_FILE_COUNT = 0
+from MLPredict import get_prediction
 
 UPLOAD_FOLDER = './'
 app = Flask(__name__)
@@ -26,7 +24,7 @@ api = Api(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 
-app.config["MONGO_URI"] = os.environ.get('MONGODB_URI')
+""" app.config["MONGO_URI"] = os.environ.get('MONGODB_URI')
 mongo = PyMongo(app)
 db = mongo.db
 fs = gridfs.GridFS(db)
@@ -138,7 +136,7 @@ def uploadImage():
         db.forms.insert_one(userProfile)
 
     # print('done')
-    return "Image Uploaded Successfully"
+    return "Image Uploaded Successfully" """
 
 @app.route('/uploadAudio', methods=['POST'])
 def uploadAudio():
@@ -184,14 +182,41 @@ def uploadAudio():
         # Convert .wav file to spectrogram, also checks for .wav file
         # being the input form, raises exception if not
         
-        spectroFile = convertAudio(wav_filename)
+        convertAudio(wav_filename)
+        spectroFile = wav_filename + '.jpg'
+
+        # sending spectrogram to AutoML
+        MLresponse = get_prediction(spectroFile, '809306467634', 'ICN1707554752075661312')
+        
         # print("spectroFile is: " + spectroFile)
+        #os.system('export GOOGLE_APPLICATION_CREDENTIALS="$(< cdrproject-41ed7890a5e2.json)"')
+        #os.system('echo $GOOGLE_APPLICATION_CREDENTIALS')
+        #print('Credendtials from environ: {}'.format(os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')))
+        #os.system('python3 predict.py ' + wav_filename + '.jpg 809306467634 ICN1707554752075661312')
+
+        #os.system('export GOOGLE_APPLICATION_CREDENTIALS="cdrproject-41ed7890a5e2.json"')
+        """ credentials = service_account.Credentials.from_service_account_file('cdrproject-41ed7890a5e2.json')
+
+        file_path = wav_filename + '.jpg'
+        project_id = '809306467634'
+        model_id = 'ICN1707554752075661312'
+
+        ff = open(file_path, 'rb')
+        content = ff.read()
+            
+        prediction_client = automl_v1beta1.PredictionServiceClient(credentials=credentials)
+
+        name = 'projects/{}/locations/us-central1/models/{}'.format(project_id, model_id)
+        payload = {'image': {'image_bytes': content }}
+        params = {}
+        mlRequest = prediction_client.predict(name, payload, params)
+        #print(mlRequest.payload) """
 
         return str("Audio File Uploaded Successfully, it is = " + filename)
 
     # if request.method == 'GET':
     #    # save audio file (temp)
-    #   #audiofile.save(filename)
+    #   #audiofile.save(filename)#
     #    #print(filename)
     #    return str("Audio File GET request received")
 
