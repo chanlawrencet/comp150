@@ -8,6 +8,8 @@ import {
     Button,
     View,
     Text,
+    Alert,
+    TouchableOpacity,
 } from 'react-native';
 import { Asset } from 'expo-asset';
 import { Audio } from 'expo-av';
@@ -157,14 +159,14 @@ export default class AudioExample extends React.Component {
         }
         //       <View style={{flex:1}}>
         // was   <View style={styles.container}
-        if (success && prediction == 'Violence') {
+        if (success && prediction == 'Emergency') {
             return (
                 <View style={styles.container}>
                     <Text style={styles.text}>Distress detected, placing emergency call!</Text>
                 </View>
             )
         }
-        if (success && prediction != 'Violence') {
+        if (success && prediction != 'Emergency') {
             return (
                 <View style={styles.container}>
                     <Text style={styles.text}>Distress not detected.</Text>
