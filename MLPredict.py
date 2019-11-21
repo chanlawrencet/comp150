@@ -20,8 +20,8 @@ def get_prediction(spectroFile, projectID, modelID):
   request = prediction_client.predict(name, payload, params)
   print("Response from model is:")
   for result in request.payload:
-    print("Predicted class name: {}".format(request.display_name))
-    print("Preccited class score: {}".format(request.classification.score))
+    print("Predicted class name: {}".format(result.display_name))
+    print("Preccited class score: {}".format(result.classification.score))
   return request  # waits till request is returned
 
 class predict:
