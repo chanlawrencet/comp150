@@ -15,6 +15,7 @@ from spectroClass import convertAudio
 from google.cloud import automl_v1beta1
 from google.cloud.automl_v1beta1.proto import service_pb2
 from google.oauth2 import service_account
+from werkzeug.datastructures import ImmutableMultiDict
 from pydub import AudioSegment
 from MLPredict import get_prediction
 
@@ -28,6 +29,18 @@ app.config["MONGO_URI"] = os.environ.get('MONGODB_URI')
 mongo = PyMongo(app)
 db = mongo.db
 fs = gridfs.GridFS(db)
+
+
+@app.route('/getForms', methods=['GET'])
+def getForms():
+    userID = request.args.get('uid')
+
+    if len(list(db.forms.find({"uid": userID}))) == 0:
+        return json.dumps({'success':False}), 400, {'ContentType':'application/json'}
+
+    userProfile = list(db.forms.find({"uid": userID}))[0]
+    return json.dumps({'forms': userProfile['forms']}), 200, {'ContentType': 'application/json'}
+
 
 @app.route('/sendForm', methods=['POST'])
 def sendForm():
@@ -45,8 +58,10 @@ def sendForm():
     else:
         userProfile = list(db.forms.find({"uid": userID}))[0]
         db.forms.delete_one({"uid": userID})
-        userProfile['forms'].append(formContents)
+        userProfile['forms'].insert(0, formContents)
         db.forms.insert_one(userProfile)
+
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 
 
@@ -107,9 +122,13 @@ def getImageIds():
 @app.route('/uploadImage', methods=['GET', 'POST'])
 def uploadImage():
     userID = request.args.get('uid')
-
+    print('uploadImage')
     # retrieve file from request params
     imagefile = request.files['image']
+    print('imagefile Retrieved')
+    # retrieve dateTime string from request params
+    dateTime = dict(request.form)['dateTime']
+    print('dateTime', dateTime)
     # retrieve filename from file
     filename = werkzeug.utils.secure_filename(imagefile.filename)
     # save image file (temp)
@@ -122,17 +141,28 @@ def uploadImage():
         a = fs.put(f)
 
     if len(list(db.forms.find({"uid": userID}))) == 0:
+        print('first')
         data = {
             'special': 'true',
-            'forms': [],
+            'forms': [{
+                'location': 'N/A',
+                'description': '0',
+                'dateTime': dateTime
+            }],
             'images': [a],
             'uid': userID
         }
         db.forms.insert_one(data)
     else:
+        print('second')
         userProfile = list(db.forms.find({"uid": userID}))[0]
         db.forms.delete_one({"uid": userID})
         userProfile['images'].append(a)
+        userProfile['forms'].insert(0, {
+                'location': 'N/A',
+                'description': len(userProfile['images']) - 1,
+                'dateTime': dateTime
+            })
         db.forms.insert_one(userProfile)
 
     # print('done')
