@@ -17,6 +17,11 @@ import AudioExample from "./components/AudioExample";
 
 class RealApp extends React.Component {
 
+
+  goToHome = () => {
+    this.setState({ currentView: 'home' })
+  }
+
   goToForms = () => {
     this.setState({ currentView: 'form' })
   }
@@ -94,7 +99,7 @@ class RealApp extends React.Component {
         <View style={styles.container}>
           <View style={styles.notiBar}></View>
           <View style={styles.contentContainer}>
-            <ViolenceForm photoURI={photoURI} uid={uid} />
+            <ViolenceForm photoURI={photoURI} uid={uid} goToHome={this.goToHome.bind(this)}/>
           </View>
           <View style={styles.emergencyContainer}>
             <TouchableOpacity
@@ -151,30 +156,21 @@ class RealApp extends React.Component {
                 <Text style={styles.text}>Camera</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => this.setState({ currentView: 'gallery' })}
-                style={styles.menuOption}
-              >
-                <Icon name="images" size={50} color='black' />
-                <Text style={styles.text}>Gallery</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.rowContainer}>
-              <TouchableOpacity
                 onPress={() => this.setState({ currentView: 'form' })}
                 style={styles.menuOption}
               >
                 <Icon name="sticky-note" size={50} color='black' />
                 <Text style={styles.text}>Add New Form</Text>
               </TouchableOpacity>
+            </View>
+            <View style={styles.rowContainer}>
               <TouchableOpacity
-                onPress={() => Alert.alert('Saved forms will be displayed.')}
+                onPress={() => this.setState({ currentView: 'gallery' })}
                 style={styles.menuOption}
               >
                 <Icon name="folder-open" size={50} color='black' />
-                <Text style={styles.text}>Saved Forms</Text>
+                <Text style={styles.text}>Gallery</Text>
               </TouchableOpacity>
-            </View>
-            <View style={styles.rowContainer}>
               <TouchableOpacity
                 onPress={() => this.setState({ currentView: 'audio' })}
                 style={styles.menuOption}
@@ -182,12 +178,14 @@ class RealApp extends React.Component {
                 <Icon name="microphone" size={50} color='black' />
                 <Text style={styles.text}>Process Audio</Text>
               </TouchableOpacity>
+            </View>
+            <View style={styles.rowContainer}>
               <TouchableOpacity
                 onPress={reset}
                 style={styles.menuOption}
               >
                 <Icon name="cog" size={50} color='black' />
-                <Text style={styles.text}>Settings</Text>
+                <Text style={styles.text}>Reset</Text>
               </TouchableOpacity>
             </View>
           </View>

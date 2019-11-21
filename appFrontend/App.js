@@ -50,6 +50,8 @@ class App extends React.Component {
     render() {
         const { locked, setup, code, uid } = this.state
         // alertIfRemoteNotificationsDisabledAsync()
+        // console.disableYellowBox = true;
+
         if (setup) {
             return (
                 <Setup setCode={this.setCode.bind(this)} notSetup={this.notSetup.bind(this)} setUid={this.setUid.bind(this)} />

@@ -7,36 +7,14 @@ import {
   Alert,
   Image,
   ScrollView,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  TextInput,
+  ActivityIndicator
 } from 'react-native';
-import t from 'tcomb-form-native';
 
-const Form = t.form.Form;
-const FormContent = t.struct({
-  location: t.String,
-  description: t.String,
-});
 
-const options = {
-  fields: {
-    description: {
-      multiline: true,
-      stylesheet: {
-        ...Form.stylesheet,
-        textbox: {
-          ...Form.stylesheet.textbox,
-          normal: {
-            ...Form.stylesheet.textbox.normal,
-            height: 150
-          },
-          error: {
-            ...Form.stylesheet.textbox.error,
-            height: 150
-          }
-        }
-      }
-    }
-  }
+const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
 class ViolenceForm extends React.Component{
@@ -45,71 +23,129 @@ class ViolenceForm extends React.Component{
     this.setState({
       success: false,
       processing: false,
+      location: '',
+      description:''
     })
   }
 
   submitForm = () => {
     const {photoURI, uid} = this.props;
-    const formData = new FormData();
+    const {location, description} = this.state;
+
     this.setState({processing: true})
-    formData.append('image', {uri: photoURI, name: 'image.jpg', type: 'image/jpeg'});
-    const options = {
-      method: 'POST',
-      body: formData,
-      // If you add this, upload won't work
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      }
+
+    // send rest of form
+
+    const currDate = new Date();
+    const body = {
+      location: location,
+      description: description,
+      dateTime: currDate.toLocaleString()
     };
 
-    delete options.headers['Content-Type'];
+    fetch('https://comp150.herokuapp.com/sendForm?uid=' + uid,
+      {method:'POST',
+        body:JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        }})
+      .then(response => response.status)
+      .then(status => {
+        if (status !== 200){
+          console.log('big bad')
+        }
+        if (photoURI !== ""){
+          const formData = new FormData();
+          formData.append('image', {uri: photoURI, name: 'image.jpg', type: 'image/jpeg'});
+          formData.append('dateTime', currDate.toLocaleString());
+          const options = {
+            method: 'POST',
+            body: formData,
+            // If you add this, upload won't work
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            }
+          };
 
-    fetch('https://comp150.herokuapp.com/uploadImage?uid=' + uid, options).then(
-      () => this.setState({processing: false, success:true})
-    );
+          delete options.headers['Content-Type'];
 
-  }
+          fetch('https://comp150.herokuapp.com/uploadImage?uid=' + uid, options).then(
+            () => {
+              this.setState({processing: false, success:true})
+            });
+        } else {
+          this.setState({processing: false, success:true})
+        }
+      }).catch(x => {
+      console.log('no data', x)
+      return('no data')
+    })
+  };
 
   render() {
-    const {photoURI} = this.props;
-    const {success, processing} = this.state;
+    const {photoURI, goToHome} = this.props;
+    const {success, processing, location, description} = this.state;
 
     if (processing){
       return(
         <View  style={styles.container}>
-          <Text style={styles.text}>Sending</Text>
+          <Text style={styles.text}>Sending...</Text>
+          <ActivityIndicator size={50} color="#0000ff"/>
         </View>
       )
     }
     if (success){
+      sleep(1000).then(() => {goToHome()})
       return(
-        <View  style={styles.container}>
-          <Text style={styles.text}>Success</Text>
+        <View style={styles.container}>
+          <Text style={styles.text}>Success! Going home...</Text>
         </View>
       )
     }
     return(
       <View style={styles.container}>
+        <Text style={{fontSize:30, padding: 6}}>Save Evidence Form:</Text>
         {photoURI !== '' ?
           <View style={styles.container}>
             <Image
               source={{uri: photoURI}}
               style={{
-                flex: 1,
-                transform:[{scale:0.5}]
+                marginTop: 5,
+                marginLeft: 100,
+                marginRight: 100,
+                minWidth: 200,
+                minHeight: 200,
+                transform: [{scale: 0.9}]
               }}
             />
           </View>: <View/>}
         <KeyboardAvoidingView style={{flex:1, marginTop:20, paddingLeft:5, paddingRight:5}} behavior="padding" enabled>
           <ScrollView>
-            <Form
-              type={FormContent}
-              options={options}
+            <Text>Location:</Text>
+            <TextInput
+              style={{ height: 40, borderColor: 'gray', borderWidth: 1, padding:5 }}
+              onChangeText={text => this.setState({location:text})}
+              value={location}
+            />
+            <Text>Description:</Text>
+            <TextInput
+              style={{ height: 100, borderColor: 'gray', borderWidth: 1, textAlignVertical:'top', padding:5}}
+              onChangeText={text => this.setState({description:text})}
+              multiline
+              numberOfLines={4}
+              value={description}
             />
           </ScrollView>
         </KeyboardAvoidingView>
         <View style={styles.buttonContainer}>
-          <Button onPress={this.submitForm} title='submit'/>
+          <Button
+            onPress={this.submitForm}
+            title='submit'
+            disabled={location.toString().length === 0 || description.toString().length === 0}
+          />
+          {location.toString().length === 0 || description.toString().length === 0 ?
+            <Text>Please enter location and description.</Text> :
+            null}
         </View>
       </View>
     )
@@ -122,7 +158,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 30,
     marginTop: 50 
   },
   buttonContainer: {
