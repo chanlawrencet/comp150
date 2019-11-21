@@ -59,7 +59,7 @@ def sendForm():
     else:
         userProfile = list(db.forms.find({"uid": userID}))[0]
         db.forms.delete_one({"uid": userID})
-        userProfile['forms'].append(formContents)
+        userProfile['forms'].insert(0, formContents)
         db.forms.insert_one(userProfile)
 
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
