@@ -17,11 +17,14 @@ def get_prediction(spectroFile, projectID, modelID):
   name = 'projects/{}/locations/us-central1/models/{}'.format(projectID, modelID)
   payload = {'image': {'image_bytes': content }}
   params = {}
-  request = prediction_client.predict(name, payload, params)
+  response = prediction_client.predict(name, payload, params)
   print("Response from model is:")
-  print("Predicted class name: {}".format(request.payload.display_name))
-  print("Preccited class score: {}".format(request.payload.classification.score))
-  return str(request.payload.display_name)  # waits till request is returned
+  for result in reponse.payload:
+    to_return = result.display_name
+    print("Predicted class name: {}".format(result.display_name))
+    print("Predicted class score: {}".format(result.classification.score))
+
+  return str(to_return)  # waits till request is returned
 
 class predict:
     def __init__(self):
