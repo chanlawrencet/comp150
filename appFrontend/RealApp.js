@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   StyleSheet,
-  Button,
   View,
   Text,
   Alert,
@@ -151,30 +150,21 @@ class RealApp extends React.Component {
                 <Text style={styles.text}>Camera</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => this.setState({ currentView: 'gallery' })}
-                style={styles.menuOption}
-              >
-                <Icon name="images" size={50} color='black' />
-                <Text style={styles.text}>Gallery</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.rowContainer}>
-              <TouchableOpacity
                 onPress={() => this.setState({ currentView: 'form' })}
                 style={styles.menuOption}
               >
-                <Icon name="sticky-note" size={50} color='black' />
-                <Text style={styles.text}>Add New Form</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => Alert.alert('Saved forms will be displayed.')}
-                style={styles.menuOption}
-              >
-                <Icon name="folder-open" size={50} color='black' />
-                <Text style={styles.text}>Saved Forms</Text>
+                <Icon name="images" size={50} color='black' />
+                <Text style={styles.text}>Add Note</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.rowContainer}>
+              <TouchableOpacity
+                onPress={() => this.setState({ currentView: 'gallery' })}
+                style={styles.menuOption}
+              >
+                <Icon name="sticky-note" size={50} color='black' />
+                <Text style={styles.text}>Saved Files</Text>
+              </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => this.setState({ currentView: 'audio' })}
                 style={styles.menuOption}
@@ -182,12 +172,22 @@ class RealApp extends React.Component {
                 <Icon name="microphone" size={50} color='black' />
                 <Text style={styles.text}>Audio Detection</Text>
               </TouchableOpacity>
+            </View>
+            <View style={styles.rowContainer}>
               <TouchableOpacity
-                onPress={reset}
+                onPress={() => Alert.alert(
+                  'Reset App?',
+                  'All information stored on this version of the app will be destroyed.',
+                  [
+                    {text: 'Cancel', onPress: () => this.setState({ currentView: 'home' })},
+                    {text: 'OK', onPress: reset}
+                  ],
+                  {cancelable: false}
+                )}
                 style={styles.menuOption}
               >
                 <Icon name="cog" size={50} color='black' />
-                <Text style={styles.text}>Settings</Text>
+                <Text style={styles.text}>Reset</Text>
               </TouchableOpacity>
             </View>
           </View>

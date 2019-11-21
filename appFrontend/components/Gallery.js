@@ -5,7 +5,11 @@ import {
   View,
   SafeAreaView,
   Text,
-  Alert, Image, ScrollView, KeyboardAvoidingView, FlatList
+  Alert,
+  Image,
+  ScrollView,
+  KeyboardAvoidingView,
+  FlatList
 } from 'react-native';
 
 class Gallery extends React.Component {
