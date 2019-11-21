@@ -182,7 +182,15 @@ class RealApp extends React.Component {
             </View>
             <View style={styles.rowContainer}>
               <TouchableOpacity
-                onPress={reset}
+                onPress={() => Alert.alert(
+                  'Reset App?',
+                  'All information stored on this version of the app will be destroyed.',
+                  [
+                    {text: 'Cancel', onPress: () => this.setState({ currentView: 'home' })},
+                    {text: 'OK', onPress: reset}
+                  ],
+                  {cancelable: false}
+                )}
                 style={styles.menuOption}
               >
                 <Icon name="cog" size={50} color='black' />
