@@ -19,7 +19,7 @@ def get_prediction(spectroFile, projectID, modelID):
   params = {}
   response = prediction_client.predict(name, payload, params)
   print("Response from model is:")
-  for result in reponse.payload:
+  for result in response.payload:
     to_return = result.display_name
     print("Predicted class name: {}".format(result.display_name))
     print("Predicted class score: {}".format(result.classification.score))
