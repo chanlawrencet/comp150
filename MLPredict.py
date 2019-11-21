@@ -18,6 +18,7 @@ def get_prediction(spectroFile, projectID, modelID):
   payload = {'image': {'image_bytes': content }}
   params = {}
   response = prediction_client.predict(name, payload, params)
+  to_return = "None"
   print("Response from model is:")
   for result in response.payload:
     to_return = result.display_name
