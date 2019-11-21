@@ -104,9 +104,19 @@ export default class AudioExample extends React.Component {
 
         delete options.headers['Content-Type'];
 
-        const response = await fetch('https://comp150.herokuapp.com/uploadAudio?uid=' + uid, options).then(
-            () => this.setState({ processing: false, success: true })
-        );
+        fetch('https://comp150.herokuapp.com/uploadAudio?uid=' + uid, options)
+        .then(
+            response => response.json()).then(
+                response => {
+                    const prediction = response['keyword']
+                    console.log("Prediction is: " + prediction)
+                    this.setState({ 
+                        success: true,
+                        prediction: prediction
+                    })
+                }
+            )
+
         //const myJson = await response.json();
         //console.log(JSON.stringify(myJson));
     }
@@ -115,6 +125,13 @@ export default class AudioExample extends React.Component {
         this._askForPermissions();
         this.recordAudio()
         //setTimeout(this.stopAudio, 5000)
+    }
+
+    componentWillMount() {
+        this.setState({
+            success: false,
+            prediction: '',
+        })
     }
 
     _askForPermissions = async () => {
@@ -126,7 +143,7 @@ export default class AudioExample extends React.Component {
 
     render() {
         const { setAudioURI, uid } = this.props;
-        const { success } = this.state;
+        const { success, prediction } = this.state;
         //onst {setAudioURI} = this.props;
         if (!this.state.haveRecordingPermissions) {
             return (
@@ -140,10 +157,17 @@ export default class AudioExample extends React.Component {
         }
         //       <View style={{flex:1}}>
         // was   <View style={styles.container}
-        if (success) {
+        if (success && prediction == 'Violence') {
             return (
                 <View style={styles.container}>
-                    <Text style={styles.text}>Prediction is ...</Text>
+                    <Text style={styles.text}>Distress detected, placing emergency call!</Text>
+                </View>
+            )
+        }
+        if (success && prediction != 'Violence') {
+            return (
+                <View style={styles.container}>
+                    <Text style={styles.text}>Distress not detected.</Text>
                 </View>
             )
         }
