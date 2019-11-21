@@ -128,6 +128,7 @@ def uploadImage():
     imagefile = request.files['image']
     # retrieve dateTime string from request params
     dateTime = request.files['dateTime']
+    print('dateTime', dateTime)
     # retrieve filename from file
     filename = werkzeug.utils.secure_filename(imagefile.filename)
     # save image file (temp)
@@ -140,6 +141,7 @@ def uploadImage():
         a = fs.put(f)
 
     if len(list(db.forms.find({"uid": userID}))) == 0:
+        print('first')
         data = {
             'special': 'true',
             'forms': [{
@@ -152,6 +154,7 @@ def uploadImage():
         }
         db.forms.insert_one(data)
     else:
+        print('second')
         userProfile = list(db.forms.find({"uid": userID}))[0]
         db.forms.delete_one({"uid": userID})
         userProfile['images'].append(a)
