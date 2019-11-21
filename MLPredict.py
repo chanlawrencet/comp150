@@ -18,7 +18,10 @@ def get_prediction(spectroFile, projectID, modelID):
   payload = {'image': {'image_bytes': content }}
   params = {}
   request = prediction_client.predict(name, payload, params)
-  print(request)
+  print("Response from model is:")
+  for result in request.payload:
+    print("Predicted class name: {}".format(request.display_name))
+    print("Preccited class score: {}".format(request.classification.score))
   return request  # waits till request is returned
 
 class predict:

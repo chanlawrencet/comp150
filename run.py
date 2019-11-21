@@ -1,4 +1,4 @@
-from flask import Flask, flash, request, redirect, send_file, url_for
+from flask import Flask, flash, request, redirect, send_file, url_for, jsonify
 from flask_restful import Resource, Api
 from flask_cors import CORS
 import os
@@ -217,9 +217,9 @@ def uploadAudio():
 
         # sending spectrogram to AutoML
         MLresponse = get_prediction(spectroFile, '809306467634', 'ICN1707554752075661312')
-
+        print("This is what was detected: " + MLresponse.display_name)
         #return str("Violence detectded, placing emergency call!" + filename)
-        return str("Violence detected, placing emergency call!" + filename)
+        return jsonify(keyword="Violence")
 
     # if request.method == 'GET':
     #    # save audio file (temp)
