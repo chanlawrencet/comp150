@@ -12,6 +12,7 @@ import json
 import sys
 import argparse
 from spectroClass import convertAudio
+from werkzeug.datastructures import ImmutableMultiDict
 
 # terrible hack to try and make this package work
 #os.system('pip3 install pydub')
@@ -128,7 +129,7 @@ def uploadImage():
     imagefile = request.files['image']
     print('imagefile Retrieved')
     # retrieve dateTime string from request params
-    dateTime = request.args.get('dateTime')
+    dateTime = dict(request.form)['dateTime']
     print('dateTime', dateTime)
     # retrieve filename from file
     filename = werkzeug.utils.secure_filename(imagefile.filename)
