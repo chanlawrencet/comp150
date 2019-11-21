@@ -19,10 +19,9 @@ def get_prediction(spectroFile, projectID, modelID):
   params = {}
   request = prediction_client.predict(name, payload, params)
   print("Response from model is:")
-  for result in request.payload:
-    print("Predicted class name: {}".format(result.display_name))
-    print("Preccited class score: {}".format(result.classification.score))
-  return request  # waits till request is returned
+  print("Predicted class name: {}".format(request.payload.display_name))
+  print("Preccited class score: {}".format(request.payload.classification.score))
+  return str(request.payload.display_name)  # waits till request is returned
 
 class predict:
     def __init__(self):
