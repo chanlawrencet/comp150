@@ -176,7 +176,8 @@ class RealApp extends React.Component {
                 style={styles.menuOption}
               >
                 <Icon name="microphone" size={50} color='black' />
-                <Text style={styles.text}>Process Audio</Text>
+                <Text style={styles.text}>Emergency</Text>
+                <Text style={styles.text}>Detection</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.rowContainer}>

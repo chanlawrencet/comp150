@@ -15,7 +15,6 @@ import * as FileSystem from 'expo-file-system';
 import * as Font from 'expo-font';
 import * as Permissions from 'expo-permissions';
 
-
 export default class AudioExample extends React.Component {
     constructor(props) {
         super(props);
@@ -69,7 +68,7 @@ export default class AudioExample extends React.Component {
             audioURI: aURI,
             //agreeToAudio: value.disable
         });
-    
+
         console.log("This is the this.audioURI: " + this.state.audioURI)
     }
 
@@ -85,7 +84,7 @@ export default class AudioExample extends React.Component {
         /* 
         let database = 'http://localhost:5000/uploadAudio'
         */
-        
+
         console.log('audioURI before uploading: ' + this.state.audioURI)
 
         const formData = new FormData();
@@ -105,9 +104,11 @@ export default class AudioExample extends React.Component {
 
         delete options.headers['Content-Type'];
 
-        fetch('https://comp150.herokuapp.com/uploadAudio?uid=' + uid, options).then(
+        const response = await fetch('https://comp150.herokuapp.com/uploadAudio?uid=' + uid, options).then(
             () => this.setState({ processing: false, success: true })
         );
+        //const myJson = await response.json();
+        //console.log(JSON.stringify(myJson));
     }
 
     componentDidMount() {
@@ -125,6 +126,7 @@ export default class AudioExample extends React.Component {
 
     render() {
         const { setAudioURI, uid } = this.props;
+        const { success } = this.state;
         //onst {setAudioURI} = this.props;
         if (!this.state.haveRecordingPermissions) {
             return (
@@ -138,6 +140,13 @@ export default class AudioExample extends React.Component {
         }
         //       <View style={{flex:1}}>
         // was   <View style={styles.container}
+        if (success) {
+            return (
+                <View style={styles.container}>
+                    <Text style={styles.text}>Prediction is ...</Text>
+                </View>
+            )
+        }
         return (
             <View style={{ flex: 1 }}>
                 <Text style={{ textAlign: 'center', marginTop: 100, fontSize: 20 }}>
@@ -153,3 +162,28 @@ export default class AudioExample extends React.Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+    text: {
+        textAlign: 'center',
+        fontSize: 30,
+        marginTop: 50
+    },
+    buttonContainer: {
+        alignItems: 'center',
+        height: '15%'
+    },
+    submitButton: {
+        alignItems: 'center',
+        height: '100%',
+        width: '50%',
+        backgroundColor: '#ff1a1a',
+        justifyContent: 'space-evenly',
+        borderWidth: 2,
+        borderTopWidth: 4,
+        borderColor: 'black'
+    }
+})
