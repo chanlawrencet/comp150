@@ -50,7 +50,7 @@ def sendForm():
         userProfile['forms'].append(formContents)
         db.forms.insert_one(userProfile)
 
-    return 200
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 
 
