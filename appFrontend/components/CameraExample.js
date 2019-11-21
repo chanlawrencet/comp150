@@ -3,10 +3,8 @@ import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import {
   StyleSheet,
-  Button,
   View,
   Text,
-  Alert,
   TouchableOpacity,
   Image,
 } from 'react-native';

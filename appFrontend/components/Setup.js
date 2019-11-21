@@ -255,7 +255,7 @@ class Setup extends React.Component {
             amet.</Text>
           </View>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={() => this.setState({ showScreen: 'showCalcSetup' })} style={styles.submitButton}>
+            <TouchableOpacity onPress={() => this.setState({ showScreen: 'showForm' })} style={styles.submitButton}>
               <Text style={styles.textButton}>Set Up</Text>
               <Icon name="arrow-right" size={40} color='black' />
             </TouchableOpacity>

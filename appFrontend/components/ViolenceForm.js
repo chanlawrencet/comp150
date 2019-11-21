@@ -7,9 +7,11 @@ import {
   Alert,
   Image,
   ScrollView,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  TouchableOpacity
 } from 'react-native';
 import t from 'tcomb-form-native';
+import Icon from 'react-native-vector-icons/FontAwesome5'
 
 const Form = t.form.Form;
 const FormContent = t.struct({
@@ -39,7 +41,7 @@ const options = {
   }
 }
 
-class ViolenceForm extends React.Component{
+class ViolenceForm extends React.Component {
 
   componentWillMount() {
     this.setState({
@@ -49,10 +51,10 @@ class ViolenceForm extends React.Component{
   }
 
   submitForm = () => {
-    const {photoURI, uid} = this.props;
+    const { photoURI, uid } = this.props;
     const formData = new FormData();
-    this.setState({processing: true})
-    formData.append('image', {uri: photoURI, name: 'image.jpg', type: 'image/jpeg'});
+    this.setState({ processing: true })
+    formData.append('image', { uri: photoURI, name: 'image.jpg', type: 'image/jpeg' });
     const options = {
       method: 'POST',
       body: formData,
@@ -65,52 +67,57 @@ class ViolenceForm extends React.Component{
     delete options.headers['Content-Type'];
 
     fetch('https://comp150.herokuapp.com/uploadImage?uid=' + uid, options).then(
-      () => this.setState({processing: false, success:true})
+      () => this.setState({ processing: false, success: true })
     );
 
   }
 
   render() {
-    const {photoURI} = this.props;
-    const {success, processing} = this.state;
+    const { photoURI } = this.props;
+    const { success, processing } = this.state;
 
-    if (processing){
-      return(
-        <View  style={styles.container}>
+    if (processing) {
+      return (
+        <View style={styles.container}>
           <Text style={styles.text}>Sending</Text>
         </View>
       )
     }
-    if (success){
-      return(
-        <View  style={styles.container}>
+    if (success) {
+      return (
+        <View style={styles.container}>
           <Text style={styles.text}>Success</Text>
         </View>
       )
     }
-    return(
+    return (
       <View style={styles.container}>
         {photoURI !== '' ?
-          <View style={styles.container}>
+          <View style={{ flex: 2 }}>
             <Image
-              source={{uri: photoURI}}
+              source={{ uri: photoURI }}
               style={{
                 flex: 1,
-                transform:[{scale:0.5}]
+                transform: [{ scale: 0.8 }]
               }}
             />
-          </View>: <View/>}
-        <KeyboardAvoidingView style={{flex:1, marginTop:20, paddingLeft:5, paddingRight:5}} behavior="padding" enabled>
+          </View> : <View style={{ height: '5%' }}/>}
+        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
           <ScrollView>
-            <Form
-              type={FormContent}
-              options={options}
-            />
+            <View style={styles.formContainer}>
+              <Form
+                type={FormContent}
+                options={options}
+              />
+            </View>   
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={this.submitForm} style={styles.submitButton}>
+              <Text style={styles.textButton}>Submit</Text>
+              <Icon name="arrow-right" size={40} color='black' />
+            </TouchableOpacity>
+          </View>
           </ScrollView>
         </KeyboardAvoidingView>
-        <View style={styles.buttonContainer}>
-          <Button onPress={this.submitForm} title='submit'/>
-        </View>
       </View>
     )
   }
@@ -123,21 +130,35 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     fontSize: 20,
-    marginTop: 50 
+    marginTop: 50
   },
   buttonContainer: {
     alignItems: 'center',
-    height: '15%'
+    height: '15%',
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignContent: 'center',
+    paddingTop: 20,
+    justifyContent: 'space-evenly'
+  },
+  textButton: {
+    fontSize: 25,
+    textAlign: 'center'
+  },
+  formContainer: {
+    width: '100%',
+    paddingHorizontal: '5%',
   },
   submitButton: {
     alignItems: 'center',
-    height: '100%',
-    width: '50%',
-    backgroundColor: '#ff1a1a',
+    height: 60,
+    width: 170,
+    flexDirection: 'row',
+    backgroundColor: '#ccecff',
     justifyContent: 'space-evenly',
-    borderWidth: 2,
-    borderTopWidth: 4,
-    borderColor: 'black'
+    borderRadius: 10,
+    margin: 10
   }
 })
 

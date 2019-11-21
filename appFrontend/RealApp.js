@@ -77,7 +77,7 @@ class RealApp extends React.Component {
               style={styles.backButton}
             >
               <Icon name="arrow-left" size={50} color='black' />
-              <Text style={styles.text}>Back</Text>
+              <Text style={styles.text}>Home</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={lock} style={styles.lockButton}>
               <Icon name="lock" size={50} color='black' />
@@ -101,7 +101,7 @@ class RealApp extends React.Component {
               style={styles.backButton}
             >
               <Icon name="arrow-left" size={50} color='black' />
-              <Text style={styles.text}>Back</Text>
+              <Text style={styles.text}>Home</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={lock} style={styles.lockButton}>
               <Icon name="lock" size={50} color='black' />
@@ -125,7 +125,7 @@ class RealApp extends React.Component {
               style={styles.backButton}
             >
               <Icon name="arrow-left" size={50} color='black' />
-              <Text style={styles.text}>Back</Text>
+              <Text style={styles.text}>Home</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={lock} style={styles.lockButton}>
               <Icon name="lock" size={50} color='black' />
@@ -197,7 +197,7 @@ class RealApp extends React.Component {
               <Text style={styles.text}>Lock</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => Alert.alert('Emergency call will be made.')}
+              onPress={() => Alert.alert('Emergency call', "Emergency call will be placed momentarily.")}
               style={styles.callButton}
             >
               <Icon name="phone" size={50} color='black' />
