@@ -30,8 +30,6 @@ class Gallery extends React.Component {
           })
         }
       )
-
-
   }
 
   makeImages = () => {

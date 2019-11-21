@@ -180,7 +180,7 @@ class RealApp extends React.Component {
                 style={styles.menuOption}
               >
                 <Icon name="microphone" size={50} color='black' />
-                <Text style={styles.text}>Process Audio</Text>
+                <Text style={styles.text}>Audio Detection</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={reset}
@@ -277,10 +277,3 @@ const styles = StyleSheet.create(
 )
 
 export default RealApp
-
-
-
-// <TouchableOpacity style={styles.submitButton} onPress={this.submitForm}>
-// <Icon name="upload" size={50} color='black' />
-// <Text style={styles.text}>Lock</Text>
-// </TouchableOpacity>
