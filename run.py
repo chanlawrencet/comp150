@@ -218,31 +218,8 @@ def uploadAudio():
         # sending spectrogram to AutoML
         MLresponse = get_prediction(spectroFile, '809306467634', 'ICN1707554752075661312')
 
-        # print("spectroFile is: " + spectroFile)
-        #os.system('export GOOGLE_APPLICATION_CREDENTIALS="$(< cdrproject-41ed7890a5e2.json)"')
-        #os.system('echo $GOOGLE_APPLICATION_CREDENTIALS')
-        #print('Credendtials from environ: {}'.format(os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')))
-        #os.system('python3 predict.py ' + wav_filename + '.jpg 809306467634 ICN1707554752075661312')
-
-        #os.system('export GOOGLE_APPLICATION_CREDENTIALS="cdrproject-41ed7890a5e2.json"')
-        """ credentials = service_account.Credentials.from_service_account_file('cdrproject-41ed7890a5e2.json')
-
-        file_path = wav_filename + '.jpg'
-        project_id = '809306467634'
-        model_id = 'ICN1707554752075661312'
-
-        ff = open(file_path, 'rb')
-        content = ff.read()
-            
-        prediction_client = automl_v1beta1.PredictionServiceClient(credentials=credentials)
-
-        name = 'projects/{}/locations/us-central1/models/{}'.format(project_id, model_id)
-        payload = {'image': {'image_bytes': content }}
-        params = {}
-        mlRequest = prediction_client.predict(name, payload, params)
-        #print(mlRequest.payload) """
-
-        return str("Audio File Uploaded Successfully, it is = " + filename)
+        #return str("Violence detectded, placing emergency call!" + filename)
+        return str("Violence detected, placing emergency call!" + filename)
 
     # if request.method == 'GET':
     #    # save audio file (temp)
