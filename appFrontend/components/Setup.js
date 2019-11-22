@@ -13,10 +13,11 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 
 const Form = t.form.Form;
 const User = t.struct({
-  name: t.String,
-  address: t.String,
-  phone: t.Number,
-  emergencyContact: t.Number
+  username: t.String,
+  name: t.maybe(t.String),
+  address: t.maybe(t.String),
+  phone: t.maybe(t.Number),
+  emergencyContact: t.maybe(t.Number)
 });
 
 class Setup extends React.Component {

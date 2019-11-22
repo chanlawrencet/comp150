@@ -99,7 +99,7 @@ class RealApp extends React.Component {
         <View style={styles.container}>
           <View style={styles.notiBar}></View>
           <View style={styles.contentContainer}>
-            <ViolenceForm photoURI={photoURI} uid={uid} goToHome={this.goToHome.bind(this)}/>
+            <ViolenceForm photoURI={photoURI} uid={uid} goToHome={this.goToHome.bind(this)} setPhotoURI={this.setPhotoURI.bind(this)}/>
           </View>
           <View style={styles.emergencyContainer}>
             <TouchableOpacity
@@ -160,7 +160,7 @@ class RealApp extends React.Component {
                 style={styles.menuOption}
               >
                 <Icon name="sticky-note" size={50} color='black' />
-                <Text style={styles.text}>Add New Form</Text>
+                <Text style={styles.text}>Add Note</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.rowContainer}>
@@ -169,7 +169,7 @@ class RealApp extends React.Component {
                 style={styles.menuOption}
               >
                 <Icon name="folder-open" size={50} color='black' />
-                <Text style={styles.text}>Gallery</Text>
+                <Text style={styles.text}>Saved Files</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => this.setState({ currentView: 'audio' })}

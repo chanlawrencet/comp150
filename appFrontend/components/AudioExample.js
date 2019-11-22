@@ -17,6 +17,8 @@ import * as FileSystem from 'expo-file-system';
 import * as Font from 'expo-font';
 import * as Permissions from 'expo-permissions';
 
+import Icon from 'react-native-vector-icons/FontAwesome5'
+
 export default class AudioExample extends React.Component {
     constructor(props) {
         super(props);
@@ -175,41 +177,48 @@ export default class AudioExample extends React.Component {
         }
         return (
             <View style={{ flex: 1 }}>
-                <Text style={{ textAlign: 'center', marginTop: 100, fontSize: 20 }}>
-                    You are now recording audio!
-            </Text>
-                <Button onPress={() => {
-                    this.stopAudio()
-                    setAudioURI(this.state.audioURI)
-                    this.uploadAudio(uid)
-                }
-                } title='upload' />
+                <Text style={{ textAlign: 'center', marginTop: 100, fontSize: 20 }}>You are now recording audio!</Text>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => {
+                        this.stopAudio()
+                        setAudioURI(this.state.audioURI)
+                        this.uploadAudio(uid) }} style={styles.submitButton}>
+                            <Text style={styles.textButton}>Submit</Text>
+                            <Icon name="arrow-right" size={40} color='black' />
+                        </TouchableOpacity>
+                    </View>
             </View>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-    text: {
-        textAlign: 'center',
-        fontSize: 30,
-        marginTop: 50
-    },
-    buttonContainer: {
-        alignItems: 'center',
-        height: '15%'
-    },
-    submitButton: {
-        alignItems: 'center',
-        height: '100%',
-        width: '50%',
-        backgroundColor: '#ff1a1a',
-        justifyContent: 'space-evenly',
-        borderWidth: 2,
-        borderTopWidth: 4,
-        borderColor: 'black'
-    }
-})
+                        const styles = StyleSheet.create({
+                        buttonContainer: {
+                        alignItems: 'center',
+                        height: '15%',
+                        width: '100%',
+                        flexDirection: 'row',
+                        alignContent: 'center',
+                        paddingTop: "10%",
+                        justifyContent: 'space-evenly'
+                        },
+                            text: {
+                                textAlign: 'center',
+                                fontSize: 20,
+                                margin: 20,
+                            },
+                            textButton: {
+                                fontSize: 25,
+                                textAlign: 'center'
+                            },
+                        submitButton: {
+                        alignItems: 'center',
+                        height: 60,
+                        width: 170,
+                        flexDirection: 'row',
+                        backgroundColor: '#ccecff',
+                        justifyContent: 'space-evenly',
+                        borderRadius: 10,
+                        margin: 10
+                        }
+                        })

@@ -9,9 +9,9 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   TextInput,
-  ActivityIndicator
+  ActivityIndicator, TouchableOpacity
 } from 'react-native';
-
+import Icon from 'react-native-vector-icons/FontAwesome5'
 
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -29,7 +29,7 @@ class ViolenceForm extends React.Component{
   }
 
   submitForm = () => {
-    const {photoURI, uid} = this.props;
+    const {photoURI, uid, setPhotoURI} = this.props;
     const {location, description} = this.state;
 
     this.setState({processing: true})
@@ -72,6 +72,7 @@ class ViolenceForm extends React.Component{
           fetch('https://comp150.herokuapp.com/uploadImage?uid=' + uid, options).then(
             () => {
               this.setState({processing: false, success:true})
+              setPhotoURI('')
             });
         } else {
           this.setState({processing: false, success:true})
@@ -104,13 +105,12 @@ class ViolenceForm extends React.Component{
     }
     return(
       <View style={styles.container}>
-        <Text style={{fontSize:30, padding: 6}}>Save Evidence Form:</Text>
+        <Text style={{fontSize:30, padding: '3%'}}>Save Evidence Form:</Text>
         {photoURI !== '' ?
           <View style={styles.container}>
             <Image
               source={{uri: photoURI}}
               style={{
-                marginTop: 5,
                 marginLeft: 100,
                 marginRight: 100,
                 minWidth: 200,
@@ -119,34 +119,35 @@ class ViolenceForm extends React.Component{
               }}
             />
           </View>: <View/>}
-        <KeyboardAvoidingView style={{flex:1, marginTop:20, paddingLeft:5, paddingRight:5}} behavior="padding" enabled>
+        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
           <ScrollView>
-            <Text>Location:</Text>
-            <TextInput
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1, padding:5 }}
-              onChangeText={text => this.setState({location:text})}
-              value={location}
-            />
-            <Text>Description:</Text>
-            <TextInput
-              style={{ height: 100, borderColor: 'gray', borderWidth: 1, textAlignVertical:'top', padding:5}}
-              onChangeText={text => this.setState({description:text})}
-              multiline
-              numberOfLines={4}
-              value={description}
-            />
+            <View style={styles.formContainer}>
+              <Text>Location:</Text>
+              <TextInput
+                style={{ height: 40, borderColor: 'gray', borderWidth: 1, padding:5 }}
+                onChangeText={text => this.setState({location:text})}
+                value={location}
+              />
+              <Text>Description:</Text>
+              <TextInput
+                style={{ height: 100, borderColor: 'gray', borderWidth: 1, textAlignVertical:'top', padding:5}}
+                onChangeText={text => this.setState({description:text})}
+                multiline
+                numberOfLines={4}
+                value={description}
+              />
+            </View>
           </ScrollView>
         </KeyboardAvoidingView>
         <View style={styles.buttonContainer}>
-          <Button
-            onPress={this.submitForm}
-            title='submit'
-            disabled={location.toString().length === 0 || description.toString().length === 0}
-          />
-          {location.toString().length === 0 || description.toString().length === 0 ?
-            <Text>Please enter location and description.</Text> :
-            null}
+          <TouchableOpacity onPress={this.submitForm} style={styles.submitButton} disabled={location.toString().length === 0 || description.toString().length === 0}>
+            <Text style={styles.textButton}>Submit</Text>
+            <Icon name="arrow-right" size={40} color='black' />
+          </TouchableOpacity>
         </View>
+        {location.toString().length === 0 || description.toString().length === 0 ?
+          <Text style={styles.text}>Please enter location and description.</Text> :
+          <Text style={styles.text}></Text>}
       </View>
     )
   }
@@ -158,22 +159,35 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: 30,
-    marginTop: 50 
+    fontSize: 20,
+    margin: 20,
   },
   buttonContainer: {
     alignItems: 'center',
-    height: '15%'
+    height: '15%',
+    width: '100%',
+    flexDirection: 'row',
+    alignContent: 'center',
+    paddingTop: "10%",
+    justifyContent: 'space-evenly'
+  },
+  textButton: {
+    fontSize: 25,
+    textAlign: 'center'
+  },
+  formContainer: {
+    width: '100%',
+    paddingHorizontal: '5%',
   },
   submitButton: {
     alignItems: 'center',
-    height: '100%',
-    width: '50%',
-    backgroundColor: '#ff1a1a',
+    height: 60,
+    width: 170,
+    flexDirection: 'row',
+    backgroundColor: '#ccecff',
     justifyContent: 'space-evenly',
-    borderWidth: 2,
-    borderTopWidth: 4,
-    borderColor: 'black'
+    borderRadius: 10,
+    margin: 10
   }
 })
 
