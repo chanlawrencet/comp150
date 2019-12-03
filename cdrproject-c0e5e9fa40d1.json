@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "cdrproject",
+  "private_key_id": "c0e5e9fa40d1ba06718bdc48d9e251ce0a8f7579",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCY/eS1Ptuohq9j\ni6YIINd4vjYx2IcRcSZC+BbZGUtVCf4kKMXrDbR5WJawkFYNJvWYte7Fzigxko4E\n/mmcSP7DbnGvHXoN0Q5PqB7kYJuQHf0aRLgTxqeUpH5Ey+vYq81/C93WwMna89AR\nZdtUmg/NDKqsCMbEl8zZbr+EZUmYesaibZ9B3iJTAXmioizYGipphid5KfzsE3UJ\nf4fdma4xlb5HNu257CnpJR0hO6jGulEAT5v7+Ywkdf68KriZD2yzdeGVlS46+bNl\nZ94CGTpXohaEAzJlB/bncZF/snuIa20IhPpCHcU/hHT5v4kS9TORSSLEtxqbUBFe\negmHT6/lAgMBAAECggEAErH/5zgJrpPazd7MSLT+r6YKyFeN1c9OXiOj4x6oqnkg\nobmLyffwRF3TeDsDEPNgUqt0xJ43IiunCCwwqqTu4OHXqY8AEb0oswo30C+QAvHv\nMm0QU3ZUlyDsvypuJRmFcI96KdqAMC3YELAyN6nl4Wg5WPFvnKlyImXaqGqaLjQu\nP9syCSpMiFmvIHruljFJ0ciW1Yld/8/vb5Rw3SykOTgpa1mQredfWRMBdORzwlbg\nzimFeuyB0YJlZLLASRCLnbwRRfH6+v/yvdkYD6KcPqPYny5YANiOo7p7OOouhe78\nZoG9FJShrHwJQ9U57Y7WXUn3pxLwcuWTnmpOYKjFYQKBgQDIG7jfQJtxaY6SGZhU\nJ8sEBn8Wy9IWiHvm1YkSzDCPEL25M7WwbNXOn+xVPcydA4ki6Y0vcIIxd0sgfvRm\n/pa6r9AvXLFq0viSWPAgitRWu7M+dAMVo7LjAdtBl92z4AqnymttyrlSkD1GaQdH\nURKg5xLDd0QogNrh29HuUrFccQKBgQDDuTbSwei7eM9BSmpFFODZyz1jPcqb4u5J\nkkhO4YJk3dzXnr/YENBPmqjy2qFKraSCRSno1JrcWJxFT4IUK6qnCntrvJj/Q2fU\nCHYUrYq9HS9Ljg9CIifQdJE/QS3nOHLaQq63JZWitb6VQqiycc042i7MVl1WAKDd\n3o+5CfiUtQKBgA76DC8hXcDyPopuwfjidY5akh55qMKo+mT/bF/symGaxihbV2jZ\n7HKng3+pvWuu/Q+Q3VFEoWnkXMoU1mPzAAL+75zr2hd9rL7/SxGUcmn/aF3vPt/a\nvaPB2tAg9qXkycdfHgU8m/wy8XMYn0PWLIfAY6YfgglqA3fOBPtKUx3xAoGAF8Hc\noLp+2HqylZdFzPrazDT6T5iJhmCGUhHaixCedkXj75xKZxyrXG5Ggav+FgV7yYBB\ntQxRe9uZpGQhQveF8F66Wnp7C8kPylH4m0vxYkEvo3kr6vggYxIzKz1rJ/zXHB0p\n/fsm7agn6RA9T+O2aGc7dPwquiy7WhMQ2QIX1V0CgYBY/QO3YdAiuIUerAgRvT4N\nJWFDtHA+DNfJrvwAox4SYKxzxdRNG5oL5gpCTWdmEWnju9v0xQMjEkhz6bd8u9BR\n7W2Uxo+xnozgUvC8BNbZXNMPj5ylU2+54BcMYXQp+QTm0tmSvnHgIUpLwDI6qRPW\nkF89GlS4KO52NL1/kCvMLA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "cdrprojectservice2@cdrproject.iam.gserviceaccount.com",
+  "client_id": "104404251379382918047",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cdrprojectservice2%40cdrproject.iam.gserviceaccount.com"
+}

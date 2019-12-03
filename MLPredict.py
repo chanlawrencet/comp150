@@ -29,4 +29,4 @@ def get_prediction(spectroFile, projectID, modelID):
 
 class predict:
     def __init__(self):
-        self.credentials = service_account.Credentials.from_service_account_file('cdrproject-41ed7890a5e2.json')
+        self.credentials = service_account.Credentials.from_service_account_file('cdrproject-c0e5e9fa40d1.json')
