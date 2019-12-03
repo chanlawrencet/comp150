@@ -128,7 +128,7 @@ export default class AudioExample extends React.Component {
     componentDidMount() {
         this._askForPermissions();
         this.recordAudio()
-        //setTimeout(this.stopAudio, 5000)
+        setTimeout(this.stopAudio, 5000)
     }
 
     componentWillMount() {
