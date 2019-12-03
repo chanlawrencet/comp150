@@ -7,7 +7,7 @@ from google.oauth2 import service_account
 
 # 'content' is base-64-encoded image data.
 def get_prediction(spectroFile, projectID, modelID):
-  credentials = service_account.Credentials.from_service_account_file('cdrproject-41ed7890a5e2.json')
+  credentials = service_account.Credentials.from_service_account_file('cdrproject-c0e5e9fa40d1.json')
   prediction_client = automl_v1beta1.PredictionServiceClient(
     credentials=credentials,
   )
