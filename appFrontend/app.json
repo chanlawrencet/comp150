@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "comp150",
+    "name": "Calculator",
     "slug": "appFrontend",
     "privacy": "public",
     "sdkVersion": "35.0.0",
@@ -27,6 +27,7 @@
       "supportsTablet": true
     },
     "android":{
+      "package": "com.ada.calculator",
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
