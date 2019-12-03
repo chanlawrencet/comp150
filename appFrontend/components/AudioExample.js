@@ -32,7 +32,7 @@ export default class AudioExample extends React.Component {
             rate: 1.0,
         };
         this.recordingSettings = JSON.parse(JSON.stringify(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY));
-        this.recordingSettings.android['maxFileSize'] = 10000 // size of max audio file to be created in bytes
+        this.recordingSettings.android['maxFileSize'] = 150000 // size of max audio file to be created in bytes
     }
 
     recordAudio = async () => {
@@ -72,15 +72,19 @@ export default class AudioExample extends React.Component {
             audioURI: aURI,
             //agreeToAudio: value.disable
         });
-
+        console.log(`Can Record 1: ${JSON.stringify(recording.getStatusAsync())}`)
         console.log("This is the this.audioURI: " + this.state.audioURI)
     }
 
-    stopAudio = async () => {
+    /*stopAudio = async () => {
         console.log("Stopping Audio Recording")
         const audio = this.recording.getURI()
+        this.recording.stopAndUnloadAsync()
+        const info = await FileSystem.getInfoAsync(this.recording.getURI)
         console.log("Recording has now stopped")
-    }
+        console.log(`File Info: ${JSON.stringify(info)}`)
+        uploadAudio(uid)
+    }*/
 
     uploadAudio = async (uid) => { //uri
         //const { audioURI, uid } = this.props;
@@ -88,7 +92,8 @@ export default class AudioExample extends React.Component {
         /* 
         let database = 'http://localhost:5000/uploadAudio'
         */
-
+        this.recording.stopAndUnloadAsync() 
+        console.log(`Can Record 2: ${JSON.stringify(this.recording.getStatusAsync())}`)
         console.log('audioURI before uploading: ' + this.state.audioURI)
 
         const formData = new FormData();
@@ -128,7 +133,7 @@ export default class AudioExample extends React.Component {
     componentDidMount() {
         this._askForPermissions();
         this.recordAudio()
-        setTimeout(this.stopAudio, 5000)
+        //setTimeout(this.stopAudio(), 5000)
     }
 
     componentWillMount() {
@@ -180,7 +185,6 @@ export default class AudioExample extends React.Component {
                 <Text style={{ textAlign: 'center', marginTop: 100, fontSize: 20 }}>You are now recording audio!</Text>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={() => {
-                        this.stopAudio()
                         setAudioURI(this.state.audioURI)
                         this.uploadAudio(uid) }} style={styles.submitButton}>
                             <Text style={styles.textButton}>Submit</Text>
