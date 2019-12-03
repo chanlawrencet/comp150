@@ -216,7 +216,7 @@ def uploadAudio():
         spectroFile = wav_filename + '.jpg'
 
         # sending spectrogram to AutoML
-        MLresponse = get_prediction(spectroFile, '809306467634', 'ICN1707554752075661312')
+        MLresponse = get_prediction(spectroFile, '809306467634', 'ICN298772493638828032')
         print("This is what was detected: " + MLresponse)
         #return str("Violence detectded, placing emergency call!" + filename)
         return jsonify(keyword=MLresponse)
