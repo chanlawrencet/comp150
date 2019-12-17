@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   StyleSheet,
-  Button,
   View,
   Text,
   Alert,
@@ -284,10 +283,3 @@ const styles = StyleSheet.create(
 )
 
 export default RealApp
-
-
-
-// <TouchableOpacity style={styles.submitButton} onPress={this.submitForm}>
-// <Icon name="upload" size={50} color='black' />
-// <Text style={styles.text}>Lock</Text>
-// </TouchableOpacity>

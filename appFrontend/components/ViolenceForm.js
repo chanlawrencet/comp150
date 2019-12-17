@@ -1,15 +1,14 @@
 import React from 'react'
 import {
   StyleSheet,
-  Button,
   View,
   Text,
-  Alert,
   Image,
   ScrollView,
   KeyboardAvoidingView,
   TextInput,
-  ActivityIndicator, TouchableOpacity
+  ActivityIndicator,
+  TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
@@ -105,7 +104,7 @@ class ViolenceForm extends React.Component{
     }
     return(
       <View style={styles.container}>
-        <Text style={{fontSize:30, padding: '3%'}}>Save Evidence Form:</Text>
+        <Text style={{ fontSize:30, padding: '3%', textAlign: 'center' }}>Evidence Form</Text>
         {photoURI !== '' ?
           <View style={styles.container}>
             <Image
@@ -122,15 +121,15 @@ class ViolenceForm extends React.Component{
         <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
           <ScrollView>
             <View style={styles.formContainer}>
-              <Text>Location:</Text>
+              <Text style={styles.fieldTitleText}>Location:</Text>
               <TextInput
-                style={{ height: 40, borderColor: 'gray', borderWidth: 1, padding:5 }}
+                style={styles.locationBox}
                 onChangeText={text => this.setState({location:text})}
                 value={location}
               />
-              <Text>Description:</Text>
+              <Text style={styles.fieldTitleText}>Description:</Text>
               <TextInput
-                style={{ height: 100, borderColor: 'gray', borderWidth: 1, textAlignVertical:'top', padding:5}}
+                style={styles.descriptionBox}
                 onChangeText={text => this.setState({description:text})}
                 multiline
                 numberOfLines={4}
@@ -160,7 +159,11 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     fontSize: 20,
-    margin: 20,
+    margin: 20
+  },
+  fieldTitleText: {
+    fontSize: 20,
+    margin: 2
   },
   buttonContainer: {
     alignItems: 'center',
@@ -188,6 +191,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     borderRadius: 10,
     margin: 10
+  },
+  locationBox: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    padding: 5,
+    borderRadius: 3
+  },
+  descriptionBox: {
+    height: 95,
+    borderColor: 'gray',
+    borderWidth: 1,
+    textAlignVertical:'top',
+    padding: 5,
+    borderRadius: 3
   }
 })
 

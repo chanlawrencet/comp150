@@ -92,29 +92,25 @@ class Gallery extends React.Component {
     if (formData === undefined) {
       return (
         <View style={{ flex: 1, padding:6 }} key={theKey}>
-          <Text style={{fontSize:30}}>Online Saved Forms</Text>
-          <Text>No saved forms found.</Text>
-          <Text>Take a picture or save a form to view forms.</Text>
+          <Text style={{ fontSize: 30, textAlign: 'center' }}>Online Saved Forms</Text>
+          <View style={styles.separator}/>
+          <Text style={styles.fieldTitleText}>No saved forms found.</Text>
+          <Text style={styles.fieldTitleText}>Take a picture or save a form to view forms.</Text>
         </View>
       )
     }
 
     let previousDateTime = '';
     return(
-      <ScrollView style={{padding: 6}} key={theKey.concat("yes")}>
-        <Text style={{fontSize:30}}>Online Saved Forms</Text>
+      <ScrollView style={{padding: 10}} key={theKey.concat("yes")}>
+        <Text style={{fontSize: 30, textAlign: 'center'}}>Online Saved Forms</Text>
         {formData.map(formInstance => {
           if (formInstance.location === 'N/A') {
             previousDateTime = formInstance.dateTime
             return (
               <View style={{flex: 1}} key={formInstance.dateTime.concat(formInstance.dateTime)}>
-                <View
-                  style={{
-                    borderBottomColor: 'black',
-                    borderBottomWidth: 1,
-                  }}
-                />
-                <Text style={{fontSize: 20}}>Time: {formInstance.dateTime}</Text>
+                <View style={styles.separator}/>
+                <Text style={styles.fieldTitleText}>Time: {formInstance.dateTime}</Text>
                 <Image
                   source={{uri: "https://comp150.herokuapp.com/getImages?uid=1234&number=".concat(formInstance.description).concat("&milliseconds=").concat(theKey)}}
                   style={{
@@ -129,41 +125,48 @@ class Gallery extends React.Component {
               </View>
             )
           }
-        else {
-          let oldPrevousDateTime = previousDateTime
-          previousDateTime = formInstance.dateTime
-          return (
-            <View style={{flex:1, marginBottom:5}} key={formInstance.dateTime}>
-              {oldPrevousDateTime !== formInstance.dateTime ?
-                <View
-                  style={{
-                    borderBottomColor: 'black',
-                    borderBottomWidth: 1,
-                  }}
-                /> : null
-              }
-              {oldPrevousDateTime !== formInstance.dateTime ?
-                <Text style={{fontSize:20}}>Time: {formInstance.dateTime}</Text>: null
-              }
-
-
-              <Text style={{fontSize:20}}>Location: {formInstance.location}</Text>
-              <Text style={{fontSize:20}}>Description: {formInstance.description}</Text>
-            </View>
-          )
+          else {
+            let oldPrevousDateTime = previousDateTime
+            previousDateTime = formInstance.dateTime
+            return (
+              <View style={{flex:1, marginBottom:5}} key={formInstance.dateTime}>
+                {oldPrevousDateTime !== formInstance.dateTime ?
+                  <View style={styles.separator}/> : null
+                }
+                {oldPrevousDateTime !== formInstance.dateTime ?
+                  <Text style={styles.fieldTitleText}>Time: {formInstance.dateTime}</Text>
+                  : null
+                }
+                <Text style={styles.fieldTitleText}>Location: {formInstance.location}</Text>
+                <Text style={styles.fieldTitleText}>Description: {formInstance.description}</Text>
+                <View style={{ height: 15 }}/>
+              </View>
+            )
           }
         })
         }
       </ScrollView>
     )
-
-    // return (
-    //   <View style={{ flex: 1 }} key={theKey.concat("NO")}>
-    //     {this.makeImages()}
-    //   </View>
-    //
-    // )
   }
 }
+
+const styles=StyleSheet.create(
+{
+  rowContainer:{
+    flex: 1,
+    flexDirection: 'row'
+  },
+  fieldTitleText: {
+    paddingLeft: 12,
+    fontSize: 20,
+    margin: 2
+  },
+  separator: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 2.5,
+    marginBottom: 15
+  }
+}
+)
 
 export default Gallery
